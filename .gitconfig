@@ -1,0 +1,54 @@
+[user]
+	name = Nicholas Hutchinson
+	email = nshutchinson@gmail.com
+[core]
+	quotepath = false
+	excludesfile = /Users/Nick/.gitignore
+	attributesfile = ~/.gitattributes
+	editor = vim
+
+[alias]
+	hist = log --date=relative --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
+	hist-no-graph = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
+	whatis = show --date=short -s --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
+	slap = blame -wC 
+	diffcw = diff --color-words
+	unstage = reset HEAD --
+	stage = add
+	startbranch = checkout -b
+	search = grep -i --break --heading --line-number -P
+	searchhist = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E -G
+	searchmsgs = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E --grep
+
+[color]
+ 	pager = true
+	ui = auto
+
+[blame]
+	date = short
+
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+	tool = Kaleidoscope
+	algorithm = histogram
+[difftool]
+	prompt = false
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
+[merge]
+	tool = Kaleidoscope
+	conflictstyle = diff3
+[push]
+	default = simple

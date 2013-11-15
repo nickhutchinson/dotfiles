@@ -41,7 +41,10 @@ set colorcolumn=80
 map <C-I> :pyf ~/.vim/clang-format.py<CR>
 imap <C-I> <ESC>:pyf ~/.vim/clang-format.py<CR>i
 
-if has(":vscmd")
+if exists(":vscmd")
    map <C-I> :vscmd Tools.ClangFormat<CR>
    imap <C-I> <ESC>:vscmd Tools.ClangFormat<CR>i
 end
+
+"set list
+set listchars=tab:▸\ ,eol:¬

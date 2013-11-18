@@ -1,9 +1,10 @@
 set fish_greeting ''
 
-set -x PATH                 \
-  $HOME/.{rbenv,pyenv}/bin  \
-  /usr/local/{bin,sbin}     \
-  /usr/local/share/npm/bin  \
+set -x PATH                            \
+  $HOME/.{cabal,rbenv,pyenv}/bin       \
+  $HOME/.rbenv/plugins/ruby-build/bin  \
+  /usr/local/{bin,sbin}                \
+  /usr/local/share/npm/bin             \
   $PATH
 
 if type rbenv > /dev/null
@@ -46,9 +47,10 @@ end
 alias pbc pbcopy
 alias pbp pbpaste
 
-switch (uname -s)
+switch (uname)
 case "Linux"
   alias o xdg-open
 case "Darwin"
   alias o open
 end
+

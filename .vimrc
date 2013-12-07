@@ -16,6 +16,9 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'editorconfig/editorconfig-vim'
+Bundle 'elzr/vim-json'
+Bundle 'kelan/gyp.vim'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Sane backspace behaviour
 set backspace=2
@@ -25,7 +28,7 @@ set number
 set hlsearch
 set incsearch
 set background=dark
-colorscheme base16-tomorrow
+colorscheme base16-solarized
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -48,3 +51,17 @@ end
 
 "set list
 set listchars=tab:▸\ ,eol:¬
+
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hie the default mode text (e.g. -- INSERT -- below the statusline)
+
+cmap w!! w !sudo tee > /dev/null %
+inoremap jj <Esc>
+set clipboard=unnamed
+set timeoutlen=200
+
+inoremap <Left>  <NOP>
+inoremap <Right> <NOP>
+inoremap <Up>    <NOP>
+inoremap <Down>  <NOP>
+

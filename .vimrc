@@ -6,107 +6,173 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
+
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-projectile'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-sensible'    
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-vinegar'
+
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
+Plugin 'chriskempson/base16-vim' 
+Plugin 'derekwyatt/vim-scala'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'kana/vim-operator-user'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'nelstrom/vim-mac-classic-theme'
+Plugin 'nelstrom/vim-qargs'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'Raimondi/delimitMate'  
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'rodjek/vim-puppet'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Valloric/YouCompleteMe'  
+Plugin 'Shougo/vimproc.vim'
+
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
 filetype plugin indent on     " required!
 
-Bundle 'tpope/vim-sensible'    
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-vinegar'
-Bundle 'tpope/vim-projectile'
-
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'Raimondi/delimitMate'  
-Bundle 'chriskempson/base16-vim' 
-Bundle 'Valloric/YouCompleteMe'  
-Bundle 'rhysd/vim-clang-format'
-Bundle 'bling/vim-airline'
-
-Bundle 'nelstrom/vim-visual-star-search'
-Bundle 'nelstrom/vim-qargs'
-Bundle 'nelstrom/vim-mac-classic-theme'
-
-Bundle 'majutsushi/tagbar'
-
-Bundle 'amiorin/ctrlp-z'
-Bundle 'kien/ctrlp.vim'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'msanders/snipmate.vim'
-Bundle 'kana/vim-operator-user'
-
-let mapleader = ","
-set hidden
-set number
-set hlsearch
+" ------------------------------------------------------------------------------ 
 set background=dark
 colorscheme base16-ocean
 
-" Case insensitive search unless capital letter
+let mapleader = ","
+set list
+set hidden
+set number
+set hlsearch
 set ignorecase
 set smartcase
-
-set guifont=Inconsolata\ For\ Powerline:h14
 set colorcolumn=81
-
 set listchars=tab:▸\ ,eol:¬
-
-set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-
- "Easy way to exit insert mode
-inoremap jj <Esc>
-
-" Use system clipboard
+set numberwidth=5
+set noswapfile
+set diffopt+=iwhite
+set cursorline
 set clipboard=unnamed
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set tags=./tags;
+" ------------------------------------------------------------------------------ 
+
+" Easy way to exit insert mode
+inoremap jj <Esc>
 
 " Bubble lines
 nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
-  
-set tags=./tags;
 
+
+" CtrlP
+let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
+nnoremap <leader>B :CtrlPBuffer<CR>
+nnoremap <leader>b :CtrlPBookmarkDir<CR>
+nnoremap <leader>r :CtrlPMRUFiles<CR>
+nnoremap <leader>cd :cd %:h<CR>
+let g:ctrlp_clear_cache_on_exit = 0
+
+" Splits
+nnoremap <C-_> <C-w>s<C-w>j
+nnoremap <C-\> <C-w>v<C-w>l
+
+" ------------------------------------------------------------------------------ 
+" YouCompleteMe
+let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_path_to_python_interpreter = "/usr/bin/python"
+nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 
-let g:clang_format#command = "clang-format-3.4"
-
+" ------------------------------------------------------------------------------ 
+" Airline
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-nnoremap <C-_> <C-w>s<C-w>j
-nnoremap <C-\> <C-w>v<C-w>l
+" Snipmate
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+" ------------------------------------------------------------------------------ 
+" Misc
+let g:clang_format#command = "clang-format-3.4"
+let g:delimitMate_expand_cr=1
+nnoremap <leader>of :silent !open %:h<CR>
 
+" ------------------------------------------------------------------------------ 
+" Less annoying NERDCommenter mapping
+map gcc <plug>NERDCommenterToggle
+" need to map this also otherwise NERDCommenter doesn't bother
+map <leader>c<space> <plug>NERDCommenterToggle
+
+autocmd Filetype c,cpp,objc,objcpp setlocal ts=4 sts=4 sw=4 expandtab 
+autocmd BufRead,BufNewFile *.m set filetype=objc
+autocmd BufRead,BufNewFile *.mm set filetype=objcpp
+
+" ------------------------------------------------------------------------------ 
 " Disable MacVim scrollbars
 set guioptions-=l
 set guioptions-=r
 set guioptions-=L
 set guioptions-=R
-"
+set guicursor+=a:blinkon0
+set guifont=Inconsolata\ For\ Powerline:h15
 " Use console dialogs
 set guioptions+=c
+" ------------------------------------------------------------------------------ 
 
-let g:localvimrc_sandbox=0
-let g:localvimrc_persistent=1
+" Folding
+set foldmethod=syntax
+set foldlevelstart=3
+nnoremap <space> za
 
-" Less annoying NERDCommenter mapping
-nmap gcc <plug>NERDCommenterToggle
-" need to map this also otherwise NERDCommenter doesn't bother
-nmap <leader>c<space> <plug>NERDCommenterToggle
-let g:delimitMate_expand_cr=1
+" Mouse support
+set mouse=a
 
-autocmd Filetype c,cpp,objc,objcpp setlocal ts=2 sts=2 sw=2 expandtab 
-autocmd BufRead,BufNewFile *.m set filetype=objc
-autocmd BufRead,BufNewFile *.m. set filetype=objcpp
-
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.d,*/CMakeFiles/*
-let g:ctrlp_cmd = 'CtrlPLastMode'
-
-set numberwidth=5
-
-set noswapfile
+let g:tagbar_type_objc = {
+    \ 'ctagstype' : 'ObjectiveC',
+    \ 'kinds'     : [
+        \ 'i:interface',
+        \ 'I:implementation',
+        \ 'p:Protocol',
+        \ 'm:Object_method',
+        \ 'c:Class_method',
+        \ 'v:Global_variable',
+        \ 'F:Object field',
+        \ 'f:function',
+        \ 'p:property',
+        \ 't:type_alias',
+        \ 's:type_structure',
+        \ 'e:enumeration',
+        \ 'M:preprocessor_macro',
+    \ ],
+    \ 'sro'        : ' ',
+    \ 'kind2scope' : {
+        \ 'i' : 'interface',
+        \ 'I' : 'implementation',
+        \ 'p' : 'Protocol',
+        \ 's' : 'type_structure',
+        \ 'e' : 'enumeration'
+    \ },
+    \ 'scope2kind' : {
+        \ 'interface'      : 'i',
+        \ 'implementation' : 'I',
+        \ 'Protocol'       : 'p',
+        \ 'type_structure' : 's',
+        \ 'enumeration'    : 'e'
+    \ }
+\ }

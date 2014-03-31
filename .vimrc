@@ -25,25 +25,22 @@ Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim' 
 Plugin 'derekwyatt/vim-scala'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'honza/vim-snippets'
 Plugin 'kana/vim-operator-user'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-mac-classic-theme'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'Raimondi/delimitMate'  
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'rodjek/vim-puppet'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'SirVer/ultisnips'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Valloric/YouCompleteMe'  
-Plugin 'Shougo/vimproc.vim'
-
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
 
 filetype plugin indent on     " required!
 
@@ -104,9 +101,12 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-" Snipmate
-imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
+" ------------------------------------------------------------------------------
+" UltiSnips
+let g:UltiSnipsExpandTrigger       = "<C-J>"
+let g:UltiSnipsJumpForwardTrigger  = "<right>"
+let g:UltiSnipsJumpBackwardTrigger = "<left>"
+let g:snips_author                 = 'Nick Hutchinson'
 " ------------------------------------------------------------------------------ 
 " Misc
 let g:clang_format#command = "clang-format-3.4"

@@ -29,8 +29,8 @@ PointerBindsToType: true
 SpacesBeforeTrailingComments: 2
 Cpp11BracedListStyle: true
 Standard:        Auto
-IndentWidth:     2
-TabWidth:        8
+IndentWidth:     4
+TabWidth:        4
 UseTab:          false
 BreakBeforeBraces: Attach
 IndentFunctionDeclarationAfterType: true

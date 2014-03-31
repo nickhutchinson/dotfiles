@@ -1,10 +1,9 @@
 set fish_greeting ''
 
 set -x PATH                            \
-  $HOME/.{cabal,rbenv,pyenv}/bin       \
+  $HOME/.{rbenv,pyenv}/bin             \
   $HOME/.rbenv/plugins/ruby-build/bin  \
   /usr/local/{bin,sbin}                \
-  /usr/local/share/npm/bin             \
   $PATH
 
 if type rbenv > /dev/null
@@ -15,6 +14,10 @@ if type pyenv > /dev/null
   . (pyenv init -|psub)
 end
 
+if type autojump > /dev/null
+  . (dirname (type -p autojump))/../etc/autojump.fish
+end
+
 if not type hash > /dev/null
   function hash; end
 end
@@ -22,12 +25,12 @@ end
 set -x EDITOR vim
 
 # EC2 stuff
-if test -d /usr/local/Library/LinkedKegs/ec2-api-tools/jars
-  set -x JAVA_HOME (/usr/libexec/java_home)
-  set -x EC2_PRIVATE_KEY (/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)
-  set -x EC2_CERT (/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)
-  set -x EC2_HOME "/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
-  set -x EC2_URL "https://us-west-2.ec2.amazonaws.com/"
+if test -d "/usr/local/Library/LinkedKegs/ec2-api-tools"
+  set -x "JAVA_HOME" (/usr/libexec/java_home)
+  set -x "EC2_PRIVATE_KEY" (/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)
+  set -x "EC2_CERT" (ls "$HOME/.ec2/"cert-*.pem | /usr/bin/head -1)
+  set -x "EC2_HOME" "/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
+  set -x "EC2_URL" "https://us-west-2.ec2.amazonaws.com/"
 end
 
 alias cp 'cp -i'
@@ -54,3 +57,11 @@ case "Darwin"
   alias o open
 end
 
+function fasd_cd ()
+  set x (fasd -i)
+  if test -d $fasd_ret
+    builtin cd $fasd_ret
+  else
+    echo $fasd_ret
+  end
+end

@@ -3,7 +3,7 @@
 	email = nshutchinson@gmail.com
 [core]
 	quotepath = false
-	excludesfile = /Users/Nick/.gitignore
+	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	editor = vim
 
@@ -21,34 +21,25 @@
 	searchmsgs = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E --grep
 
 [color]
- 	pager = true
 	ui = auto
 
 [blame]
 	date = short
 
+[mergetool "gvim"]
+	cmd = gvim --nofork \"+Gdiff\" $MERGED
+[merge]
+	tool = gvim
+[diff]
+	tool = gvimdiff
+[push]
+	default = simple
+
+[difftool "gvimdiff"]
+	cmd = gvim --nofork -d "$LOCAL" "$REMOTE"
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 	path = 
-
 [mergetool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true
-
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[diff]
-	tool = Kaleidoscope
-	algorithm = histogram
-[difftool]
-	prompt = false
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
-[mergetool]
-	prompt = false
-[merge]
-	tool = Kaleidoscope
-	conflictstyle = diff3
-[push]
-	default = simple

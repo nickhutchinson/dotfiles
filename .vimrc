@@ -45,6 +45,7 @@ Plugin 'Valloric/YouCompleteMe'
 filetype plugin indent on     " required!
 
 " ------------------------------------------------------------------------------ 
+let base16colorspace=256
 set background=dark
 colorscheme base16-ocean
 

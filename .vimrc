@@ -45,7 +45,9 @@ Plugin 'Valloric/YouCompleteMe'
 filetype plugin indent on     " required!
 
 " ------------------------------------------------------------------------------ 
-let base16colorspace=256
+if $TERM_PROGRAM != "Apple_Terminal"
+  let base16colorspace=256
+endif
 set background=dark
 colorscheme base16-ocean
 

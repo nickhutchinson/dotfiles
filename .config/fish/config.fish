@@ -7,11 +7,11 @@ set -x PATH                            \
   $PATH
 
 if type rbenv > /dev/null
-  . (rbenv init -|psub)
+  source (rbenv init -|psub)
 end
 
 if type pyenv > /dev/null
-  . (pyenv init -|psub)
+  source (pyenv init -|psub)
 end
 
 if type autojump > /dev/null
@@ -23,15 +23,6 @@ if not type hash > /dev/null
 end
 
 set -x EDITOR vim
-
-# EC2 stuff
-if test -d "/usr/local/Library/LinkedKegs/ec2-api-tools"
-  set -x "JAVA_HOME" (/usr/libexec/java_home)
-  set -x "EC2_PRIVATE_KEY" (/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)
-  set -x "EC2_CERT" (ls "$HOME/.ec2/"cert-*.pem | /usr/bin/head -1)
-  set -x "EC2_HOME" "/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
-  set -x "EC2_URL" "https://us-west-2.ec2.amazonaws.com/"
-end
 
 alias cp 'cp -i'
 alias ln 'ln -i'
@@ -57,17 +48,9 @@ case "Darwin"
   alias o open
 end
 
-function fasd_cd ()
-  set x (fasd -i)
-  if test -d $fasd_ret
-    builtin cd $fasd_ret
-  else
-    echo $fasd_ret
+if test -d $HOME/.config/fish/config.fish.d
+  for f in $HOME/.config/fish/config.fish.d/*.fish
+    source $f
   end
 end
 
-set -l BASE16_SCHEME ocean
-set -l BASE16_SHELL "$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-if test -f $BASE16_SHELL
-  eval sh "$BASE16_SHELL"
-end

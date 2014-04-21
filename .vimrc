@@ -1,3 +1,6 @@
+" vim: fdm=marker:foldlevel=0:
+
+" Bundle settings {{{
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -41,16 +44,20 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Valloric/YouCompleteMe'  
+Plugin 'danro/rename.vim'
 
 filetype plugin indent on     " required!
 
-" ------------------------------------------------------------------------------ 
+" }}}
+
+" Colour scheme {{{
 if $TERM_PROGRAM != "Apple_Terminal"
   let base16colorspace=256
 endif
 set background=dark
 colorscheme base16-ocean
-
+" }}}
+" Options {{{
 let mapleader = ","
 set list
 set hidden
@@ -67,8 +74,9 @@ set cursorline
 set clipboard=unnamed
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set tags=./tags;
-" ------------------------------------------------------------------------------ 
-
+set mouse=a
+"}}}
+" Mappings"{{{
 " Easy way to exit insert mode
 inoremap jj <Esc>
 
@@ -78,56 +86,53 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-
-" CtrlP
+" Splits
+nnoremap <C-_> <C-w>s<C-w>j
+nnoremap <C-\> <C-w>v<C-w>l
+"}}}
+" CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>B :CtrlPBuffer<CR>
 nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>cd :cd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
-
-" Splits
-nnoremap <C-_> <C-w>s<C-w>j
-nnoremap <C-\> <C-w>v<C-w>l
-
-" ------------------------------------------------------------------------------ 
-" YouCompleteMe
+"}}}
+" YouCompleteMe"{{{
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_path_to_python_interpreter = "/usr/bin/python"
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
-
-" ------------------------------------------------------------------------------ 
-" Airline
+"}}}
+" Airline"{{{
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-" ------------------------------------------------------------------------------
-" UltiSnips
+"}}}
+" UltiSnips"{{{
 let g:UltiSnipsExpandTrigger       = "<C-J>"
 let g:UltiSnipsJumpForwardTrigger  = "<right>"
 let g:UltiSnipsJumpBackwardTrigger = "<left>"
-let g:snips_author                 = 'Nick Hutchinson'
-" ------------------------------------------------------------------------------ 
+let g:snips_author                 = 'Nick Hutchinson'"}}}
+"Nerdcommenter{{{
+" Less annoying NERDCommenter mapping
+map gcc <plug>NERDCommenterToggle
+" need to map this also otherwise NERDCommenter doesn't bother
+map <leader>c<space> <plug>NERDCommenterToggle
+"}}}
+
 " Misc
 let g:clang_format#command = "clang-format-3.4"
 let g:delimitMate_expand_cr=1
 nnoremap <leader>of :silent !open %:h<CR>
 
-" ------------------------------------------------------------------------------ 
-" Less annoying NERDCommenter mapping
-map gcc <plug>NERDCommenterToggle
-" need to map this also otherwise NERDCommenter doesn't bother
-map <leader>c<space> <plug>NERDCommenterToggle
-
-autocmd Filetype c,cpp,objc,objcpp setlocal ts=4 sts=4 sw=4 expandtab 
+" Filetype/indentation{{{
+set ts=4 sts=4 sw=4 expandtab 
 autocmd BufRead,BufNewFile *.m set filetype=objc
 autocmd BufRead,BufNewFile *.mm set filetype=objcpp
-
-" ------------------------------------------------------------------------------ 
-" Disable MacVim scrollbars
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+"}}}
+" GUI Options{{{
 set guioptions-=l
 set guioptions-=r
 set guioptions-=L
@@ -136,16 +141,27 @@ set guicursor+=a:blinkon0
 set guifont=Inconsolata\ For\ Powerline:h15
 " Use console dialogs
 set guioptions+=c
-" ------------------------------------------------------------------------------ 
+"}}}
 
 " Folding
 set foldmethod=syntax
-set foldlevelstart=3
+set foldlevelstart=4
 nnoremap <space> za
 
-" Mouse support
-set mouse=a
-
+"Projectile {{{
+let g:projectiles = {
+   \ "*": {
+   \   "*.m":  { "alternate": ["{}.h"] },
+   \   "*.mm": { "alternate": ["{}.h"] },
+   \   "*.c":  { "alternate": ["{}.h"] },
+   \   "*.cc": { "alternate": ["{}.h", "{}.hpp"] },
+   \   "*.cpp":{ "alternate": ["{}.h", "{}.hpp"] },
+   \   "*.h":  { "alternate": ["{}.c", "{}.cc", "{}.cpp", "{}.m", "{}.mm"] },
+   \   "*.hpp":{ "alternate": ["{}.cc", "{}.cpp"] },
+   \ }
+   \ }
+"}}}
+" Tagbar{{{
 let g:tagbar_type_objc = {
     \ 'ctagstype' : 'ObjectiveC',
     \ 'kinds'     : [
@@ -179,3 +195,5 @@ let g:tagbar_type_objc = {
         \ 'enumeration'    : 'e'
     \ }
 \ }
+"}}}
+

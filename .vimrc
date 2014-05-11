@@ -70,7 +70,11 @@ set cursorline
 set clipboard=unnamed
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set tags=./tags;
-set mouse=a
+set mouse+=a
+if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+endif
 "}}}
 " Mappings{{{
 " Easy way to exit insert mode

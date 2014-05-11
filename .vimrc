@@ -64,9 +64,8 @@ set ignorecase
 set smartcase
 set colorcolumn=81
 let &listchars="tab:▸ ,eol:¬"
-set numberwidth=5
+set numberwidth=2
 set noswapfile
-"set diffopt+=iwhite
 set cursorline
 set clipboard=unnamed
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
@@ -84,8 +83,6 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
 " Splits {{{
-"nnoremap <C-_> <C-w>s<C-w>j
-"nnoremap <C-\> <C-w>v<C-w>l
 nnoremap <leader>v :vnew<cr>
 set splitbelow
 set splitright
@@ -144,10 +141,8 @@ set guioptions+=c
 
 " Folding
 set foldmethod=syntax
-set foldlevelstart=4
-nnoremap <return> za
-
-"nnoremap <leader>vc :e ~/.vimrc<return>
+set foldlevelstart=10
+nnoremap <space> za
 
 "Projectile {{{
 let g:projectiles = {

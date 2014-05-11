@@ -14,35 +14,33 @@ Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'    
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-vinegar'
 
-Plugin 'nelstrom/vim-mac-classic-theme'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
 
-Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim' 
-Plugin 'danro/rename.vim'
-Plugin 'derekwyatt/vim-scala'
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'rodjek/vim-puppet'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'Valloric/YouCompleteMe'  
 
 filetype plugin indent on     " required!
@@ -92,10 +90,8 @@ nnoremap <leader>v :vnew<cr>
 set splitbelow
 set splitright
 "}}}
-
-nnoremap <leader>m :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeFind<CR>
 "}}}
+
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>B :CtrlPBuffer<CR>
@@ -121,13 +117,6 @@ let g:UltiSnipsJumpForwardTrigger  = "<right>"
 let g:UltiSnipsJumpBackwardTrigger = "<left>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
-"}}}
-
-"Nerdcommenter{{{
-" Less annoying NERDCommenter mapping
-map gcc <plug>NERDCommenterToggle
-" need to map this also otherwise NERDCommenter doesn't bother
-map <leader>c<space> <plug>NERDCommenterToggle
 "}}}
 
 " Misc

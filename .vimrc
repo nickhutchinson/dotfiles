@@ -24,11 +24,16 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'    
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
 
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
 
+" Battle of the file managers
+" Plugin 'tpope/vim-vinegar'
+Plugin 'dhruvasagar/vim-vinegar'
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'bufkill.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim' 
@@ -94,9 +99,28 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 "}}}
 
-" Netrw
-nnoremap <silent> <leader>n :Lexplore<CR>
-let g:netrw_winsize = -28
+" Netrw/NERDTree
+nnoremap <silent> <leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <leader>N :NERDTreeFind<CR>
+let g:NERDTreeShowBookmarks=1
+
+let g:NERDTreeIgnore = [
+    \   '^out$[[dir]]', 
+    \   '^objects$[[dir]]', 
+    \   '\v\.(dll|lib|so)$[[file]]'
+    \ ]
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v/(out|objects)$',
+    \ 'file': '\v\.(exe|so|dll)$',
+    \ }
+
+nnoremap <silent> <C-P> :CtrlPLastMode<CR>
+
+"
+" nnoremap <silent> <leader>n :Lexplore<CR>
+" map <silent> <leader>n :silent call ToggleVExplorer()<CR>
+" let g:netrw_winsize = -28
 
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']

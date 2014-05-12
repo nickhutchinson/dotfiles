@@ -94,6 +94,10 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 "}}}
 
+" Netrw
+nnoremap <silent> <leader>n :Lexplore<CR>
+let g:netrw_winsize = -28
+
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>B :CtrlPBuffer<CR>

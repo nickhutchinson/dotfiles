@@ -148,19 +148,6 @@ set foldmethod=syntax
 set foldlevelstart=10
 nnoremap <space> za
 
-"Projectile {{{
-let g:projectiles = {
-   \ "*": {
-   \   "*.m":  { "alternate": ["{}.h"] },
-   \   "*.mm": { "alternate": ["{}.h"] },
-   \   "*.c":  { "alternate": ["{}.h"] },
-   \   "*.cc": { "alternate": ["{}.h", "{}.hpp"] },
-   \   "*.cpp":{ "alternate": ["{}.h", "{}.hpp"] },
-   \   "*.h":  { "alternate": ["{}.c", "{}.cc", "{}.cpp", "{}.m", "{}.mm"] },
-   \   "*.hpp":{ "alternate": ["{}.cc", "{}.cpp"] },
-   \ }
-   \ }
-"}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
     \ 'ctagstype' : 'ObjectiveC',
@@ -196,4 +183,19 @@ let g:tagbar_type_objc = {
     \ }
 \ }
 "}}}
+
+let g:projectiles = {
+   \ "*": {
+   \   "*.m":  { "alternate": ["{}.h"] },
+   \   "*.mm": { "alternate": ["{}.h"] },
+   \   "*.c":  { "alternate": ["{}.h"] },
+   \   "*.cc": { "alternate": ["{}.h"] },
+   \   "*.cpp":{ "alternate": ["{}.h"] },
+   \   "*.h":  { "alternate": ["{}.c", "{}.cc", "{}.cpp", "{}.m", "{}.mm"] }
+   \ },
+   \ "src/&include/": {
+   \   "include/*.h": {"alternate": ["src/{}.cpp"]},
+   \   "src/*.cpp": {"alternate": ["include/{}.h"]}
+   \ }
+   \ }
 

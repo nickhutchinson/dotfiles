@@ -117,8 +117,6 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
 
-nnoremap <silent> <C-P> :CtrlPLastMode<CR>
-
 "
 " nnoremap <silent> <leader>n :Lexplore<CR>
 " map <silent> <leader>n :silent call ToggleVExplorer()<CR>
@@ -126,12 +124,14 @@ nnoremap <silent> <C-P> :CtrlPLastMode<CR>
 
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
-nnoremap <leader>B :CtrlPBuffer<CR>
+nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>cd :lcd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
+let g:ctrlp_max_files=100000
+let g:ctrlp_cmd = 'CtrlPMixed'
 "}}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]

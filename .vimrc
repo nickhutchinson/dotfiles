@@ -75,11 +75,12 @@ let &listchars="tab:▸ ,eol:¬"
 set numberwidth=2
 set noswapfile
 set cursorline
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-set tags=./tags;
+set tags=./.tags;
 set splitbelow
 set splitright
+set spelllang=en_gb
 
 set mouse+=a
 if &term =~ '^screen'
@@ -128,7 +129,7 @@ let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>B :CtrlPBuffer<CR>
 nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
-nnoremap <leader>cd :cd %:h<CR>
+nnoremap <leader>cd :lcd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 "}}}
@@ -142,6 +143,7 @@ nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 "}}}
 " UltiSnips{{{
 let g:UltiSnipsExpandTrigger       = "<C-J>"
@@ -164,7 +166,9 @@ set guioptions-=r
 set guioptions-=L
 set guioptions-=R
 set guicursor+=a:blinkon0
-let &guifont="Inconsolata for Powerline:h15"
+if has("mac")
+    let &guifont="Inconsolata for Powerline:h15"
+endif
 " Use console dialogs
 set guioptions+=c
 "}}}

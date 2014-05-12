@@ -40,6 +40,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
+Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
@@ -129,6 +130,7 @@ nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>cd :cd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 "}}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]

@@ -34,11 +34,13 @@ Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim' 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'godlygeek/tabular'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
+Plugin 'sjl/gundo.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'Valloric/YouCompleteMe'  
@@ -70,12 +72,17 @@ set cursorline
 set clipboard=unnamed
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set tags=./tags;
+set splitbelow
+set splitright
+
 set mouse+=a
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
+
 "}}}
+
 " Mappings{{{
 " Easy way to exit insert mode
 inoremap jj <Esc>
@@ -85,12 +92,6 @@ nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
-
-" Splits {{{
-nnoremap <leader>v :vnew<cr>
-set splitbelow
-set splitright
-"}}}
 "}}}
 
 " CtrlP{{{
@@ -119,11 +120,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<left>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
-
-" Misc
-let g:delimitMate_expand_cr=1
-nnoremap <leader>of :silent !open %:h<CR>
-let &grepprg="ack -H --nocolor --nogroup --column"
 
 " Filetype/indentation{{{
 set ts=4 sts=4 sw=4 expandtab 

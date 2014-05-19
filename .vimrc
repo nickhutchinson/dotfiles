@@ -1,16 +1,14 @@
 " vim: fdm=marker:foldlevel=0:
 
 " Bundle settings {{{
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/vundle'
-
+Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
@@ -21,7 +19,7 @@ Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-sensible'    
+Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
@@ -33,10 +31,14 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'scrooloose/nerdtree'
 
+Plugin 'bronson/vim-trailing-whitespace'
+
+Plugin 'PeterRincker/vim-argumentative'
+Plugin 'justinmk/vim-sneak'
 Plugin 'bufkill.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
-Plugin 'chriskempson/base16-vim' 
+Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
@@ -49,10 +51,10 @@ Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'Valloric/YouCompleteMe'  
+Plugin 'Valloric/YouCompleteMe'
 
-filetype plugin indent on     " required!
-
+call vundle#end()            " required
+filetype plugin indent on    " required
 " }}}
 
 " Colour scheme {{{
@@ -71,7 +73,8 @@ set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=81
-let &listchars="tab:▸ ,eol:¬"
+let &listchars='tab:▸ ,eol:¬,trail:▓'
+let &showbreak='↪ '
 set numberwidth=2
 set noswapfile
 set cursorline
@@ -81,12 +84,18 @@ set tags=./.tags;
 set splitbelow
 set splitright
 set spelllang=en_gb
+set shell=bash
+set confirm  " friendly confirm dialogs
 
 set mouse+=a
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
+
+
+set undofile
+set undodir=~/.vim/cache/
 
 "}}}
 
@@ -100,15 +109,14 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 "}}}
-
 " Netrw/NERDTree
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
 let g:NERDTreeShowBookmarks=1
 
 let g:NERDTreeIgnore = [
-    \   '^out$[[dir]]', 
-    \   '^objects$[[dir]]', 
+    \   '^out$[[dir]]',
+    \   '^objects$[[dir]]',
     \   '\v\.(dll|lib|so)$[[file]]'
     \ ]
 
@@ -117,14 +125,9 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
 
-"
-" nnoremap <silent> <leader>n :Lexplore<CR>
-" map <silent> <leader>n :silent call ToggleVExplorer()<CR>
-" let g:netrw_winsize = -28
-
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
-nnoremap <leader>t :CtrlPTag<CR>
+nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>cd :lcd %:h<CR>
@@ -152,9 +155,12 @@ let g:UltiSnipsJumpBackwardTrigger = "<left>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
-
+"Sneak{{{
+let g:sneak#s_next = 1
+let g:gneak#streak = 1
+"}}}
 " Filetype/indentation{{{
-set ts=4 sts=4 sw=4 expandtab 
+set ts=4 sts=4 sw=4 expandtab
 autocmd BufRead,BufNewFile *.m set filetype=objc
 autocmd BufRead,BufNewFile *.mm set filetype=objcpp
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
@@ -229,3 +235,6 @@ let g:projectiles = {
    \ }
    \ }
 
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif

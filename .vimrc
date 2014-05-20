@@ -1,5 +1,3 @@
-" vim: fdm=marker:foldlevel=0:
-
 " Bundle settings {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -31,20 +29,20 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'scrooloose/nerdtree'
 
-Plugin 'bronson/vim-trailing-whitespace'
-
-Plugin 'PeterRincker/vim-argumentative'
-Plugin 'justinmk/vim-sneak'
-Plugin 'bufkill.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'JazzCore/ctrlp-cmatcher'
+Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'PeterRincker/vim-argumentative'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
@@ -63,6 +61,7 @@ if $TERM_PROGRAM != "Apple_Terminal"
 endif
 set background=dark
 colorscheme base16-ocean
+highlight MatchParen ctermbg=4
 " }}}
 " Options {{{
 let mapleader = ","
@@ -93,10 +92,8 @@ if &term =~ '^screen'
     set ttymouse=xterm2
 endif
 
-
 set undofile
 set undodir=~/.vim/cache/
-
 "}}}
 
 " Mappings{{{
@@ -109,7 +106,7 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 "}}}
-" Netrw/NERDTree
+" Netrw/NERDTree"{{{
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
 let g:NERDTreeShowBookmarks=1
@@ -124,7 +121,7 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v/(out|objects)$',
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
-
+"}}}
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>t :CtrlPBufTagAll<CR>
@@ -178,12 +175,11 @@ endif
 " Use console dialogs
 set guioptions+=c
 "}}}
-
-" Folding
+" Folding"{{{
 set foldmethod=syntax
 set foldlevelstart=10
 nnoremap <space> za
-
+"}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
     \ 'ctagstype' : 'ObjectiveC',
@@ -219,7 +215,7 @@ let g:tagbar_type_objc = {
     \ }
 \ }
 "}}}
-
+" Projectile"{{{
 let g:projectiles = {
    \ "*": {
    \   "*.m":  { "alternate": ["{}.h"] },
@@ -234,7 +230,9 @@ let g:projectiles = {
    \   "src/*.cpp": {"alternate": ["include/{}.h"]}
    \ }
    \ }
-
+"}}}
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+" vim: fdm=marker:foldlevel=0:

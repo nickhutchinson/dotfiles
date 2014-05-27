@@ -22,20 +22,13 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
-Plugin 'nelstrom/vim-qargs'
-Plugin 'nelstrom/vim-visual-star-search'
-
-" Battle of the file managers
-" Plugin 'tpope/vim-vinegar'
-Plugin 'dhruvasagar/vim-vinegar'
-Plugin 'scrooloose/nerdtree'
-
 Plugin 'airblade/vim-gitgutter'
+Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
-Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'JazzCore/ctrlp-cmatcher'
@@ -43,14 +36,21 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'nelstrom/vim-qargs'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'palardy/vim-slime'
 Plugin 'PeterRincker/vim-argumentative'
+Plugin 'qstrahl/vim-matchmaker'
 Plugin 'rhysd/vim-clang-format'
+Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
+Plugin 'spiiph/vim-space'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'wellle/targets.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -95,6 +95,11 @@ endif
 
 set undofile
 set undodir=~/.vim/cache/
+
+if has("mac")
+  set macmeta
+endif
+
 "}}}
 
 " Mappings{{{
@@ -154,6 +159,11 @@ let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
 "Sneak{{{
+call yankstack#setup()
+nmap s <Plug>Sneak_s
+nmap S <Plug>Sneak_S
+xmap s <Plug>Sneak_s
+xmap S <Plug>Sneak_S
 let g:sneak#s_next = 1
 let g:gneak#streak = 1
 "}}}
@@ -163,6 +173,7 @@ autocmd BufRead,BufNewFile *.m set filetype=objc
 autocmd BufRead,BufNewFile *.mm set filetype=objcpp
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+autocmd Filetype python setlocal tw=79 cc=80
 "}}}
 " GUI Options{{{
 set guioptions-=l
@@ -232,8 +243,17 @@ let g:projectiles = {
    \ }
    \ }
 "}}}
+" Slime{{{
+let g:slime_target = "tmux"
+let g:slime_no_mappings = 1
+xnoremap <leader>s <Plug>SlimeRegionSend
+nnoremap <leader>s <Plug>SlimeMotionSend
+nnoremap <leader>ss <Plug>SlimeLineSend
+"}}}
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
 " vim: fdm=marker:foldlevel=0:
+

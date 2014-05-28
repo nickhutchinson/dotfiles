@@ -10,10 +10,6 @@ set -x LESS '-F -g -i -M -R -S -w -X -z-4'
 set -x EDITOR vim
 set -x TERM xterm-256color
 
-set -x PYTHONPATH       \
-    $PYTHONPATH         \
-    /opt/eclipse/dropins/plugins/org.python.pydev_2.8.2.2013090511/pysrc/
-
 alias cp 'cp -i'
 alias ln 'ln -i'
 alias rm 'rm -i'

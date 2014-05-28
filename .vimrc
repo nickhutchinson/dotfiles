@@ -31,6 +31,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
+Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
@@ -38,7 +39,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'palardy/vim-slime'
+Plugin 'jpalardy/vim-slime'
 Plugin 'PeterRincker/vim-argumentative'
 Plugin 'qstrahl/vim-matchmaker'
 Plugin 'rhysd/vim-clang-format'
@@ -249,6 +250,10 @@ let g:slime_no_mappings = 1
 xnoremap <leader>s <Plug>SlimeRegionSend
 nnoremap <leader>s <Plug>SlimeMotionSend
 nnoremap <leader>ss <Plug>SlimeLineSend
+"}}}
+" Syntastic{{{
+let g:syntastic_lua_checkers = ['luajit']
+let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 "}}}
 
 if filereadable(expand("~/.vimrc.local"))

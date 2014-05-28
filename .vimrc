@@ -71,8 +71,7 @@ if $TERM_PROGRAM != "Apple_Terminal"
   let base16colorspace=256
 endif
 set background=dark
-colorscheme base16-ocean
-highlight MatchParen ctermbg=4
+colorscheme base16-solarized
 " }}}
 " Options {{{
 let mapleader = ","

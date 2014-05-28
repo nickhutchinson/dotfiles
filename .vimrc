@@ -41,7 +41,6 @@ Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'jpalardy/vim-slime'
 Plugin 'PeterRincker/vim-argumentative'
-Plugin 'qstrahl/vim-matchmaker'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -63,7 +62,6 @@ if $TERM_PROGRAM != "Apple_Terminal"
 endif
 set background=dark
 colorscheme base16-ocean
-highlight MatchParen ctermbg=4
 " }}}
 " Options {{{
 let mapleader = ","
@@ -90,8 +88,8 @@ set confirm  " friendly confirm dialogs
 
 set mouse+=a
 if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
 endif
 
 set undofile
@@ -190,8 +188,7 @@ set guioptions+=c
 "}}}
 " Folding"{{{
 set foldmethod=syntax
-set foldlevelstart=10
-nnoremap <space> za
+set foldlevelstart=99
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {

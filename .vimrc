@@ -126,15 +126,14 @@ nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
 let g:NERDTreeShowBookmarks=1
 
-let g:NERDTreeIgnore = [
-    \   '^out$[[dir]]',
-    \   '^objects$[[dir]]',
-    \   '\v\.(dll|lib|so)$[[file]]'
-    \ ]
+" let g:NERDTreeIgnore = [
+"     \   '^out$[[dir]]',
+"     \   '\v\.(dll|lib|so|pyc)$[[file]]'
+"     \ ]
 
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v/(out|objects)$',
-    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
+    \ 'file': '\v\.(exe|so|dll|pyc|pyo)$',
     \ }
 "}}}
 " CtrlP{{{
@@ -199,8 +198,8 @@ set guioptions+=c
 "}}}
 " Folding"{{{
 set foldmethod=syntax
-set foldlevelstart=10
-nnoremap <space> za
+set foldlevelstart=100
+" nnoremap <space> za
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {

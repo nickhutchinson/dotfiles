@@ -5,12 +5,6 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
-"Pyclewn{{{
-set rtp+=~/.vim/pyclewn/
-let $PATH .= ":" . $HOME . "/.vim/pyclewn/bin/bin"
-let $PYTHONPATH .= ":" . $HOME . "/.vim/pyclewn/bin/lib/python"
-"}}}
-
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -29,9 +23,6 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
-Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'hynek/vim-python-pep8-indent'
-
 Plugin 'airblade/vim-gitgutter'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
@@ -41,16 +32,17 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
+Plugin 'jpalardy/vim-slime'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'jpalardy/vim-slime'
 Plugin 'PeterRincker/vim-argumentative'
-Plugin 'qstrahl/vim-matchmaker'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -95,15 +87,14 @@ set splitright
 set spelllang=en_gb
 set shell=bash
 set confirm  " friendly confirm dialogs
+set undofile
+set undodir=/tmp
 
 set mouse+=a
 if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
 endif
-
-set undofile
-set undodir=/tmp
 
 if has("mac")
   set macmeta
@@ -125,19 +116,13 @@ vmap <C-Down> ]egv
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
 let g:NERDTreeShowBookmarks=1
-
-" let g:NERDTreeIgnore = [
-"     \   '^out$[[dir]]',
-"     \   '\v\.(dll|lib|so|pyc)$[[file]]'
-"     \ ]
-
+"}}}
+" CtrlP{{{
+let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
     \ 'file': '\v\.(exe|so|dll|pyc|pyo)$',
     \ }
-"}}}
-" CtrlP{{{
-let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>b :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
@@ -190,16 +175,16 @@ set guioptions-=r
 set guioptions-=L
 set guioptions-=R
 set guicursor+=a:blinkon0
+set guioptions+=c  " Use console dialogs
 if has("mac")
     let &guifont="Inconsolata for Powerline:h15"
+elseif has("unix")
+    let &guifont="DeJa Vu Sans Mono For Powerline 11"
 endif
-" Use console dialogs
-set guioptions+=c
 "}}}
 " Folding"{{{
 set foldmethod=syntax
-set foldlevelstart=100
-" nnoremap <space> za
+set foldlevelstart=99
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -259,23 +244,16 @@ xnoremap <leader>s <Plug>SlimeRegionSend
 nnoremap <leader>s <Plug>SlimeMotionSend
 nnoremap <leader>ss <Plug>SlimeLineSend
 "}}}
-
 if has("gui_running")
   " GUI is running or is about to start.
   " Maximize gvim window.
   set lines=999 columns=999
 endif
 
-" Debugging
-nnoremap <localleader>db :Pyclewn pdb<CR>
-nnoremap <localleader>DB :nbclose<CR>
-nnoremap <localleader>bb :execute ":Cbreak " . expand("%:p") . ":" . line(".")<CR>
-nnoremap <localleader>bc :execute ":Cclear " . expand("%:p") . ":" . line(".")<CR>
-nnoremap <localleader>z :Cinterrupt<CR>
-nnoremap <localleader>s :Cstep<CR>
-nnoremap <localleader>n :Cnext<CR>
-nnoremap <localleader>r :Creturn<CR>
-nnoremap <localleader>c :Ccontinue<CR>
+" Syntastic{{{
+let g:syntastic_lua_checkers = ['luajit']
+let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
+"}}}
 
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local

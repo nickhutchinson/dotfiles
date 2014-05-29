@@ -1,14 +1,30 @@
-set -x PATH                            \
-  "$HOME/opt/FBuildTools"              \
-  "$HOME/.luarocks/bin"                \
-  $PATH
-
 set fish_greeting ''
-set -x LUA_PATH "$HOME/.lua-packages/?.lua"
 set -x LESS '-F -g -i -M -R -S -w -X -z-4'
 
 set -x EDITOR vim
 set -x TERM xterm-256color
+
+set -x PATH                            \
+  $HOME/.{rbenv,pyenv}/bin             \
+  $HOME/.rbenv/plugins/ruby-build/bin  \
+  /usr/local/{bin,sbin}                \
+  $PATH
+
+if type rbenv > /dev/null
+  source (rbenv init -|psub)
+end
+
+if type pyenv > /dev/null
+  source (pyenv init -|psub)
+end
+
+if type autojump > /dev/null
+  . (dirname (type -p autojump))/../etc/autojump.fish
+end
+
+if not type hash > /dev/null
+  function hash; end
+end
 
 alias cp 'cp -i'
 alias ln 'ln -i'

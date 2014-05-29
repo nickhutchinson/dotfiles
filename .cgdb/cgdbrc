@@ -1,0 +1,7 @@
+# Current line is all but invsible without this...
+:highlight SelectedLineNr cterm=reverse
+#:highlight Breakpoint  cterm=underline ctermfg=1 ctermbg=0
+
+:set arrowstyle=long
+:set tabstop=4
+

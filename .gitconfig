@@ -1,0 +1,36 @@
+[user]
+    name = Nicholas Hutchinson
+    email = nick.hutchinson@thefoundry.co.uk
+[core]
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    editor = vim
+
+[alias]
+    hist = log --date=relative --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
+    hist-no-graph = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
+    whatis = show --date=short -s --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
+    slap = blame -wC 
+    diffcw = diff --color-words
+    unstage = reset HEAD --
+    stage = add
+    startbranch = checkout -b
+    search = grep -i --break --heading --line-number -P
+    searchhist = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E -G
+    searchmsgs = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E --grep
+
+[color]
+    ui = auto
+
+[blame]
+    date = short
+
+[mergetool "gvim"]
+    cmd = gvim --nofork \"+Gdiff\" $MERGED
+[merge]
+    tool = gvim
+[diff]
+    tool = gvimdiff
+
+[difftool "gvimdiff"]
+    cmd = gvim --nofork -d "$LOCAL" "$REMOTE"

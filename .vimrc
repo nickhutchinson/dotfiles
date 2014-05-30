@@ -106,6 +106,8 @@ endif
 " Easy way to exit insert mode
 inoremap jj <Esc>
 
+nnoremap <leader>f :echo expand("%:p")<CR>
+
 " Bubble lines
 nmap <C-Up> [e
 nmap <C-Down> ]e

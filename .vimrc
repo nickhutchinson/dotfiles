@@ -32,6 +32,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'godlygeek/tabular'
+Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
@@ -40,6 +41,8 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'mhinz/vim-startify'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'PeterRincker/vim-argumentative'
@@ -48,7 +51,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
-Plugin 'spiiph/vim-space'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'Valloric/YouCompleteMe'
@@ -105,6 +107,19 @@ endif
 " Mappings{{{
 " Easy way to exit insert mode
 inoremap jj <Esc>
+inoremap jk <Esc>
+
+" verymagic
+nnoremap / /\v
+
+" just because
+nnoremap Y y$
+
+" going up and down in wrapped lines
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <up>   gk
 
 nnoremap <leader>f :echo expand("%:p")<CR>
 
@@ -126,8 +141,10 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll|pyc|pyo)$',
     \ }
 nnoremap <leader>t :CtrlPBufTagAll<CR>
-nnoremap <leader>b :CtrlPBookmarkDir<CR>
+nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>l :CtrlPLine<CR>
 nnoremap <leader>cd :lcd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
@@ -143,16 +160,39 @@ nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 " Airline{{{
 let g:airline_theme="luna"
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
 "}}}
 " UltiSnips{{{
-let g:UltiSnipsExpandTrigger       = "<C-J>"
-let g:UltiSnipsJumpForwardTrigger  = "<right>"
-let g:UltiSnipsJumpBackwardTrigger = "<left>"
+" let g:UltiSnipsExpandTrigger       = "<C-J>"
+" let g:UltiSnipsJumpForwardTrigger  = "<right>"
+" let g:UltiSnipsJumpBackwardTrigger = "<left>"
+" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
+let g:UltiSnipsExpandTrigger       = "<tab>"
+let g:UltiSnipsJumpForwardTrigger  = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
 "}}}
 "Sneak{{{
 call yankstack#setup()
@@ -242,9 +282,9 @@ let g:projectiles = {
 " Slime{{{
 let g:slime_target = "tmux"
 let g:slime_no_mappings = 1
-xnoremap <leader>s <Plug>SlimeRegionSend
-nnoremap <leader>s <Plug>SlimeMotionSend
-nnoremap <leader>ss <Plug>SlimeLineSend
+xmap <leader>s <Plug>SlimeRegionSend
+nmap <leader>s <Plug>SlimeMotionSend
+nmap <leader>ss <Plug>SlimeLineSend
 "}}}
 if has("gui_running")
   " GUI is running or is about to start.
@@ -260,6 +300,11 @@ let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+let g:surround_{char2nr("C")} = "C{\r}"
+let g:surround_{char2nr("L")} = "L{\r}"
+
+command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
 
 " vim: fdm=marker:foldlevel=0:
 

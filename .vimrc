@@ -31,6 +31,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
+Bundle 'bling/vim-bufferline'
 Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
@@ -65,7 +66,7 @@ if $TERM_PROGRAM != "Apple_Terminal"
   let base16colorspace=256
 endif
 set background=dark
-colorscheme base16-solarized
+colorscheme base16-ocean
 " }}}
 " Options {{{
 let mapleader = ","
@@ -76,7 +77,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=81
-let &listchars='tab:▸ ,eol:¬,trail:▓'
+let &listchars='tab:▸ ,eol:¬'
 let &showbreak='↪ '
 set numberwidth=2
 set noswapfile
@@ -88,7 +89,6 @@ set splitbelow
 set splitright
 set spelllang=en_gb
 set shell=bash
-set confirm  " friendly confirm dialogs
 set undofile
 set undodir=/tmp
 
@@ -105,6 +105,14 @@ endif
 "}}}
 
 " Mappings{{{
+
+" http://vimcasts.org/episodes/the-edit-command/
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
 " Easy way to exit insert mode
 inoremap jj <Esc>
 inoremap jk <Esc>
@@ -149,7 +157,6 @@ nnoremap <leader>cd :lcd %:h<CR>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 let g:ctrlp_max_files=100000
-let g:ctrlp_cmd = 'CtrlPMixed'
 "}}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
@@ -158,18 +165,16 @@ let g:ycm_path_to_python_interpreter = "/usr/bin/python"
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
 " Airline{{{
-let g:airline_theme="luna"
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
+let g:bufferline_echo = 0
 "}}}
 " UltiSnips{{{
-" let g:UltiSnipsExpandTrigger       = "<C-J>"
-" let g:UltiSnipsJumpForwardTrigger  = "<right>"
-" let g:UltiSnipsJumpBackwardTrigger = "<left>"
 " https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsJumpForwardTrigger  = "<tab>"
@@ -177,21 +182,24 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
     endif
-    return ""
+  endif
+  return ""
 endfunction
 
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+augroup vimrc_ultisnips_fixup
+  autocmd!
+  autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+augroup END
 
 "}}}
 "Sneak{{{
@@ -205,11 +213,14 @@ let g:gneak#streak = 1
 "}}}
 " Filetype/indentation{{{
 set ts=4 sts=4 sw=4 expandtab
-autocmd BufRead,BufNewFile *.m set filetype=objc
-autocmd BufRead,BufNewFile *.mm set filetype=objcpp
-autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-autocmd Filetype lua setlocal ts=2 sts=2 sw=2
-autocmd Filetype python setlocal tw=79 cc=80
+augroup vimrc_filetypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.m set filetype=objc
+  autocmd BufRead,BufNewFile *.mm set filetype=objcpp
+  autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+  autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+  autocmd Filetype python setlocal tw=79 cc=80
+augroup END
 "}}}
 " GUI Options{{{
 set guioptions-=l
@@ -219,14 +230,10 @@ set guioptions-=R
 set guicursor+=a:blinkon0
 set guioptions+=c  " Use console dialogs
 if has("mac")
-    let &guifont="Inconsolata for Powerline:h15"
+  let &guifont="Inconsolata for Powerline:h15"
 elseif has("unix")
-    let &guifont="DeJa Vu Sans Mono For Powerline 11"
+  let &guifont="DeJa Vu Sans Mono For Powerline 11"
 endif
-"}}}
-" Folding"{{{
-set foldmethod=syntax
-set foldlevelstart=99
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -305,6 +312,7 @@ let g:surround_{char2nr("C")} = "C{\r}"
 let g:surround_{char2nr("L")} = "L{\r}"
 
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
+
 
 " vim: fdm=marker:foldlevel=0:
 

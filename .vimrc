@@ -220,7 +220,9 @@ augroup vimrc_filetypes
   autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
   autocmd Filetype lua setlocal ts=2 sts=2 sw=2
   autocmd Filetype python setlocal tw=79 cc=80
+  autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
 augroup END
+
 "}}}
 " GUI Options{{{
 set guioptions-=l

@@ -9,6 +9,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
@@ -18,6 +19,7 @@ Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
+Plugin 'tpope/vim-scriptease'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
@@ -26,10 +28,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
-Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'edkolev/tmuxline.vim'
 Bundle 'bling/vim-bufferline'
 Plugin 'godlygeek/tabular'
@@ -38,7 +38,7 @@ Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
-Plugin 'justinmk/vim-sneak'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'maxbrunsfeld/vim-yankstack'
@@ -46,13 +46,10 @@ Plugin 'mhinz/vim-startify'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'PeterRincker/vim-argumentative'
-Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wellle/targets.vim'
@@ -141,6 +138,7 @@ vmap <C-Down> ]egv
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
 let g:NERDTreeShowBookmarks=1
+let g:NERDTreeSortOrder=[]
 "}}}
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
@@ -202,24 +200,15 @@ augroup vimrc_ultisnips_fixup
 augroup END
 
 "}}}
-"Sneak{{{
-call yankstack#setup()
-nmap s <Plug>Sneak_s
-nmap S <Plug>Sneak_S
-xmap s <Plug>Sneak_s
-xmap S <Plug>Sneak_S
-let g:sneak#s_next = 1
-let g:gneak#streak = 1
-"}}}
 " Filetype/indentation{{{
 set ts=4 sts=4 sw=4 expandtab
 augroup vimrc_filetypes
   autocmd!
-  autocmd BufRead,BufNewFile *.m set filetype=objc
-  autocmd BufRead,BufNewFile *.mm set filetype=objcpp
-  autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-  autocmd Filetype lua setlocal ts=2 sts=2 sw=2
-  autocmd Filetype python setlocal tw=79 cc=80
+  autocmd BufRead,BufNewFile *.m setf objc
+  autocmd BufRead,BufNewFile *.mm setf objcpp
+  autocmd Filetype ruby setl ts=2 sts=2 sw=2
+  autocmd Filetype lua setl ts=2 sts=2 sw=2
+  autocmd Filetype python setl tw=79 cc=+1
   autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
 augroup END
 
@@ -314,7 +303,6 @@ let g:surround_{char2nr("C")} = "C{\r}"
 let g:surround_{char2nr("L")} = "L{\r}"
 
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
-
 
 " vim: fdm=marker:foldlevel=0:
 

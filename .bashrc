@@ -1,19 +1,27 @@
 # .bashrc
+try_source() {
+    if [[ -f $1 ]]; then
+        source "$1"
+    fi
+}
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+is_interactive() {
+    case "$-" in
+        *i*)    true;;
+        *)      false;;
+    esac
+}
 
-# Base16 Shell
-export BASE16_SCHEME="solarized"
-BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+try_source /etc/bashrc
+try_source /workspace/Katana/QA_Resources/Resources/Apps/Katana/Modules/.qaBashrc
+try_source /opt/intel/vtune_amplifier_xe_2013/amplxe-vars.sh >/dev/null
 
-# User specific aliases and functions
-source /workspace/Katana/QA_Resources/Resources/Apps/Katana/Modules/.qaBashrc
-source /opt/intel/vtune_amplifier_xe_2013/amplxe-vars.sh >/dev/null
 export PATH=$PATH:$HOME/opt/FBuildTools
-export TERM=xterm-256color
+# export TERM=xterm-256color
+# export PYTHONPATH=$PYTHONPATH:$HOME/opt/python2.6-modules
 
-export PYTHONPATH=$PYTHONPATH:/opt/eclipse/dropins/plugins/org.python.pydev_2.8.2.2013090511/pysrc/:$HOME/.vim/pyclewn/bin/lib/python/
+if is_interactive; then
+    THEME=$(jq -r '.base16_scheme//"default.dark"' ~/.config/shell.json)
+    THEME_FILEPATH=~/.config/base16-shell/base16-$THEME.sh
+    try_source $THEME_FILEPATH
+fi

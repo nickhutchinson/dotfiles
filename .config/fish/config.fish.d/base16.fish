@@ -1,10 +1,7 @@
-if not set -q BASE16_SCHEME
-    set -x BASE16_SCHEME solarized
-    set -l BASE16_SHELL "$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-    if test -f $BASE16_SHELL
-        eval sh "$BASE16_SHELL"
+if status --is-interactive
+    set -l base16_scheme (jq -r '.base16_scheme//"default.dark"' ~/.config/shell.json)
+    set -l base16_path "$HOME/.config/base16-shell/base16-$base16_scheme.sh"
+    if test -f $base16_path
+        eval sh "$base16_path"
     end
-    #echo "set terminal vars"
-else
-    #echo "Not setting terminal vars"
 end

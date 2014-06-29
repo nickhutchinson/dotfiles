@@ -1,4 +1,4 @@
-" Bundle settings {{{
+" Plugins {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -7,9 +7,35 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 
+" Plugin 'Lokaltog/vim-easymotion'
+" Plugin 'sjl/gundo.vim'
+" Plugin 'wellle/targets.vim'
+Plugin 'JazzCore/ctrlp-cmatcher'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
+Plugin 'bling/vim-bufferline'
+Plugin 'bufkill.vim'
+Plugin 'chriskempson/base16-vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'embear/vim-localvimrc'
+Plugin 'fish-syntax'
 Plugin 'gmarik/Vundle.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'honza/vim-snippets'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'ivalkeen/vim-ctrlp-tjump'
+Plugin 'jpalardy/vim-slime'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nelstrom/vim-qargs'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
@@ -24,47 +50,13 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-
-Plugin 'airblade/vim-gitgutter'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'bling/vim-airline'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'edkolev/tmuxline.vim'
-Bundle 'bling/vim-bufferline'
-Plugin 'godlygeek/tabular'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'JazzCore/ctrlp-cmatcher'
-Plugin 'jpalardy/vim-slime'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'maxbrunsfeld/vim-yankstack'
-Plugin 'mhinz/vim-startify'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-qargs'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'sjl/gundo.vim'
-Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'wellle/targets.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 " }}}
 
-" Colour scheme {{{
-if $TERM_PROGRAM != "Apple_Terminal"
-  let base16colorspace=256
-endif
-set background=dark
-colorscheme base16-ocean
-" }}}
 " Options {{{
 let mapleader = ","
 set list
@@ -89,19 +81,49 @@ set shell=bash
 set undofile
 set undodir=/tmp
 
+if has("mac")
+  set macmeta
+endif
+
+if $TERM_PROGRAM != "Apple_Terminal"
+  let base16colorspace=256
+endif
+colorscheme base16-ocean
+
+" GUI Options{{{
 set mouse+=a
 if &term =~ '^screen'
   " tmux knows the extended mouse mode
   set ttymouse=xterm2
 endif
 
+set guioptions-=l
+set guioptions-=r
+set guioptions-=L
+set guioptions-=R
+set guicursor+=a:blinkon0
+set guioptions+=c  " Use console dialogs
 if has("mac")
-  set macmeta
+  let &guifont="Inconsolata for Powerline:h15"
+elseif has("unix")
+  let &guifont="DeJa Vu Sans Mono For Powerline 11"
 endif
+"}}}
+"}}}
+" Filetype-specific stuff{{{
+set ts=4 sts=4 sw=4 expandtab
+augroup vimrc_filetypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.m setf objc
+  autocmd BufRead,BufNewFile *.mm setf objcpp
+  autocmd Filetype ruby setl ts=2 sts=2 sw=2
+  autocmd Filetype lua setl ts=2 sts=2 sw=2
+  autocmd Filetype python setl tw=79 cc=+1
+  autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+augroup END
 
 "}}}
-
-" Mappings{{{
+" Mappings/Commands {{{
 
 " http://vimcasts.org/episodes/the-edit-command/
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
@@ -127,16 +149,14 @@ nnoremap <Down> gj
 nnoremap <up>   gk
 
 nnoremap <leader>f :echo expand("%:p")<CR>
-
-" Bubble lines
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
+command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
 "}}}
-" Netrw/NERDTree"{{{
+"Plugin Config{{{
+" NERDTree"{{{
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
+let g:NERDTreeRespectWildignore = 1
+let g:NERDTreeMapHelp = "<F1>"
 let g:NERDTreeShowBookmarks=1
 let g:NERDTreeSortOrder=[]
 "}}}
@@ -162,15 +182,19 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_path_to_python_interpreter = "/usr/bin/python"
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
-" Airline{{{
-let g:airline#extensions#whitespace#enabled = 0
+" Airline/Bufferline{{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
+let g:airline#extensions#whitespace#enabled = 0
 let g:bufferline_echo = 0
+"}}}
+" LocalVimrc{{{
+let g:localvimrc_persistent=1
+let g:localvimrc_sandbox=0
 "}}}
 " UltiSnips{{{
 " https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
@@ -200,31 +224,9 @@ augroup vimrc_ultisnips_fixup
 augroup END
 
 "}}}
-" Filetype/indentation{{{
-set ts=4 sts=4 sw=4 expandtab
-augroup vimrc_filetypes
-  autocmd!
-  autocmd BufRead,BufNewFile *.m setf objc
-  autocmd BufRead,BufNewFile *.mm setf objcpp
-  autocmd Filetype ruby setl ts=2 sts=2 sw=2
-  autocmd Filetype lua setl ts=2 sts=2 sw=2
-  autocmd Filetype python setl tw=79 cc=+1
-  autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
-augroup END
-
-"}}}
-" GUI Options{{{
-set guioptions-=l
-set guioptions-=r
-set guioptions-=L
-set guioptions-=R
-set guicursor+=a:blinkon0
-set guioptions+=c  " Use console dialogs
-if has("mac")
-  let &guifont="Inconsolata for Powerline:h15"
-elseif has("unix")
-  let &guifont="DeJa Vu Sans Mono For Powerline 11"
-endif
+" Syntastic{{{
+let g:syntastic_lua_checkers = ['luajit']
+let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -284,25 +286,8 @@ xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
 "}}}
-if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window.
-  set lines=999 columns=999
-endif
-
-" Syntastic{{{
-let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
 "}}}
 
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
-let g:surround_{char2nr("C")} = "C{\r}"
-let g:surround_{char2nr("L")} = "L{\r}"
-
-command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
+if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 
 " vim: fdm=marker:foldlevel=0:
-

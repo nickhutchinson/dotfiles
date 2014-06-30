@@ -1,16 +1,12 @@
 " Plugins {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-
 call vundle#begin()
 
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'wellle/targets.vim'
-Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
@@ -25,8 +21,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
+Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
@@ -58,6 +56,11 @@ filetype plugin indent on    " required
 " }}}
 
 " Options {{{
+" Colour scheme {{{
+set background=dark
+let base16colorspace=256
+colorscheme base16-default
+" }}}
 let mapleader = ","
 set list
 set hidden
@@ -80,6 +83,12 @@ set spelllang=en_gb
 set shell=bash
 set undofile
 set undodir=/tmp
+set wildignorecase  " case insensitive filename completion
+
+" Allegedly this is faster than the newfangled regex engine
+set regexpengine=1
+
+set foldlevelstart=99
 
 if has("mac")
   set macmeta
@@ -151,7 +160,7 @@ nnoremap <up>   gk
 nnoremap <leader>f :echo expand("%:p")<CR>
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
 "}}}
-"Plugin Config{{{
+"Plugin Config"{{{
 " NERDTree"{{{
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
@@ -160,18 +169,23 @@ let g:NERDTreeMapHelp = "<F1>"
 let g:NERDTreeShowBookmarks=1
 let g:NERDTreeSortOrder=[]
 "}}}
-" CtrlP{{{
-let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
+" Wilgignore{{{
+set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
-    \ 'file': '\v\.(exe|so|dll|pyc|pyo)$',
     \ }
+let g:NERDTreeRespectWildIgnore = 1
+"}}}
+" CtrlP{{{
+let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>l :CtrlPLine<CR>
 nnoremap <leader>cd :lcd %:h<CR>
+nnoremap <C-]> :CtrlPtjump<cr>
+vnoremap <C-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 let g:ctrlp_max_files=100000
@@ -190,7 +204,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#syntastic#enabled = 0
 let g:bufferline_echo = 0
+" let g:airline_theme="luna"
 "}}}
 " LocalVimrc{{{
 let g:localvimrc_persistent=1
@@ -203,6 +219,8 @@ let g:UltiSnipsJumpForwardTrigger  = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
+let g:ultisnips_python_style = "doxygen"
+
 function! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
   if g:ulti_expand_res == 0
@@ -223,10 +241,6 @@ augroup vimrc_ultisnips_fixup
   autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 augroup END
 
-"}}}
-" Syntastic{{{
-let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -287,6 +301,22 @@ nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
 "}}}
 "}}}
+
+let g:surround_{char2nr("C")} = "C{\r}"
+let g:surround_{char2nr("L")} = "L{\r}"
+
+augroup fixup_colorscheme
+  autocmd!
+  autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
+augroup END
+
+augroup foundry
+  autocmd!
+  autocmd BufRead,BufNewFile *.args setf xml
+ augroup END
+
+" let g:EasyMotion_do_mapping = 0
+let g:markdown_fenced_languages = ['python', 'lua', 'c++']
 
 if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 

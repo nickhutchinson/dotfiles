@@ -18,7 +18,7 @@ try_source /opt/intel/vtune_amplifier_xe_2013/amplxe-vars.sh >/dev/null
 
 export PATH=$PATH:$HOME/opt/FBuildTools
 # export TERM=xterm-256color
-# export PYTHONPATH=$PYTHONPATH:$HOME/opt/python2.6-modules
+export PYTHONPATH=$PYTHONPATH:$HOME/opt/python26_packages
 
 if is_interactive; then
     THEME=$(jq -r '.base16_scheme//"default.dark"' ~/.config/shell.json)

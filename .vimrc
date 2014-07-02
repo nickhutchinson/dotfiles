@@ -10,11 +10,10 @@ call vundle#begin()
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'wellle/targets.vim'
-Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
-Plugin 'bufkill.vim'
+Plugin 'moll/vim-bbye'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
@@ -25,6 +24,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
+Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
@@ -41,7 +41,6 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
@@ -52,6 +51,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -79,7 +80,7 @@ set splitright
 set spelllang=en_gb
 set shell=bash
 set undofile
-set undodir=/tmp
+set undodir=~/.vim/tmp/undo//,/tmp/vim//,/tmp//
 
 if has("mac")
   set macmeta
@@ -150,6 +151,9 @@ nnoremap <up>   gk
 
 nnoremap <leader>f :echo expand("%:p")<CR>
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
+
+command! -bang -complete=buffer -nargs=? BDelete Bdelete<bang> <args>
+
 "}}}
 "Plugin Config{{{
 " NERDTree"{{{
@@ -159,6 +163,9 @@ let g:NERDTreeRespectWildignore = 1
 let g:NERDTreeMapHelp = "<F1>"
 let g:NERDTreeShowBookmarks=1
 let g:NERDTreeSortOrder=[]
+let g:NERDTreeMapOpenInTab="<C-T>"
+let g:NERDTreeMapOpenSplit="<C-S>"
+let g:NERDTreeMapOpenVSplit="<C-V>"
 "}}}
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
@@ -285,6 +292,10 @@ let g:slime_no_mappings = 1
 xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
+"}}}
+" VimSession{{{
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 "}}}
 "}}}
 

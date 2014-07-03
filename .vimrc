@@ -7,6 +7,7 @@ call vundle#begin()
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'wellle/targets.vim'
+
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
@@ -24,7 +25,6 @@ Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/vim-easymotion'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
@@ -114,7 +114,7 @@ set guioptions+=c  " Use console dialogs
 if has("mac")
   let &guifont="Inconsolata for Powerline:h15"
 elseif has("unix")
-  let &guifont="DeJa Vu Sans Mono For Powerline 11"
+  let &guifont="DeJa Vu Sans Mono For Powerline 10"
 endif
 "}}}
 "}}}
@@ -129,7 +129,7 @@ augroup vimrc_filetypes
   autocmd Filetype python setl tw=79 cc=+1
   autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
 augroup END
-
+let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
 "}}}
 " Mappings/Commands {{{
 
@@ -155,6 +155,8 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <up>   gk
+
+nnoremap <leader>cp :let @+ = expand("%")
 
 nnoremap <leader>f :echo expand("%:p")<CR>
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
@@ -183,6 +185,7 @@ let g:NERDTreeRespectWildIgnore = 1
 "}}}
 " CtrlP{{{
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
+let g:ctrlp_cmd = "CtrlPMixed"
 nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
@@ -194,8 +197,12 @@ vnoremap <C-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 let g:ctrlp_max_files=100000
+let g:ctrlp_lazy_update = 50
 "}}}
 " YouCompleteMe{{{
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_path_to_python_interpreter = "/usr/bin/python"
@@ -305,12 +312,16 @@ xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
 "}}}
-" VimSession{{{
+" Syntastic{{{
+let g:syntastic_lua_checkers = ['luajit']
+let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
+"}}}
+"VimSession{{{
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 "}}}
 "}}}
-
+" Misc{{{
 let g:surround_{char2nr("C")} = "C{\r}"
 let g:surround_{char2nr("L")} = "L{\r}"
 
@@ -324,9 +335,7 @@ augroup foundry
   autocmd BufRead,BufNewFile *.args setf xml
  augroup END
 
-" let g:EasyMotion_do_mapping = 0
-let g:markdown_fenced_languages = ['python', 'lua', 'c++']
-
-if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
+ if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
+"}}}
 
 " vim: fdm=marker:foldlevel=0:

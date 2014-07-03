@@ -10,7 +10,7 @@ call vundle#begin()
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
-Plugin 'bufkill.vim'
+Plugin 'moll/vim-bbye'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
@@ -39,7 +39,6 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
@@ -50,6 +49,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -82,12 +83,10 @@ set splitright
 set spelllang=en_gb
 set shell=bash
 set undofile
-set undodir=/tmp
+set undodir=~/.vim/tmp/undo//,/tmp/vim//,/tmp//
 set wildignorecase  " case insensitive filename completion
-
 " Allegedly this is faster than the newfangled regex engine
 set regexpengine=1
-
 set foldlevelstart=99
 
 if has("mac")
@@ -159,6 +158,9 @@ nnoremap <up>   gk
 
 nnoremap <leader>f :echo expand("%:p")<CR>
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
+
+command! -bang -complete=buffer -nargs=? BDelete Bdelete<bang> <args>
+
 "}}}
 "Plugin Config"{{{
 " NERDTree"{{{
@@ -168,6 +170,9 @@ let g:NERDTreeRespectWildignore = 1
 let g:NERDTreeMapHelp = "<F1>"
 let g:NERDTreeShowBookmarks=1
 let g:NERDTreeSortOrder=[]
+let g:NERDTreeMapOpenInTab="<C-T>"
+let g:NERDTreeMapOpenSplit="<C-S>"
+let g:NERDTreeMapOpenVSplit="<C-V>"
 "}}}
 " Wilgignore{{{
 set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
@@ -299,6 +304,10 @@ let g:slime_no_mappings = 1
 xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
+"}}}
+" VimSession{{{
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 "}}}
 "}}}
 

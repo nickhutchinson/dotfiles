@@ -7,33 +7,37 @@ call vundle#begin()
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'wellle/targets.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-sensible'
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
-Plugin 'moll/vim-bbye'
+Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'embear/vim-localvimrc'
 Plugin 'fish-syntax'
-Plugin 'gmarik/Vundle.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
+Plugin 'kelan/gyp.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'scons.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-characterize'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
@@ -43,9 +47,9 @@ Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-scriptease'
-Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-tbone'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
@@ -77,11 +81,9 @@ set noswapfile
 set cursorline
 set clipboard=unnamed,unnamedplus
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-set tags=./.tags;
 set splitbelow
 set splitright
 set spelllang=en_gb
-set shell=bash
 set undofile
 set undodir=~/.vim/tmp/undo//,/tmp/vim//,/tmp//
 set wildignorecase  " case insensitive filename completion
@@ -124,9 +126,11 @@ augroup vimrc_filetypes
   autocmd!
   autocmd BufRead,BufNewFile *.m setf objc
   autocmd BufRead,BufNewFile *.mm setf objcpp
+  autocmd BufRead,BufNewFile SConscript,SConstruct setf scons
   autocmd Filetype ruby setl ts=2 sts=2 sw=2
   autocmd Filetype lua setl ts=2 sts=2 sw=2
-  autocmd Filetype python setl tw=79 cc=+1
+  autocmd Filetype python setl tw=79 cc=+1 fdm=indent
+  autocmd Filetype python setl formatexpr=autopep8#formatexpr()
   autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
 augroup END
 let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
@@ -144,6 +148,8 @@ map <leader>et :tabe %%
 inoremap jj <Esc>
 inoremap jk <Esc>
 
+nnoremap & :&&<Cr>
+
 " verymagic
 nnoremap / /\v
 
@@ -156,12 +162,12 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <up>   gk
 
-nnoremap <leader>cp :let @+ = expand("%")
+nnoremap <leader>cp :let @+ = expand("%:p")<CR>
+nnoremap <leader>cP :let @+ = printf("%s:%d", expand("%:p"), line("."))<CR>
 
+nnoremap <leader>cd :lcd %:h<CR>
 nnoremap <leader>f :echo expand("%:p")<CR>
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
-
-command! -bang -complete=buffer -nargs=? BDelete Bdelete<bang> <args>
 
 "}}}
 "Plugin Config"{{{
@@ -175,6 +181,7 @@ let g:NERDTreeSortOrder=[]
 let g:NERDTreeMapOpenInTab="<C-T>"
 let g:NERDTreeMapOpenSplit="<C-S>"
 let g:NERDTreeMapOpenVSplit="<C-V>"
+let g:NERDTreeMapUpdir="-"
 "}}}
 " Wilgignore{{{
 set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
@@ -191,7 +198,6 @@ nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>l :CtrlPLine<CR>
-nnoremap <leader>cd :lcd %:h<CR>
 nnoremap <C-]> :CtrlPtjump<cr>
 vnoremap <C-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_clear_cache_on_exit = 0
@@ -225,14 +231,14 @@ let g:localvimrc_persistent=1
 let g:localvimrc_sandbox=0
 "}}}
 " UltiSnips{{{
-" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsJumpForwardTrigger  = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author                 = 'Nick Hutchinson'
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 let g:ultisnips_python_style = "doxygen"
-
+" Hacky fixup for UltiSnips/YCM{{{
+" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
 function! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
   if g:ulti_expand_res == 0
@@ -252,7 +258,7 @@ augroup vimrc_ultisnips_fixup
   autocmd!
   autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 augroup END
-
+"}}}
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {

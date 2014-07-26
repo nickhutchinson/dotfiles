@@ -9,17 +9,18 @@ if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 EOF
 
-function! clang_format#formatexpr()
+function! autopep8#formatexpr()
   if mode() ==# 'i' || mode() ==# 'R'
     return -1
   endif
 
 python << EOF
-import formatters.clang_format
-import vim
-formatters.clang_format.ClangFormat(
-    vim.vvars['lnum'], 
-    vim.vvars['lnum'] + vim.vvars['count'])
+if True:
+  import formatters.autopep8
+  import vim
+  formatters.autopep8.AutoPep8(
+      vim.vvars['lnum'], 
+      vim.vvars['lnum'] + vim.vvars['count'])
 EOF
 endfunction
 

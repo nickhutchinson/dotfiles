@@ -6,7 +6,6 @@ call vundle#begin()
 
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'sjl/gundo.vim'
-" Plugin 'wellle/targets.vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-sensible'
 
@@ -25,9 +24,11 @@ Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
+Plugin 'kana/vim-textobj-user'
 Plugin 'kelan/gyp.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
@@ -53,6 +54,7 @@ Plugin 'tpope/vim-tbone'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'wellle/targets.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 
@@ -80,15 +82,15 @@ set numberwidth=2
 set noswapfile
 set cursorline
 set clipboard=unnamed,unnamedplus
-set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set noshowmode
 set splitbelow
+set formatoptions+=j
 set splitright
 set spelllang=en_gb
 set undofile
 set undodir=~/.vim/tmp/undo//,/tmp/vim//,/tmp//
 set wildignorecase  " case insensitive filename completion
-" Allegedly this is faster than the newfangled regex engine
-set regexpengine=1
+set regexpengine=1 " Allegedly this is faster than the newfangled regex engine
 set foldlevelstart=99
 
 if has("mac")
@@ -148,13 +150,8 @@ map <leader>et :tabe %%
 inoremap jj <Esc>
 inoremap jk <Esc>
 
-nnoremap & :&&<Cr>
-
 " verymagic
 nnoremap / /\v
-
-" just because
-nnoremap Y y$
 
 " going up and down in wrapped lines
 nnoremap j gj
@@ -167,7 +164,7 @@ nnoremap <leader>cP :let @+ = printf("%s:%d", expand("%:p"), line("."))<CR>
 
 nnoremap <leader>cd :lcd %:h<CR>
 nnoremap <leader>f :echo expand("%:p")<CR>
-command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e'
+command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | let @/=""'
 
 "}}}
 "Plugin Config"{{{
@@ -328,13 +325,14 @@ let g:session_autoload = 'yes'
 "}}}
 "}}}
 " Misc{{{
-let g:surround_{char2nr("C")} = "C{\r}"
-let g:surround_{char2nr("L")} = "L{\r}"
 
-augroup fixup_colorscheme
-  autocmd!
-  autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
-augroup END
+" let g:surround_{char2nr("C")} = "C{\r}"
+" let g:surround_{char2nr("L")} = "L{\r}"
+
+" augroup fixup_colorscheme
+"   autocmd!
+"   autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
+" augroup END
 
 augroup foundry
   autocmd!

@@ -5,7 +5,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'sjl/gundo.vim'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-sensible'
 
@@ -24,18 +23,20 @@ Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
+Plugin 'kana/vim-textobj-indent'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kelan/gyp.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'Raimondi/delimitMate'
 Plugin 'scons.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
+Plugin 'sjl/gundo.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-characterize'
@@ -134,6 +135,9 @@ augroup vimrc_filetypes
   autocmd Filetype python setl tw=79 cc=+1 fdm=indent
   autocmd Filetype python setl formatexpr=autopep8#formatexpr()
   autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+
+  " Don't let us get swamped with fugitive buffers
+  autocmd BufReadPost fugitive://* set bufhidden=delete
 augroup END
 let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
 "}}}
@@ -329,10 +333,10 @@ let g:session_autoload = 'yes'
 " let g:surround_{char2nr("C")} = "C{\r}"
 " let g:surround_{char2nr("L")} = "L{\r}"
 
-" augroup fixup_colorscheme
-"   autocmd!
-"   autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
-" augroup END
+augroup fixup_colorscheme
+  autocmd!
+  autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
+augroup END
 
 augroup foundry
   autocmd!

@@ -1,3 +1,7 @@
 function copy_path
-	readlink -f $argv | xsel --clipboard --input
+	if type greadlink > /dev/null
+		greadlink -f $argv | pbc
+	else
+		readlink -f $argv | pbc
+	end
 end

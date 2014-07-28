@@ -4,11 +4,11 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Plugin 'Lokaltog/vim-easymotion'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-sensible'
 
 Plugin 'airblade/vim-gitgutter'
+Plugin 'bkad/CamelCaseMotion'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
 Plugin 'bufkill.vim'
@@ -18,8 +18,10 @@ Plugin 'edkolev/tmuxline.vim'
 Plugin 'embear/vim-localvimrc'
 Plugin 'fish-syntax'
 Plugin 'godlygeek/tabular'
+Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'int3/vim-extradite'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'jpalardy/vim-slime'
@@ -55,6 +57,7 @@ Plugin 'tpope/vim-tbone'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vcscommand.vim'
 Plugin 'wellle/targets.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -89,10 +92,11 @@ set formatoptions+=j
 set splitright
 set spelllang=en_gb
 set undofile
-set undodir=~/.vim/tmp/undo//,/tmp/vim//,/tmp//
+set undodir=~/.vim/undo//,/tmp/vim//,/tmp//
 set wildignorecase  " case insensitive filename completion
 set regexpengine=1 " Allegedly this is faster than the newfangled regex engine
 set foldlevelstart=99
+set scrolloff=10
 
 if has("mac")
   set macmeta
@@ -130,11 +134,11 @@ augroup vimrc_filetypes
   autocmd BufRead,BufNewFile *.m setf objc
   autocmd BufRead,BufNewFile *.mm setf objcpp
   autocmd BufRead,BufNewFile SConscript,SConstruct setf scons
-  autocmd Filetype ruby setl ts=2 sts=2 sw=2
-  autocmd Filetype lua setl ts=2 sts=2 sw=2
-  autocmd Filetype python setl tw=79 cc=+1 fdm=indent
-  autocmd Filetype python setl formatexpr=autopep8#formatexpr()
   autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  autocmd Filetype lua setl ts=2 sts=2 sw=2
+  autocmd Filetype python setl formatexpr=autopep8#formatexpr()
+  autocmd Filetype python setl tw=79 cc=+1 fdm=indent
+  autocmd Filetype ruby setl ts=2 sts=2 sw=2
 
   " Don't let us get swamped with fugitive buffers
   autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -168,7 +172,14 @@ nnoremap <leader>cP :let @+ = printf("%s:%d", expand("%:p"), line("."))<CR>
 
 nnoremap <leader>cd :lcd %:h<CR>
 nnoremap <leader>f :echo expand("%:p")<CR>
+nnoremap <leader>F :echo printf("%s:%d", expand("%:p"), line("."))<CR>
+
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | let @/=""'
+
+" Butter fingers
+nnoremap <F1> <nop>
+nnoremap Q <nop>
+nnoremap K <nop>
 
 "}}}
 "Plugin Config"{{{
@@ -182,7 +193,7 @@ let g:NERDTreeSortOrder=[]
 let g:NERDTreeMapOpenInTab="<C-T>"
 let g:NERDTreeMapOpenSplit="<C-S>"
 let g:NERDTreeMapOpenVSplit="<C-V>"
-let g:NERDTreeMapUpdir="-"
+let g:NERDTreeMapUpdirKeepOpen="-"
 "}}}
 " Wilgignore{{{
 set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
@@ -225,7 +236,7 @@ let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#syntastic#enabled = 0
 let g:bufferline_echo = 0
-" let g:airline_theme="luna"
+let g:airline_theme="base16"
 "}}}
 " LocalVimrc{{{
 let g:localvimrc_persistent=1

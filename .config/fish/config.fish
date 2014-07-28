@@ -4,7 +4,8 @@ set -x LESS '-F -g -i -M -R -S -w -X -z-4'
 set -x EDITOR vim
 # set -x TERM xterm-256color
 
-set -x PATH /usr/local/{bin,sbin} $PATH
+set -x PATH $HOME/opt/bin /usr/local/{bin,sbin} $PATH
+set -x TERM xterm-256color
 
 ################################################################################
 alias cp 'cp -i'
@@ -37,3 +38,5 @@ if test -d $HOME/.config/fish/config.fish.d
     source $f
   end
 end
+
+

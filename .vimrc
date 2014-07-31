@@ -80,7 +80,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=81
-let &listchars='tab:▸ ,eol:¬'
+let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
 let &showbreak='↪ '
 set numberwidth=2
 set noswapfile
@@ -107,6 +107,12 @@ if $TERM_PROGRAM != "Apple_Terminal"
 endif
 colorscheme base16-ocean
 
+augroup trailing
+  au!
+  au InsertEnter * :set listchars-=trail:⌴
+  au InsertLeave * :set listchars+=trail:⌴
+augroup END
+
 " GUI Options{{{
 set mouse+=a
 if &term =~ '^screen'
@@ -130,18 +136,17 @@ endif
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
 augroup vimrc_filetypes
-  autocmd!
-  autocmd BufRead,BufNewFile *.m setf objc
-  autocmd BufRead,BufNewFile *.mm setf objcpp
-  autocmd BufRead,BufNewFile SConscript,SConstruct setf scons
-  autocmd Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
-  autocmd Filetype lua setl ts=2 sts=2 sw=2
-  autocmd Filetype python setl formatexpr=autopep8#formatexpr()
-  autocmd Filetype python setl tw=79 cc=+1 fdm=indent
-  autocmd Filetype ruby setl ts=2 sts=2 sw=2
-
+  au!
+  au BufRead,BufNewFile *.m setf objc
+  au BufRead,BufNewFile *.mm setf objcpp
+  au BufRead,BufNewFile SConscript,SConstruct setf scons
+  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype lua setl ts=2 sts=2 sw=2
+  au Filetype python setl formatexpr=autopep8#formatexpr()
+  au Filetype python setl tw=79 cc=+1 fdm=indent
+  au Filetype ruby setl ts=2 sts=2 sw=2
   " Don't let us get swamped with fugitive buffers
-  autocmd BufReadPost fugitive://* set bufhidden=delete
+  au BufReadPost fugitive://* set bufhidden=delete
 augroup END
 let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
 "}}}
@@ -267,8 +272,8 @@ function! g:UltiSnips_Complete()
 endfunction
 
 augroup vimrc_ultisnips_fixup
-  autocmd!
-  autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+  au!
+  au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 augroup END
 "}}}
 "}}}
@@ -345,16 +350,35 @@ let g:session_autoload = 'yes'
 " let g:surround_{char2nr("L")} = "L{\r}"
 
 augroup fixup_colorscheme
-  autocmd!
-  autocmd ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
+  au!
+  au ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
 augroup END
 
 augroup foundry
-  autocmd!
-  autocmd BufRead,BufNewFile *.args setf xml
+  au!
+  au BufRead,BufNewFile *.args setf xml
  augroup END
 
  if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
+"}}}
+
+" Scratchpad"{{{
+" Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
+
+" Don't move on *
+nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" Fugitive
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
 "}}}
 
 " vim: fdm=marker:foldlevel=0:

@@ -352,4 +352,23 @@ augroup foundry
  if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
 
+" Scratchpad"{{{
+" Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
+
+" Don't move on *
+nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" Fugitive
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
+"}}}
+
 " vim: fdm=marker:foldlevel=0:

@@ -67,6 +67,7 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wellle/targets.vim'
 Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-session'
 
 call vundle#end()            " required

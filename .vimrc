@@ -11,9 +11,11 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
+Plugin 'bogado/file-line'
 Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'derekwyatt/vim-scala'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'embear/vim-localvimrc'
 Plugin 'fish-syntax'
@@ -30,15 +32,19 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'kelan/gyp.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'mattn/emmet-vim'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'Raimondi/delimitMate'
+Plugin 'othree/html5.vim'
+Plugin 'rking/ag.vim'
 Plugin 'scons.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'tommcdo/vim-exchange'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-characterize'
@@ -46,12 +52,16 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-jdaddy'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-ragtag'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-scriptease'
 Plugin 'tpope/vim-sleuth'
+Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-tbone'
 Plugin 'tpope/vim-unimpaired'
@@ -60,6 +70,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vcscommand.vim'
 Plugin 'wellle/targets.vim'
 Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-session'
 
 call vundle#end()            " required
@@ -72,6 +83,8 @@ set background=dark
 let base16colorspace=256
 colorscheme base16-default
 " }}}
+set shell=/bin/bash
+
 let mapleader = ","
 set list
 set hidden
@@ -80,7 +93,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=81
-let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
+let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮,trail:·'
 let &showbreak='↪ '
 set numberwidth=2
 set noswapfile
@@ -109,8 +122,8 @@ colorscheme base16-ocean
 
 augroup trailing
   au!
-  au InsertEnter * :set listchars-=trail:⌴
-  au InsertLeave * :set listchars+=trail:⌴
+  au InsertEnter * :set listchars-=trail:·
+  au InsertLeave * :set listchars+=trail:·
 augroup END
 
 " GUI Options{{{
@@ -170,9 +183,12 @@ nnoremap / /\v
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
-nnoremap <up>   gk
+nnoremap <Up>   gk
 
+" copy absolute path to clipboard
 nnoremap <leader>cp :let @+ = expand("%:p")<CR>
+
+" copy 'filename:lineno' (for easier GDB breakpoints)
 nnoremap <leader>cP :let @+ = printf("%s:%d", expand("%:p"), line("."))<CR>
 
 nnoremap <leader>cd :lcd %:h<CR>
@@ -191,14 +207,17 @@ nnoremap K <nop>
 " NERDTree"{{{
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
-let g:NERDTreeRespectWildignore = 1
+
 let g:NERDTreeMapHelp = "<F1>"
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeSortOrder=[]
 let g:NERDTreeMapOpenInTab="<C-T>"
 let g:NERDTreeMapOpenSplit="<C-S>"
 let g:NERDTreeMapOpenVSplit="<C-V>"
 let g:NERDTreeMapUpdirKeepOpen="-"
+
+let g:NERDTreeRespectWildignore = 1
+let g:NERDTreeShowBookmarks=1
+let g:NERDTreeSortOrder=[]
+
 "}}}
 " Wilgignore{{{
 set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
@@ -208,8 +227,13 @@ let g:ctrlp_custom_ignore = {
 let g:NERDTreeRespectWildIgnore = 1
 "}}}
 " CtrlP{{{
-let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cmd = "CtrlPMixed"
+let g:ctrlp_lazy_update = 50
+let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:13'
+let g:ctrlp_max_files=100000
+let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
 nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
@@ -217,10 +241,6 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>l :CtrlPLine<CR>
 nnoremap <C-]> :CtrlPtjump<cr>
 vnoremap <C-]> :CtrlPtjumpVisual<cr>
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
-let g:ctrlp_max_files=100000
-let g:ctrlp_lazy_update = 50
 "}}}
 " YouCompleteMe{{{
 let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -343,6 +363,9 @@ let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 "}}}
+" Instant Markdown{{{
+let g:instant_markdown_autostart = 0
+"}}}
 "}}}
 " Misc{{{
 
@@ -368,17 +391,8 @@ augroup foundry
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
 
-" Keep search matches in the middle of the window.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Same when jumping around
-nnoremap g; g;zz
-nnoremap g, g,zz
-
 " Fugitive
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
 "}}}
-
 " vim: fdm=marker:foldlevel=0:

@@ -1,77 +1,81 @@
 " Plugins {{{
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
+
+set shell=/bin/bash
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Plugin 'Lokaltog/vim-easymotion'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-sensible'
-
-Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'bling/vim-bufferline'
-Plugin 'bogado/file-line'
 Plugin 'bufkill.vim'
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'derekwyatt/vim-scala'
+Plugin 'derekwyatt/vim-fswitch'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'embear/vim-localvimrc'
-Plugin 'fish-syntax'
-Plugin 'godlygeek/tabular'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'JazzCore/ctrlp-cmatcher'
+Plugin 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 Plugin 'jpalardy/vim-slime'
-Plugin 'kana/vim-textobj-indent'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kelan/gyp.vim'
 Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'mattn/emmet-vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-qargs'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'othree/html5.vim'
 Plugin 'rking/ag.vim'
-Plugin 'scons.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'sjl/gundo.vim'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-characterize'
 Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-scriptease'
+Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'wellle/targets.vim'
+Plugin 'wikimatze/hammer.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-session'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plugin 'derekwyatt/vim-scala'
+Plugin 'fish-syntax'
+Plugin 'honza/vim-snippets'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'mattn/emmet-vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'othree/html5.vim'
+Plugin 'scons.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'suan/vim-instant-markdown'  " Requires setup
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-jdaddy'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-ragtag'
+Plugin 'tpope/vim-scriptease'
+Plugin 'Valloric/YouCompleteMe'  " Requires compilation
+Plugin 'vim-jp/cpp-vim'
+
+Plugin 'airblade/vim-gitgutter'
+Plugin 'godlygeek/tabular'
+Plugin 'kana/vim-textobj-indent'
+Plugin 'kana/vim-textobj-user'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'majutsushi/tagbar'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'oblitum/rainbow'
+Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-characterize'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'wellle/targets.vim'
+
+call vundle#end()
+filetype plugin indent on
 " }}}
 
 " Options {{{
@@ -80,9 +84,9 @@ set background=dark
 let base16colorspace=256
 colorscheme base16-default
 " }}}
-set shell=/bin/bash
 
 let mapleader = ","
+set shortmess+=I
 set list
 set hidden
 set number
@@ -90,6 +94,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=81
+set matchpairs+=<:>
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮,trail:·'
 let &showbreak='↪ '
 set numberwidth=2
@@ -153,7 +158,7 @@ augroup vimrc_filetypes
   au Filetype lua setl ts=2 sts=2 sw=2
   au Filetype python setl tw=79 cc=+1 fdm=indent
   au Filetype python setl formatexpr=autopep8#formatexpr()
-  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr() fdm=syntax
 
   " Don't let us get swamped with fugitive buffers
   au BufReadPost fugitive://* set bufhidden=delete
@@ -232,6 +237,7 @@ nnoremap <C-]> :CtrlPtjump<cr>
 vnoremap <C-]> :CtrlPtjumpVisual<cr>
 "}}}
 " YouCompleteMe{{{
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -257,34 +263,15 @@ let g:localvimrc_persistent=1
 let g:localvimrc_sandbox=0
 "}}}
 " UltiSnips{{{
-let g:UltiSnipsExpandTrigger       = "<tab>"
-let g:UltiSnipsJumpForwardTrigger  = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author                 = 'Nick Hutchinson'
-let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 let g:ultisnips_python_style = "doxygen"
-" Hacky fixup for UltiSnips/YCM{{{
-" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-40921899
-function! g:UltiSnips_Complete()
-  call UltiSnips#ExpandSnippet()
-  if g:ulti_expand_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      call UltiSnips#JumpForwards()
-      if g:ulti_jump_forwards_res == 0
-        return "\<TAB>"
-      endif
-    endif
-  endif
-  return ""
-endfunction
-
-augroup vimrc_ultisnips_fixup
-  au!
-  au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-augroup END
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
+" Rainbox
+let g:rainbow_active = 1
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -369,9 +356,9 @@ augroup END
 augroup foundry
   au!
   au BufRead,BufNewFile *.args setf xml
- augroup END
+augroup END
 
- if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
+if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
 
 " Scratchpad"{{{
@@ -380,8 +367,30 @@ augroup foundry
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
 
+" Replace current word
+nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
+
 " Fugitive
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
+
+function! <SID>DoHighlighting()
+  " syn match myConstant "\v<k\w+>"
+  " syn match myConstant "\v<[A-Z0-9_]+>"
+  " hi link myConstant Constant
+endfunction
+
+augroup syntax
+  au!
+  au filetype cpp call <SID>DoHighlighting()
+augroup END
+
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 "}}}
 " vim: fdm=marker:foldlevel=0:

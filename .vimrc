@@ -1,81 +1,75 @@
 " Plugins {{{
-set nocompatible
-filetype off
+call plug#begin('~/.vim/plugged')
 
-set shell=/bin/bash
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'bufkill.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'edkolev/tmuxline.vim'
+Plug 'embear/vim-localvimrc'
+Plug 'ivalkeen/vim-ctrlp-tjump'
+Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
+Plug 'jpalardy/vim-slime'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-vinegar'
+Plug 'wikimatze/hammer.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-session'
 
-Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
-Plugin 'bufkill.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'embear/vim-localvimrc'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'JazzCore/ctrlp-cmatcher'  " Requires compilation
-Plugin 'jpalardy/vim-slime'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-vinegar'
-Plugin 'wikimatze/hammer.vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
-Plugin 'xolox/vim-session'
+Plug 'derekwyatt/vim-scala'
+Plug 'fish-syntax'
+Plug 'honza/vim-snippets'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'mattn/emmet-vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'othree/html5.vim'
+Plug 'scons.vim'
+Plug 'SirVer/ultisnips', { 'on': [], }
+Plug 'suan/vim-instant-markdown'  " Requires setup
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-scriptease'
+Plug 'Valloric/YouCompleteMe'  " Requires compilation
+Plug 'vim-jp/cpp-vim'
 
-Plugin 'derekwyatt/vim-scala'
-Plugin 'fish-syntax'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'mattn/emmet-vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'othree/html5.vim'
-Plugin 'scons.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'suan/vim-instant-markdown'  " Requires setup
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-scriptease'
-Plugin 'Valloric/YouCompleteMe'  " Requires compilation
-Plugin 'vim-jp/cpp-vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/tabular'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'majutsushi/tagbar'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'oblitum/rainbow'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'tommcdo/vim-exchange'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'wellle/targets.vim'
 
-Plugin 'airblade/vim-gitgutter'
-Plugin 'godlygeek/tabular'
-Plugin 'kana/vim-textobj-indent'
-Plugin 'kana/vim-textobj-user'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'majutsushi/tagbar'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'oblitum/rainbow'
-Plugin 'scrooloose/syntastic'
-Plugin 'sjl/gundo.vim'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-characterize'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'wellle/targets.vim'
-
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 " }}}
 
 " Options {{{
@@ -374,23 +368,10 @@ nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
 
-function! <SID>DoHighlighting()
-  " syn match myConstant "\v<k\w+>"
-  " syn match myConstant "\v<[A-Z0-9_]+>"
-  " hi link myConstant Constant
-endfunction
-
-augroup syntax
+augroup lazy_load
   au!
-  au filetype cpp call <SID>DoHighlighting()
+  au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
 
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 "}}}
 " vim: fdm=marker:foldlevel=0:

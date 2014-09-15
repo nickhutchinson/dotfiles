@@ -1,7 +1,0 @@
-{
-    "base16_scheme": "ocean.dark",
-    "env": {
-        "PATH": ["$PATH", "$HOME/opt/FBuildTools"],
-        "PYTHONPATH": ["$PYTHONPATH", "$HOME/opt/python-packages"]
-    }
-}

@@ -147,6 +147,7 @@ set guioptions-=l
 set guioptions-=r
 set guioptions-=L
 set guioptions-=R
+set guioptions-=T
 set guicursor+=a:blinkon0
 set guioptions+=c  " Use console dialogs
 if has("mac")
@@ -163,7 +164,8 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
-  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr() fdm=syntax
+  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype cpp,c,objc,objcpp setl fdm=indent
   au Filetype lua setl ts=2 sts=2 sw=2
   au Filetype python setl formatexpr=autopep8#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
@@ -286,8 +288,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
-" Rainbox
-let g:rainbow_active = 1
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -390,18 +390,6 @@ nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
 
-function! <SID>DoHighlighting()
-  " syn match myConstant "\v<k\w+>"
-  " syn match myConstant "\v<[A-Z0-9_]+>"
-  " hi link myConstant Constant
-endfunction
-
-augroup syntax
-  au!
-  au filetype cpp call <SID>DoHighlighting()
-augroup END
-
-nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
@@ -411,5 +399,19 @@ endfunc
 "}}}
 
 let g:EasyMotion_do_mapping = 0
+nmap <F8> :TagbarToggle<CR>
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set lines=999 columns=999
+else
+  " This is console Vim.
+  if exists("+lines")
+    set lines=50
+  endif
+  if exists("+columns")
+    set columns=100
+  endif
+endif
 
 " vim: fdm=marker:foldlevel=0:

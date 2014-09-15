@@ -1,89 +1,79 @@
 " Plugins {{{
-set nocompatible
-filetype off
+call plug#begin('~/.vim/plugged')
 
-set shell=/bin/bash
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
-Plugin 'bufkill.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'derekwyatt/vim-fswitch'
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'bufkill.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'derekwyatt/vim-fswitch'
 
 if !has('gui_running')
-  Plugin 'edkolev/tmuxline.vim'
+	Plug 'edkolev/tmuxline.vim'
 end
 
-Plugin 'embear/vim-localvimrc'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'int3/vim-extradite'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'JazzCore/ctrlp-cmatcher'  " Requires compilation
-Plugin 'jpalardy/vim-slime'
-Plugin 'kana/vim-textobj-indent'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'majutsushi/tagbar'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'oblitum/rainbow'
-Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'sjl/gundo.vim'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-characterize'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-scriptease'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-Plugin 'Valloric/YouCompleteMe'  " Requires compilation
-Plugin 'vcscommand.vim'
-Plugin 'wellle/targets.vim'
-Plugin 'wikimatze/hammer.vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
-Plugin 'xolox/vim-session'
+Plug 'embear/vim-localvimrc'
+Plug 'ivalkeen/vim-ctrlp-tjump'
+Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
+Plug 'jpalardy/vim-slime'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-vinegar'
+Plug 'wikimatze/hammer.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-session'
 
-Plugin 'derekwyatt/vim-scala'
-Plugin 'fish-syntax'
-Plugin 'hdima/python-syntax'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'mattn/emmet-vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'othree/html5.vim'
-Plugin 'scons.vim'
-Plugin 'suan/vim-instant-markdown'  " Requires setup
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-ragtag'
-Plugin 'vim-jp/cpp-vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'fish-syntax'
+Plug 'honza/vim-snippets'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'mattn/emmet-vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'othree/html5.vim'
+Plug 'scons.vim'
+Plug 'SirVer/ultisnips', { 'on': [], }
+Plug 'suan/vim-instant-markdown'  " Requires setup
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-scriptease'
+Plug 'Valloric/YouCompleteMe'  " Requires compilation
+Plug 'vim-jp/cpp-vim'
 
-call vundle#end()
-filetype plugin indent on
+Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/tabular'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'majutsushi/tagbar'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'oblitum/rainbow'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'tommcdo/vim-exchange'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'wellle/targets.vim'
+
+call plug#end()
 " }}}
 
 " Options {{{
@@ -390,12 +380,11 @@ nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
 
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+augroup lazy_load
+  au!
+  au InsertEnter * call plug#load('ultisnips') | au! lazy_load
+augroup END
+
 "}}}
 
 let g:EasyMotion_do_mapping = 0

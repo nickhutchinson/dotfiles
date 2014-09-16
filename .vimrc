@@ -1,13 +1,16 @@
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
+Plug 'ekalinin/Dockerfile.vim'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'bufkill.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'edkolev/tmuxline.vim'
+if has('gui_running')
+  Plug 'edkolev/tmuxline.vim'
+endif
 Plug 'embear/vim-localvimrc'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
@@ -24,7 +27,6 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
-Plug 'wikimatze/hammer.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-session'
@@ -48,7 +50,7 @@ Plug 'Valloric/YouCompleteMe'  " Requires compilation
 Plug 'vim-jp/cpp-vim'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
 Plug 'Lokaltog/vim-easymotion'
@@ -372,6 +374,12 @@ augroup lazy_load
   au!
   au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+nmap <Leader>a <Plug>(EasyAlign)
 
 "}}}
 " vim: fdm=marker:foldlevel=0:

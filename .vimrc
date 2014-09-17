@@ -1,6 +1,7 @@
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
+Plug 'ekalinin/Dockerfile.vim'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'bufkill.vim'
@@ -28,7 +29,6 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
-Plug 'wikimatze/hammer.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-session'
@@ -52,7 +52,7 @@ Plug 'Valloric/YouCompleteMe'  " Requires compilation
 Plug 'vim-jp/cpp-vim'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
 Plug 'Lokaltog/vim-easymotion'
@@ -366,7 +366,6 @@ augroup END
 
 if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
-
 " Scratchpad"{{{
 " Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 
@@ -385,7 +384,6 @@ augroup lazy_load
   au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
 
-"}}}
 
 let g:EasyMotion_do_mapping = 0
 nmap <F8> :TagbarToggle<CR>
@@ -402,5 +400,15 @@ else
     set columns=100
   endif
 endif
+
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+nmap <Leader>a <Plug>(EasyAlign)
+
+"}}}
+
 
 " vim: fdm=marker:foldlevel=0:

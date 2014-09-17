@@ -1,84 +1,79 @@
 " Plugins {{{
-set nocompatible
-filetype off
+call plug#begin('~/.vim/plugged')
 
-set shell=/bin/bash
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'bufkill.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'derekwyatt/vim-fswitch'
 
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
-Plugin 'bufkill.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'embear/vim-localvimrc'
-Plugin 'fish-syntax'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'hdima/python-syntax'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'int3/vim-extradite'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
-Plugin 'JazzCore/ctrlp-cmatcher'  " Requires compilation
-Plugin 'jpalardy/vim-slime'
-Plugin 'kana/vim-textobj-indent'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'majutsushi/tagbar'
-Plugin 'mattn/emmet-vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'oblitum/rainbow'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'othree/html5.vim'
-Plugin 'rking/ag.vim'
-Plugin 'scons.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'sjl/gundo.vim'
-Plugin 'suan/vim-instant-markdown'  " Requires setup
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-characterize'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-scriptease'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-tbone'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-Plugin 'Valloric/YouCompleteMe'  " Requires compilation
-Plugin 'vcscommand.vim'
-Plugin 'vim-jp/cpp-vim'
-Plugin 'wellle/targets.vim'
-Plugin 'wikimatze/hammer.vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
-Plugin 'xolox/vim-session'
+if !has('gui_running')
+	Plug 'edkolev/tmuxline.vim'
+end
 
-call vundle#end()
-filetype plugin indent on
+Plug 'embear/vim-localvimrc'
+Plug 'ivalkeen/vim-ctrlp-tjump'
+Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
+Plug 'jpalardy/vim-slime'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-vinegar'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-session'
+
+Plug 'derekwyatt/vim-scala'
+Plug 'fish-syntax'
+Plug 'honza/vim-snippets'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'mattn/emmet-vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'othree/html5.vim'
+Plug 'scons.vim'
+Plug 'SirVer/ultisnips', { 'on': [], }
+Plug 'suan/vim-instant-markdown'  " Requires setup
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-scriptease'
+Plug 'Valloric/YouCompleteMe'  " Requires compilation
+Plug 'vim-jp/cpp-vim'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/vim-easy-align'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'majutsushi/tagbar'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'oblitum/rainbow'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'tommcdo/vim-exchange'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'wellle/targets.vim'
+
+call plug#end()
 " }}}
 
 " Options {{{
@@ -142,6 +137,7 @@ set guioptions-=l
 set guioptions-=r
 set guioptions-=L
 set guioptions-=R
+set guioptions-=T
 set guicursor+=a:blinkon0
 set guioptions+=c  " Use console dialogs
 if has("mac")
@@ -158,7 +154,8 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
-  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr() fdm=syntax
+  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype cpp,c,objc,objcpp setl fdm=indent
   au Filetype lua setl ts=2 sts=2 sw=2
   au Filetype python setl formatexpr=autopep8#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
@@ -281,8 +278,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
-" Rainbox
-let g:rainbow_active = 1
 "}}}
 " Tagbar{{{
 let g:tagbar_type_objc = {
@@ -371,7 +366,6 @@ augroup END
 
 if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
-
 " Scratchpad"{{{
 " Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 
@@ -385,26 +379,36 @@ nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gs :Gstatus<cr>
 
-function! <SID>DoHighlighting()
-  " syn match myConstant "\v<k\w+>"
-  " syn match myConstant "\v<[A-Z0-9_]+>"
-  " hi link myConstant Constant
-endfunction
-
-augroup syntax
+augroup lazy_load
   au!
-  au filetype cpp call <SID>DoHighlighting()
+  au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
 
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-"}}}
 
 let g:EasyMotion_do_mapping = 0
+nmap <F8> :TagbarToggle<CR>
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set lines=999 columns=999
+else
+  " This is console Vim.
+  if exists("+lines")
+    set lines=50
+  endif
+  if exists("+columns")
+    set columns=100
+  endif
+endif
+
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+nmap <Leader>a <Plug>(EasyAlign)
+
+"}}}
+
 
 " vim: fdm=marker:foldlevel=0:

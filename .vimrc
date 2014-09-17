@@ -356,7 +356,6 @@ augroup END
 
 if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
-
 " Scratchpad"{{{
 " Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 
@@ -375,11 +374,15 @@ augroup lazy_load
   au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
 
+"}}}
+" Experimental{{{
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
 nmap <Leader>a <Plug>(EasyAlign)
 
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 "}}}
+
 " vim: fdm=marker:foldlevel=0:

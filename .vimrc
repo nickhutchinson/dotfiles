@@ -18,6 +18,8 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 Plug 'jpalardy/vim-slime'
 Plug 'kien/ctrlp.vim'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-dispatch'
@@ -57,9 +59,9 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'oblitum/rainbow'
+Plug 'othree/eregex.vim'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
@@ -205,7 +207,8 @@ nnoremap Q <nop>
 nnoremap K <nop>
 
 "}}}
-"Plugin Config"{{{
+
+"Plugin Config {{{
 " NERDTree"{{{
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>N :NERDTreeFind<CR>
@@ -254,6 +257,11 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_path_to_python_interpreter = "/usr/bin/python"
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
+" Eregex{{{
+let g:eregex_default_enable = 0
+" Toggles '/' to mean eregex search or normal Vim search
+nnoremap <leader>/ :call eregex#toggle()<CR>
+" }}}
 " Airline/Bufferline{{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -270,6 +278,9 @@ let g:airline_theme="base16"
 let g:localvimrc_persistent=1
 let g:localvimrc_sandbox=0
 "}}}
+" Gist {{{
+let g:gist_open_browser_after_post = 1
+"}}}
 " UltiSnips{{{
 let g:snips_author                 = 'Nick Hutchinson'
 let g:ultisnips_python_style = "doxygen"
@@ -278,8 +289,14 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
+" Easy Align{{{
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+nmap <Leader>a <Plug>(EasyAlign)
 "}}}
 " Tagbar{{{
+nnoremap <F8> :TagbarToggle<CR>
 let g:tagbar_type_objc = {
     \ 'ctagstype' : 'ObjectiveC',
     \ 'kinds'     : [
@@ -338,8 +355,12 @@ nmap <leader>s <Plug>SlimeMotionSend
 nmap <leader>ss <Plug>SlimeLineSend
 "}}}
 " Syntastic{{{
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'pylint', 'pyflakes']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'
@@ -348,16 +369,24 @@ let g:session_autoload = 'yes'
 " Instant Markdown{{{
 let g:instant_markdown_autostart = 0
 "}}}
+" Fugitive"{{{
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
 "}}}
+" EasyMotion{{{
+let g:EasyMotion_do_mapping = 0
+"}}}
+"}}}
+
 " Misc{{{
 
 " let g:surround_{char2nr("C")} = "C{\r}"
 " let g:surround_{char2nr("L")} = "L{\r}"
 
-augroup fixup_colorscheme
-  au!
-  au ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
-augroup END
+" augroup fixup_colorscheme
+"   au!
+"   au ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
+" augroup END
 
 augroup foundry
   au!
@@ -366,27 +395,21 @@ augroup END
 
 if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
-" Scratchpad"{{{
-" Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 
+" Scratchpad"{{{
+
+" Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
 
 " Replace current word
 nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 
-" Fugitive
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
-
 augroup lazy_load
   au!
   au InsertEnter * call plug#load('ultisnips') | au! lazy_load
 augroup END
 
-
-let g:EasyMotion_do_mapping = 0
-nmap <F8> :TagbarToggle<CR>
 if has("gui_running")
   " GUI is running or is about to start.
   " Maximize gvim window (for an alternative on Windows, see simalt below).
@@ -402,11 +425,7 @@ else
 endif
 
 
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
 
-" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-nmap <Leader>a <Plug>(EasyAlign)
 
 "}}}
 

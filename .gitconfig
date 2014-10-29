@@ -1,6 +1,5 @@
-[user]
-    name = Nicholas Hutchinson
-    email = nshutchinson@gmail.com
+[include]
+	path = .gitconfig.local
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
@@ -14,7 +13,6 @@
 	slap = blame -wC 
 	diffcw = diff --color-words
 	unstage = reset HEAD --
-	stage = add
 	startbranch = checkout -b
 	search = grep -i --break --heading --line-number -P
 	searchhist = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E -G
@@ -27,6 +25,8 @@
 	date = short
 [push]
 	default = simple
+[github]
+	user = nickhutchinson
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 	path = 

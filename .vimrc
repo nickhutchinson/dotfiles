@@ -10,9 +10,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
 
 if !has('gui_running')
-	Plug 'edkolev/tmuxline.vim'
+  Plug 'edkolev/tmuxline.vim'
 end
 
+Plug 'AndrewRadev/linediff.vim'
+Plug 'mitsuhiko/vim-jinja'
+Plug 'nickhutchinson/vim-systemtap'
+Plug 'edkolev/promptline.vim'
 Plug 'embear/vim-localvimrc'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
@@ -22,6 +26,7 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'ton/vim-bufsurf'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -254,7 +259,9 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_path_to_python_interpreter = "/usr/bin/python"
+if executable("/usr/local/opt/python/bin/python")
+  let g:ycm_path_to_python_interpreter = "/usr/local/opt/python/bin/python"
+endif
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
 " Eregex{{{
@@ -275,18 +282,18 @@ let g:bufferline_echo = 0
 let g:airline_theme="base16"
 "}}}
 " LocalVimrc{{{
-let g:localvimrc_persistent=1
-let g:localvimrc_sandbox=0
+let g:localvimrc_persistent = 1
+let g:localvimrc_sandbox    = 0
 "}}}
 " Gist {{{
 let g:gist_open_browser_after_post = 1
 "}}}
 " UltiSnips{{{
 let g:snips_author                 = 'Nick Hutchinson'
-let g:ultisnips_python_style = "doxygen"
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:ultisnips_python_style       = "doxygen"
+let g:UltiSnipsExpandTrigger       = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
 let g:UltiSnipsSnippetDirectories  = ["UltiSnips"]
 "}}}
 " Easy Align{{{
@@ -359,7 +366,7 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
@@ -376,18 +383,15 @@ nnoremap <leader>gs :Gstatus<cr>
 " EasyMotion{{{
 let g:EasyMotion_do_mapping = 0
 "}}}
+" Promptline {{{
+let g:promptline_preset = {
+    \'c' : [ promptline#slices#cwd() ],
+    \'y' : [ promptline#slices#vcs_branch() ],
+    \'warn' : [ promptline#slices#last_exit_code() ]}
+"}}}
 "}}}
 
 " Misc{{{
-
-" let g:surround_{char2nr("C")} = "C{\r}"
-" let g:surround_{char2nr("L")} = "L{\r}"
-
-" augroup fixup_colorscheme
-"   au!
-"   au ColorScheme * highlight Search term=reverse  guifg=#073642 ctermfg=18
-" augroup END
-
 augroup foundry
   au!
   au BufRead,BufNewFile *.args setf xml
@@ -411,23 +415,12 @@ augroup lazy_load
 augroup END
 
 if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window (for an alternative on Windows, see simalt below).
   set lines=999 columns=999
-else
-  " This is console Vim.
-  if exists("+lines")
-    set lines=50
-  endif
-  if exists("+columns")
-    set columns=100
-  endif
 endif
 
 
 
 
 "}}}
-
 
 " vim: fdm=marker:foldlevel=0:

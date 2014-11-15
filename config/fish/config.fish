@@ -18,23 +18,31 @@ alias df 'df -kh'
 alias du 'du -kh'
 
 if not type pbcopy > /dev/null
-  alias pbcopy="xsel --clipboard --input"
-  alias pbpaste="xsel --clipboard --output"
+  alias pbcopy 'xsel --clipboard --input'
+  alias pbpaste 'xsel --clipboard --output'
 end
 
 alias pbc pbcopy
 alias pbp pbpaste
 
 switch (uname)
-case "Linux"
+case 'Linux'
   alias o xdg-open
-case "Darwin"
+case 'Darwin'
   alias o open
 end
 
+alias gdc 'git diff --cached'
+alias gd 'git diff'
+alias gc 'git checkout'
+alias gs 'git status'
+alias gh 'git hist'
+
 ################################################################################
-if test -d $HOME/.config/fish/config.fish.d
-  for f in $HOME/.config/fish/config.fish.d/*.fish
+set -l script_dir (dirname (status -f))
+
+if test -d "$script_dir/config.fish.d"
+  for f in "$script_dir/config.fish.d/"*.fish
     source $f
   end
 end

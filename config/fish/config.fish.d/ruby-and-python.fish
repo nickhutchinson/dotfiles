@@ -1,9 +1,8 @@
+_append_path "$HOME/.pyenv/bin"
+_append_path "$HOME/.pyenv/plugins/python-build/bin"
 
-set -x PATH                              \
-  $HOME/.{rbenv,pyenv}/bin               \
-  $HOME/.rbenv/plugins/ruby-build/bin    \
-  $HOME/.pyenv/plugins/python-build/bin  \
-  $PATH
+_append_path "$HOME/.rbenv/bin"
+_append_path "$HOME/.rbenv/plugins/ruby-build/bin"
 
 if type rbenv > /dev/null
   source (rbenv init -|psub)

@@ -1,22 +1,15 @@
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'ekalinin/Dockerfile.vim'
+" == General ==
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
-Plug 'bufkill.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
-
-if !has('gui_running')
-  Plug 'edkolev/tmuxline.vim'
-end
-
-Plug 'AndrewRadev/linediff.vim'
-Plug 'mitsuhiko/vim-jinja'
-Plug 'nickhutchinson/vim-systemtap'
 Plug 'edkolev/promptline.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'eiginn/netrw' " built-in version often very out-of-date, buggy.
 Plug 'embear/vim-localvimrc'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
@@ -25,7 +18,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'ton/vim-bufsurf'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -37,28 +29,11 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
 Plug 'xolox/vim-session'
 
-Plug 'derekwyatt/vim-scala'
-Plug 'fish-syntax'
-Plug 'honza/vim-snippets'
-Plug 'hynek/vim-python-pep8-indent'
-Plug 'mattn/emmet-vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'othree/html5.vim'
-Plug 'scons.vim'
-Plug 'SirVer/ultisnips', { 'on': [], }
-Plug 'suan/vim-instant-markdown'  " Requires setup
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-jdaddy'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-ragtag'
-Plug 'tpope/vim-scriptease'
-Plug 'Valloric/YouCompleteMe'  " Requires compilation
-Plug 'vim-jp/cpp-vim'
-
-Plug 'airblade/vim-gitgutter'
+" == Text editing ==
+Plug 'AndrewRadev/linediff.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
@@ -79,6 +54,41 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
+Plug 'xolox/vim-notes'
+
+" == Syntax/filetype-specific ==
+Plug 'derekwyatt/vim-scala'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'fish-syntax'
+Plug 'honza/vim-snippets'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'mattn/emmet-vim'
+Plug 'mitsuhiko/vim-jinja'
+Plug 'nickhutchinson/vim-systemtap'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'othree/html5.vim'
+Plug 'scons.vim'
+Plug 'SirVer/ultisnips', { 'on': [], }
+Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-scriptease'
+Plug 'Valloric/YouCompleteMe'  " Requires compilation
+Plug 'vim-jp/cpp-vim'
+
+
+" == Plugin graveyard. ==
+" Plug '~/Desktop/fuzzy_finder'
+" ---
+" Plug 'bufkill.vim' " Buggy
+" Plug 'scrooloose/nerdtree' " Too damn buggy.
+" Plug 'airblade/vim-gitgutter' " ditto.
+" ---
+" Plug 'Shougo/unite.vim'
+" Plug 'Shougo/vimfiler.vim'
+" let g:vimfiler_as_default_explorer = 1
 
 call plug#end()
 " }}}

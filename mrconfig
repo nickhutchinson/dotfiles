@@ -1,0 +1,4 @@
+[DEFAULT]
+jobs = 4
+include = cat .config/mr/config.d/*
+

@@ -1,0 +1,9 @@
+[.pyenv]
+checkout = git clone 'https://github.com/yyuu/pyenv.git' '.pyenv'
+
+[.pyenv/plugins/pyenv-pip-rehash]
+checkout = git clone 'https://github.com/yyuu/pyenv-pip-rehash.git' 'pyenv-pip-rehash'
+
+[.pyenv/plugins/pyenv-virtualenv]
+checkout = git clone 'https://github.com/yyuu/pyenv-virtualenv.git' 'pyenv-virtualenv'
+

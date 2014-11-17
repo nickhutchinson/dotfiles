@@ -1,0 +1,9 @@
+[.rbenv]
+checkout = git clone 'https://github.com/sstephenson/rbenv.git' '.rbenv'
+
+[.rbenv/plugins/rbenv-gem-rehash]
+checkout = git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' 'rbenv-gem-rehash'
+
+[.rbenv/plugins/ruby-build]
+checkout = git clone 'https://github.com/sstephenson/ruby-build.git' 'ruby-build'
+

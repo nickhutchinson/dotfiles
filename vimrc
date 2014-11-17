@@ -95,9 +95,12 @@ call plug#end()
 
 " Options {{{
 " Colour scheme {{{
+if $TERM_PROGRAM != "Apple_Terminal"
+  let base16colorspace=256
+endif
+
 set background=dark
-let base16colorspace=256
-colorscheme base16-default
+colorscheme base16-monokai
 " }}}
 
 let mapleader = ","
@@ -131,11 +134,6 @@ set scrolloff=10
 if has("mac")
   set macmeta
 endif
-
-if $TERM_PROGRAM != "Apple_Terminal"
-  let base16colorspace=256
-endif
-colorscheme base16-ocean
 
 augroup trailing
   au!

@@ -11,36 +11,46 @@ echo_exec() {
 }
 
 link_dotfile() {
-    echo_exec ln -si "$SCRIPT_DIR/$1" ~/."$1"
+    if [[ ! -e "$HOME/.$1" ]]; then
+        echo_exec ln -s "$SCRIPT_DIR/$1" "$HOME/.$1"
+    else
+        >&2 echo "- Skipping '~/.$1' (destination exists)"
+    fi
 }
 
 (
     set +e
 
-    link_dotfile bash_profile
-    link_dotfile bashrc
-    link_dotfile cgdb
-    link_dotfile clang-format
-    link_dotfile gdbinit
-    link_dotfile gitattributes
-    link_dotfile gitconfig
-    link_dotfile gitignore
-    link_dotfile pdbrc
-    link_dotfile tmux-linux.conf
-    link_dotfile tmux-osx.conf
-    link_dotfile tmux.conf
-    link_dotfile tmuxline.conf
-    link_dotfile vim
-    link_dotfile vimrc
-    link_dotfile Xresources
-    link_dotfile ycm_extra_conf.py
-
     echo_exec mkdir -p ~/.config
-    echo_exec mkdir -p ~/.config/fish
+    echo_exec mkdir -p ~/.config/fish/{config.fish.d,functions}
 
-    link_dotfile config/bash16-shell
-    link_dotfile config/bash16-xresources
-    link_dotfile config/fish/functions
-    link_dotfile config/fish/config.fish.d
-    link_dotfile config/fish/config.fish
+    files=(
+        bash_profile
+        bashrc
+        cgdb
+        clang-format
+        config/base16-shell
+        config/base16-xresources
+        config/fish/config.fish
+        config/fish/{config.fish.d,functions}/*.fish
+        gdbinit
+        gitattributes
+        gitconfig
+        gitignore
+        pdbrc
+        promptline.sh
+        tmux-linux.conf
+        tmux-osx.conf
+        tmux.conf
+        tmuxline.conf
+        vim
+        vimrc
+        Xresources
+        ycm_extra_conf.py
+    )
+
+    for f in "${files[@]}"; do
+        link_dotfile "$f"
+    done
+
 )

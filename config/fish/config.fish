@@ -39,10 +39,13 @@ alias gs 'git status'
 alias gh 'git hist'
 
 ################################################################################
-set -l script_dir (dirname (status -f))
+set -l XDG_CONFIG_DIR "$XDG_CONFIG_DIR"
+if test -z "$XDG_CONFIG_DIR"
+  set XDG_CONFIG_DIR "$HOME/.config"
+end
 
-if test -d "$script_dir/config.fish.d"
-  for f in "$script_dir/config.fish.d/"*.fish
+if test -d "$XDG_CONFIG_DIR/fish/config.fish.d"
+  for f in "$XDG_CONFIG_DIR/fish/config.fish.d/"*.fish
     source $f
   end
 end

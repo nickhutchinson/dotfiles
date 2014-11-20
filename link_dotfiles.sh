@@ -22,6 +22,7 @@ link_dotfile() {
     set +e
 
     echo_exec mkdir -p ~/.config
+    echo_exec mkdir -p ~/.config/mr/config.d
     echo_exec mkdir -p ~/.config/fish/{config.fish.d,functions}
 
     files=(
@@ -33,10 +34,12 @@ link_dotfile() {
         config/base16-xresources
         config/fish/config.fish
         config/fish/{config.fish.d,functions}/*.fish
+        config/mr/config.d/*
         gdbinit
         gitattributes
         gitconfig
         gitignore
+        mrconfig
         pdbrc
         promptline.sh
         tmux-linux.conf

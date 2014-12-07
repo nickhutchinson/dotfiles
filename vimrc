@@ -9,7 +9,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'eiginn/netrw' " built-in version often very out-of-date, buggy.
 Plug 'embear/vim-localvimrc'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
@@ -18,6 +17,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
 Plug 'ton/vim-bufsurf'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -59,6 +59,7 @@ Plug 'xolox/vim-notes'
 " == Syntax/filetype-specific ==
 Plug 'derekwyatt/vim-scala'
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'fatih/vim-go'
 Plug 'fish-syntax'
 Plug 'honza/vim-snippets'
 Plug 'hynek/vim-python-pep8-indent'
@@ -70,6 +71,7 @@ Plug 'othree/html5.vim'
 Plug 'scons.vim'
 Plug 'SirVer/ultisnips', { 'on': [], }
 Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
+Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-markdown'
@@ -83,7 +85,6 @@ Plug 'vim-jp/cpp-vim'
 " Plug '~/Desktop/fuzzy_finder'
 " ---
 " Plug 'bufkill.vim' " Buggy
-" Plug 'scrooloose/nerdtree' " Too damn buggy.
 " Plug 'airblade/vim-gitgutter' " ditto.
 " ---
 " Plug 'Shougo/unite.vim'

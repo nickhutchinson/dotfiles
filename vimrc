@@ -6,7 +6,7 @@ Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'derekwyatt/vim-fswitch'
+" Plug 'derekwyatt/vim-fswitch'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'embear/vim-localvimrc'
@@ -79,6 +79,7 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-scriptease'
 Plug 'Valloric/YouCompleteMe'  " Requires compilation
 Plug 'vim-jp/cpp-vim'
+Plug 'scrooloose/nerdtree'
 
 
 " == Plugin graveyard. ==
@@ -165,13 +166,22 @@ endif
 "}}}
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
+
+function! <SID>SetDoxygenCommentTypes()
+    setl comments-=://
+    setl comments+=:///,://
+
+endfunction
+
 augroup vimrc_filetypes
   au!
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
+  au BufRead,BufNewFile *.ypp setf yacc.cpp
   au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
   au Filetype cpp,c,objc,objcpp setl fdm=indent
+  au Filetype cpp,c,objc,objcpp call <SID>SetDoxygenCommentTypes()
   au Filetype lua setl ts=2 sts=2 sw=2
   au Filetype python setl formatexpr=autopep8#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
@@ -233,8 +243,8 @@ let g:NERDTreeMapOpenSplit="<C-S>"
 let g:NERDTreeMapOpenVSplit="<C-V>"
 let g:NERDTreeMapUpdirKeepOpen="-"
 
+let g:NERDTreeShowHidden=1
 let g:NERDTreeRespectWildignore = 1
-let g:NERDTreeShowBookmarks=1
 let g:NERDTreeSortOrder=[]
 
 "}}}
@@ -262,11 +272,15 @@ nnoremap <C-]> :CtrlPtjump<cr>
 vnoremap <C-]> :CtrlPtjumpVisual<cr>
 "}}}
 " YouCompleteMe{{{
+let g:ycm_extra_conf_globlist = [
+      \ '/workspace/Katana/*',
+      \ '/workspace/nick/Desktop/KatanaScratchpad/*',
+      \ '~/.ycm_extra_conf.py']
+
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_extra_conf_globlist = ["~/.ycm_extra_conf.py"]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 if executable("/usr/local/opt/python/bin/python")
   let g:ycm_path_to_python_interpreter = "/usr/local/opt/python/bin/python"
@@ -381,7 +395,7 @@ let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
+" let g:session_autoload = 'yes'
 "}}}
 " Instant Markdown{{{
 let g:instant_markdown_autostart = 0

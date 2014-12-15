@@ -11,7 +11,6 @@ Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'embear/vim-localvimrc'
 Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 Plug 'jpalardy/vim-slime'
 Plug 'kien/ctrlp.vim'
 Plug 'mattn/gist-vim'
@@ -28,8 +27,16 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
+Plug 'wincent/command-t'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+
+if isdirectory(expand('~/Documents/Development/ctrlp-luamatcher'))
+  Plug '~/Documents/Development/ctrlp-luamatcher'
+else
+  Plug 'nickhutchinson/ctrlp-luamatcher'
+end
+" Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 
 " == Text editing ==
 Plug 'AndrewRadev/linediff.vim'
@@ -80,17 +87,6 @@ Plug 'tpope/vim-scriptease'
 Plug 'Valloric/YouCompleteMe'  " Requires compilation
 Plug 'vim-jp/cpp-vim'
 Plug 'scrooloose/nerdtree'
-
-
-" == Plugin graveyard. ==
-" Plug '~/Desktop/fuzzy_finder'
-" ---
-" Plug 'bufkill.vim' " Buggy
-" Plug 'airblade/vim-gitgutter' " ditto.
-" ---
-" Plug 'Shougo/unite.vim'
-" Plug 'Shougo/vimfiler.vim'
-" let g:vimfiler_as_default_explorer = 1
 
 call plug#end()
 " }}}
@@ -246,6 +242,7 @@ let g:NERDTreeMapUpdirKeepOpen="-"
 let g:NERDTreeShowHidden=1
 let g:NERDTreeRespectWildignore = 1
 let g:NERDTreeSortOrder=[]
+let g:NERDTreeMinimalUI=1
 
 "}}}
 " Wilgignore{{{
@@ -256,10 +253,14 @@ let g:ctrlp_custom_ignore = {
 let g:NERDTreeRespectWildIgnore = 1
 "}}}
 " CtrlP{{{
+let g:CommandTFileScanner="find"
+let g:CommandTMaxFiles=200000
+
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cmd = "CtrlPMixed"
 let g:ctrlp_lazy_update = 50
-let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
+let g:ctrlp_match_func  = {'match' : 'ctrlp_luamatcher#Match'}
+" let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:13'
 let g:ctrlp_max_files=100000
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
@@ -389,6 +390,7 @@ nmap <leader>ss <Plug>SlimeLineSend
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_glsl_checkers = ['glslang']
 let g:syntastic_lua_checkers = ['luajit']
 let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'

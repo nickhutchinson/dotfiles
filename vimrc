@@ -163,6 +163,7 @@ endif
 set ts=4 sts=4 sw=4 expandtab
 augroup vimrc_filetypes
   au!
+  au BufRead,BufNewFile *.tesc,*.tese,*.comp set ft=glsl
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
@@ -172,6 +173,9 @@ augroup vimrc_filetypes
   au Filetype python setl formatexpr=autopep8#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
+  au Filetype glsl setl comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+
+
   " Don't let us get swamped with fugitive buffers
   au BufReadPost fugitive://* set bufhidden=delete
 augroup END

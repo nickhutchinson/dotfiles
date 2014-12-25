@@ -167,9 +167,10 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
+
   au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
   au Filetype cpp,c,objc,objcpp setl fdm=indent
-  au Filetype lua setl ts=2 sts=2 sw=2
+  au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=autopep8#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2

@@ -79,6 +79,7 @@ Plug 'scons.vim'
 Plug 'SirVer/ultisnips', { 'on': [], }
 Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
 Plug 'tikhomirov/vim-glsl'
+Plug 'Keithbsmiley/swift.vim'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-markdown'
@@ -204,6 +205,9 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
+nnoremap <leader>go :BufSurfBack<CR>
+nnoremap <leader>gp :BufSurfForward<CR>
+
 " copy absolute path to clipboard
 nnoremap <leader>cp :let @+ = expand("%:p")<CR>
 
@@ -251,7 +255,7 @@ let g:CommandTFileScanner="find"
 let g:CommandTMaxFiles=200000
 
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cmd = "CtrlPMixed"
+" let g:ctrlp_cmd = "CtrlPMixed"
 let g:ctrlp_lazy_update = 50
 let g:ctrlp_match_func  = {'match' : 'ctrlp_luamatcher#Match'}
 " let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
@@ -438,5 +442,9 @@ endif
 
 
 "}}}
+
+nnoremap <leader>\| :vsp<CR>
+nnoremap <leader>- :sp<CR>
+nnoremap <leader><space> :noh<CR>
 
 " vim: fdm=marker:foldlevel=0:

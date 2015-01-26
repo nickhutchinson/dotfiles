@@ -167,7 +167,6 @@ set ts=4 sts=4 sw=4 expandtab
 function! <SID>SetDoxygenCommentTypes()
     setl comments-=://
     setl comments+=:///,://
-
 endfunction
 
 augroup vimrc_filetypes
@@ -179,7 +178,7 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile SConscript,SConstruct setf scons
 
   au Filetype cpp,c,objc,objcpp call <SID>SetDoxygenCommentTypes()
-  au Filetype cpp,c,objc,objcpp setl fdm=indent
+  au Filetype cpp,c,objc,objcpp setl fdm=syntax
   au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
   au Filetype glsl setl comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
@@ -233,6 +232,17 @@ command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | 
 nnoremap <F1> <nop>
 nnoremap Q <nop>
 nnoremap K <nop>
+
+" Fat fingers
+command! -bang -nargs=? -complete=file E e<bang> <args>
+command! -bang -nargs=? -complete=file W w<bang> <args>
+command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+command! -bang Wa wa<bang>
+command! -bang WA wa<bang>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
 
 "}}}
 
@@ -405,7 +415,7 @@ let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'
-" let g:session_autoload = 'yes'
+let g:session_autoload = 'yes'
 "}}}
 " Instant Markdown{{{
 let g:instant_markdown_autostart = 0

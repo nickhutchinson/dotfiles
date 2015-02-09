@@ -207,8 +207,8 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
-nnoremap <leader>go :BufSurfBack<CR>
-nnoremap <leader>gp :BufSurfForward<CR>
+nnoremap gb :BufSurfBack<CR>
+nnoremap gB :BufSurfForward<CR>
 
 " copy absolute path to clipboard
 nnoremap <leader>cp :let @+ = expand("%:p")<CR>
@@ -222,12 +222,11 @@ nnoremap <leader>F :echo printf("%s:%d", expand("%:p"), line("."))<CR>
 
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | let @/=""'
 
-" Butter fingers
+
+" Fat fingers
 nnoremap <F1> <nop>
 nnoremap Q <nop>
 nnoremap K <nop>
-
-" Fat fingers
 command! -bang -nargs=? -complete=file E e<bang> <args>
 command! -bang -nargs=? -complete=file W w<bang> <args>
 command! -bang -nargs=? -complete=file Wq wq<bang> <args>

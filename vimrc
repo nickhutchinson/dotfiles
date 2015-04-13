@@ -28,6 +28,7 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+Plug 'airblade/vim-gitgutter'
 
 if isdirectory(expand('~/Documents/Development/ctrlp-luamatcher'))
   Plug '~/Documents/Development/ctrlp-luamatcher'
@@ -71,7 +72,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
 Plug 'scons.vim'
 Plug 'SirVer/ultisnips', { 'on': [], }
-Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
+Plug 'shime/vim-livedown'
+" Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
 Plug 'tikhomirov/vim-glsl'
 Plug 'Keithbsmiley/swift.vim'
 Plug 'tpope/vim-git'
@@ -340,6 +342,7 @@ nmap <Leader>a <Plug>(EasyAlign)
 "}}}
 " Tagbar{{{
 nnoremap <F8> :TagbarToggle<CR>
+let g:tagbar_sort = 0
 let g:tagbar_type_objc = {
     \ 'ctagstype' : 'ObjectiveC',
     \ 'kinds'     : [

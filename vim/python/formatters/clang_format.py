@@ -71,7 +71,8 @@ def ClangFormat(start=None, end=None):
     print stderr
 
   if not stdout:
-    print ('No output from clang-format (crashed?).\n' +
+    print(
+        'No output from clang-format (crashed?).\n' +
         'Please report to bugs.llvm.org.')
   else:
     lines = stdout.split('\n')
@@ -82,5 +83,3 @@ def ClangFormat(start=None, end=None):
       if op[0] is not 'equal':
         vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
     vim.command('goto %d' % (output['Cursor'] + 1))
-
-

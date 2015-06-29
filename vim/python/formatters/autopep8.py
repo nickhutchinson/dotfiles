@@ -50,10 +50,8 @@ def AutoPep8(start=None, end=None):
     if not stdout:
         print('No output from autopep8; command was {0}'.format(command))
     else:
-        lines = stdout.split('\n')
+        lines = stdout.splitlines()
         sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
         for op in reversed(sequence.get_opcodes()):
             if op[0] is not 'equal':
                 vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
-
-

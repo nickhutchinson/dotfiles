@@ -63,7 +63,7 @@ def Yapf(start=None, end=None):
 
     # If successful, replace buffer contents.
     if stdout:
-        lines = stdout.split('\n')
+        lines = stdout.splitlines()
         sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
         for op in reversed(sequence.get_opcodes()):
             if op[0] is not 'equal':

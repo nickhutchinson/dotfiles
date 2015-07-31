@@ -6,7 +6,6 @@ Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'derekwyatt/vim-fswitch'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
@@ -28,28 +27,27 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 if isdirectory(expand('~/Documents/Development/ctrlp-luamatcher'))
   Plug '~/Documents/Development/ctrlp-luamatcher'
 else
   Plug 'nickhutchinson/ctrlp-luamatcher'
 end
-" Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 
 " == Text editing ==
 Plug 'AndrewRadev/linediff.vim'
-Plug 'junegunn/goyo.vim'
+" Plug 'vim-scripts/YankRing.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-user'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
-Plug 'tomtom/tcomment_vim'
+if v:version >= 704
+  Plug 'tomtom/tcomment_vim'
+endif
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise'
@@ -58,6 +56,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
+Plug 'SWIG-syntax'
 
 " == Syntax/filetype-specific ==
 Plug 'derekwyatt/vim-scala'
@@ -70,18 +69,20 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
-Plug 'scons.vim'
-Plug 'SirVer/ultisnips', { 'on': [], }
+if v:version >= 704
+  Plug 'SirVer/ultisnips', { 'on': [], }
+endif
 Plug 'shime/vim-livedown'
-" Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
 Plug 'tikhomirov/vim-glsl'
 Plug 'Keithbsmiley/swift.vim'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-scriptease'
-Plug 'Valloric/YouCompleteMe'  " Requires compilation
+
+if v:version >= 704
+  Plug 'Valloric/YouCompleteMe'  " Requires compilation
+endif
 Plug 'vim-jp/cpp-vim'
 Plug 'scrooloose/nerdtree'
 
@@ -106,7 +107,14 @@ set number
 set hlsearch
 set ignorecase
 set smartcase
-set colorcolumn=81
+if v:version >= 704
+  set colorcolumn=81
+  set formatoptions+=j
+  set regexpengine=1 " Allegedly this is faster than the newfangled regex engine
+  set undofile
+  set undodir=~/.vim/undo//,/tmp/vim//,/tmp//
+  set wildignorecase  " case insensitive filename completion
+endif
 set matchpairs+=<:>
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮,trail:·'
 let &showbreak='↪ '
@@ -116,13 +124,8 @@ set cursorline
 set clipboard=unnamed,unnamedplus
 set noshowmode
 set splitbelow
-set formatoptions+=j
 set splitright
 set spelllang=en_gb
-set undofile
-set undodir=~/.vim/undo//,/tmp/vim//,/tmp//
-set wildignorecase  " case insensitive filename completion
-set regexpengine=1 " Allegedly this is faster than the newfangled regex engine
 set foldlevelstart=99
 set scrolloff=10
 
@@ -168,6 +171,7 @@ endfunction
 augroup vimrc_filetypes
   au!
   au BufRead,BufNewFile *.m setf objc
+  au BufRead,BufNewFile *.i set ft=swig
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile *.tesc,*.tese,*.comp set ft=glsl
   au BufRead,BufNewFile *.ypp setf yacc.cpp
@@ -179,7 +183,10 @@ augroup vimrc_filetypes
   au Filetype glsl setl comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=autopep8#formatexpr()
-  au Filetype python setl tw=79 cc=+1 fdm=indent
+  au Filetype python setl tw=79 fdm=indent
+  if v:version >= 704
+    au Filetype python setl cc=+1
+  endif
   au Filetype ruby setl ts=2 sts=2 sw=2
 
   " Don't let us get swamped with fugitive buffers
@@ -259,7 +266,7 @@ let g:NERDTreeMinimalUI=1
 
 "}}}
 " Wilgignore{{{
-set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
+set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo,*.so.debug
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
     \ }
@@ -269,6 +276,7 @@ let g:NERDTreeRespectWildIgnore = 1
 let g:CommandTFileScanner="find"
 let g:CommandTMaxFiles=200000
 
+" let g:crtlp_map='<c-\>'
 let g:ctrlp_clear_cache_on_exit = 0
 " let g:ctrlp_cmd = "CtrlPMixed"
 let g:ctrlp_lazy_update = 50
@@ -406,7 +414,7 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_glsl_checkers = ['glslang']
 let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
@@ -449,10 +457,12 @@ nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(st
 " Replace current word
 nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 
-augroup lazy_load
-  au!
-  au InsertEnter * call plug#load('ultisnips') | au! lazy_load
-augroup END
+if v:version >= 704
+  augroup lazy_load
+    au!
+    au InsertEnter * call plug#load('ultisnips') | au! lazy_load
+  augroup END
+endif
 
 if has("gui_running")
   set lines=999 columns=999
@@ -466,5 +476,11 @@ endif
 nnoremap <leader>\| :vsp<CR>
 nnoremap <leader>- :sp<CR>
 nnoremap <leader><space> :noh<CR>
+
+" " https://bitbucket.org/sjl/dotfiles/src/e7f1e7f3a7970c64cce0e5af8a93464f1e24bc01/vim/vimrc?at=default#cl-1800
+" function! YRRunAfterMaps()
+"     " Don't clobber the yank register when pasting over text in visual mode.
+"     vnoremap p :<c-u>YRPaste 'p', 'v'<cr>gv:YRYankRange 'v'<cr>
+" endfunction
 
 " vim: fdm=marker:foldlevel=0:

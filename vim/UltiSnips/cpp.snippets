@@ -1,0 +1,26 @@
+snippet debugts
+static std::string DebugTimestamp()
+{
+	time_t currentTime = time(NULL);
+	struct tm components;
+	gmtime_r(&currentTime, &components);
+
+	char* string = NULL;
+	asprintf(&string, "%04d-%02d-%02dT%02d:%02d:%02dZ",
+			components.tm_year + 1900, components.tm_mon + 1,
+			components.tm_mday, components.tm_hour, components.tm_min,
+			components.tm_sec);
+	std::string ret(string);
+	free(string);
+	return ret;
+}
+endsnippet
+
+snippet debugBuilder
+static std::string DebugBuilder(/*const*/ FnAttribute::GroupBuilder& gb)
+{
+	FnAttribute::Attribute attr =
+		gb.build(FnAttribute::GroupBuilder::BuildAndRetain);
+	return attr.getXML();
+}
+endsnippet

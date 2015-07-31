@@ -1,0 +1,11 @@
+global !p
+import re
+def _module_var(module_name):
+	module_name = re.sub(r'^.*\W(?=\w)', '', module_name)
+	module_name = re.sub('\W+', '_', module_name)
+	return module_name
+endglobal
+
+snippet require "Require module (require)" b
+local ${2:`!p snip.rv = _module_var(t[1])`} = require "${1:module_name}"$0
+endsnippet

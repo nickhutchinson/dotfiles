@@ -6,7 +6,7 @@ import vim
 BINARY = 'autopep8'
 
 def _Win32StartupInfo():
-    startupinfo = None
+    startupinfo =   None
     if sys.platform.startswith('win32'):
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW

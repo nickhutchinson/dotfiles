@@ -1,0 +1,8 @@
+snippet #! "Shebang + boilerplate" b
+#!/usr/bin/env bash
+set -eu -o pipefail -o errtrace
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+${0:echo 'Hello world!'}
+endsnippet

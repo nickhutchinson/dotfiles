@@ -1,0 +1,14 @@
+snippet climain "A CLI based on Click" b
+#!/usr/bin/env python
+# encoding: utf-8
+
+import click
+
+
+@click.command()
+def cli():
+	${0:pass}
+
+if __name__ == '__main__':
+	cli()
+endsnippet

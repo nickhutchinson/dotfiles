@@ -25,6 +25,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-vinegar'
+Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 " Plug 'airblade/vim-gitgutter'
@@ -58,7 +59,10 @@ Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 Plug 'SWIG-syntax'
 
+Plug 'drawit'
+
 " == Syntax/filetype-specific ==
+Plug 'jneen/ragel.vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-go'
@@ -182,8 +186,8 @@ augroup vimrc_filetypes
   au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
   au Filetype glsl setl comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
-  au Filetype python setl formatexpr=autopep8#formatexpr()
-  au Filetype python setl tw=79 fdm=indent
+  au Filetype python setl formatexpr=yapf#formatexpr()
+  au Filetype python setl tw=79 cc=+1 fdm=indent
   if v:version >= 704
     au Filetype python setl cc=+1
   endif

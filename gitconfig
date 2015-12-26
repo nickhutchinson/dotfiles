@@ -7,31 +7,16 @@
 
 [alias]
 	hist = log --date=relative --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
-	hist-all = hist all
-	hist-no-graph = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
-	whatis = show --date=short -s --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
-	slap = blame -wC 
-	diffcw = diff --color-words
-	unstage = reset HEAD --
-	startbranch = checkout -b
-	search = grep -i --break --heading --line-number -P
-	searchhist = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E -G
-	searchmsgs = log --date=relative --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' -i -E --grep
 
 [color]
 	ui = auto
 
-[blame]
-	date = short
-[push]
-	default = simple
-[github]
-	user = nickhutchinson
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true
-[credential]
-	helper = osxkeychain
+[user]
+	name = Nicholas Hutchinson
+	email = nshutchinson@gmail.com

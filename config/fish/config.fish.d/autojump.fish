@@ -1,9 +1,7 @@
-if type autojump > /dev/null
-  . (dirname (type -p autojump))/../etc/autojump.fish
-end
+if test -f "$HOME/.autojump/etc/profile.d/autojump.fish"
+  . "$HOME/.autojump/etc/profile.d/autojump.fish"
 
-set -l AUTOJUMP_PATH "$HOME/.autojump/etc/profile.d/autojump.fish"
-if test -f $AUTOJUMP_PATH
-  . $AUTOJUMP_PATH
+else if test -f /etc/profile.d/autojump.fish
+  . /etc/profile.d/autojump.fish
 end
 

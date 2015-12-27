@@ -6,7 +6,6 @@ Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'derekwyatt/vim-fswitch'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
@@ -36,7 +35,6 @@ if isdirectory(expand('~/Documents/Development/ctrlp-luamatcher'))
 else
   Plug 'nickhutchinson/ctrlp-luamatcher'
 end
-" Plug 'JazzCore/ctrlp-cmatcher'  " Requires compilation
 
 " == Text editing ==
 Plug 'AndrewRadev/linediff.vim'
@@ -99,7 +97,7 @@ if $TERM_PROGRAM != "Apple_Terminal"
 endif
 
 set background=dark
-colorscheme base16-monokai
+colorscheme base16-ocean
 " }}}
 
 let mapleader = ","
@@ -276,8 +274,9 @@ let g:CommandTMaxFiles=200000
 let g:ctrlp_clear_cache_on_exit = 0
 " let g:ctrlp_cmd = "CtrlPMixed"
 let g:ctrlp_lazy_update = 50
-let g:ctrlp_match_func  = {'match' : 'ctrlp_luamatcher#Match'}
-" let g:ctrlp_match_func  = {'match' : 'matcher#cmatch'}
+if has('lua')
+  let g:ctrlp_match_func  = {'match' : 'ctrlp_luamatcher#Match'}
+endif
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:13'
 let g:ctrlp_max_files=100000
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']

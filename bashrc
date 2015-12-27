@@ -13,7 +13,8 @@ is_interactive() {
 }
 
 try_source /etc/bashrc
-try_source /workspace/Katana/QA_Resources/Resources/Apps/Katana/Modules/.qaBashrc
-try_source /opt/intel/vtune_amplifier_xe_2013/amplxe-vars.sh >/dev/null
 
-
+if is_interactive; then
+    try_source "$HOME/.config/base16-shell/base16-ocean.dark.sh"
+    export TERM=xterm-256color
+fi

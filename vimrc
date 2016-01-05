@@ -2,46 +2,34 @@
 call plug#begin('~/.vim/plugged')
 
 " == General ==
+Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'drawit'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'jpalardy/vim-slime'
-Plug 'kien/ctrlp.vim'
-Plug 'mattn/gist-vim'
-Plug 'mattn/webapi-vim'
+Plug 'jeetsukumaran/vim-filebeagle'
+Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
+Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
+Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'rking/ag.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'ton/vim-bufsurf'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-dispatch' " process launcher
+Plug 'tpope/vim-eunuch' " UNIX commands
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-rsi' " readline bindings
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-vinegar'
-Plug 'raymond-w-ko/vim-lua-indent'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-Plug 'airblade/vim-gitgutter'
-
-if isdirectory(expand('~/Documents/Development/ctrlp-luamatcher'))
-  Plug '~/Documents/Development/ctrlp-luamatcher'
-else
-  Plug 'nickhutchinson/ctrlp-luamatcher'
-end
+Plug 'tpope/vim-tbone' " tmux
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 
 " == Text editing ==
 Plug 'AndrewRadev/linediff.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim' " focussed text editing
 Plug 'junegunn/vim-easy-align'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-indent'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
@@ -53,39 +41,33 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
-Plug 'drawit'
-
 " == Syntax/filetype-specific ==
-Plug 'jneen/ragel.vim'
-Plug 'derekwyatt/vim-scala'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-go'
 Plug 'fish-syntax'
-Plug 'honza/vim-snippets'
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'jneen/ragel.vim'
+Plug 'Keithbsmiley/swift.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
 Plug 'scons.vim'
-Plug 'SirVer/ultisnips', { 'on': [], }
 Plug 'shime/vim-livedown'
-" Plug 'suan/vim-instant-markdown'  " Requires setup, and lots of it.
+Plug 'SirVer/ultisnips', { 'on': [], }
 Plug 'tikhomirov/vim-glsl'
-Plug 'Keithbsmiley/swift.vim'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-jdaddy' " JSON
 Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-ragtag' " XML/HTML
 Plug 'tpope/vim-scriptease'
 Plug 'Valloric/YouCompleteMe'  " Requires compilation
 Plug 'vim-jp/cpp-vim'
-Plug 'scrooloose/nerdtree'
 
 call plug#end()
 " }}}
@@ -101,42 +83,36 @@ colorscheme base16-ocean
 " }}}
 
 let mapleader = ","
-set shortmess+=I
-set list
+let &showbreak='↪ '
+set clipboard=unnamed,unnamedplus
+let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
+set colorcolumn=81
+set cursorline
+set foldlevelstart=99
+set formatoptions+=jn " j: join commented lines sensibly; n: indent lists properly
 set hidden
-set number
 set hlsearch
 set ignorecase
-set smartcase
-set colorcolumn=81
+set list
 set matchpairs+=<:>
-let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮,trail:·'
-let &showbreak='↪ '
-set numberwidth=2
-set noswapfile
-set cursorline
-set clipboard=unnamed,unnamedplus
 set noshowmode
-set splitbelow
-set formatoptions+=j
-set splitright
-set spelllang=en_gb
-set undofile
-set undodir=~/.vim/undo//,/tmp/vim//,/tmp//
-set wildignorecase  " case insensitive filename completion
-set regexpengine=1 " Allegedly this is faster than the newfangled regex engine
-set foldlevelstart=99
+set noswapfile
+set number
+set numberwidth=2
 set scrolloff=10
+set shortmess+=I
+set smartcase
+set spell
+set spelllang=en_gb
+set splitbelow
+set splitright
+set undodir=/tmp/vim/,.
+set undofile
+set wildignorecase  " case insensitive filename completion
 
 if has("mac")
   set macmeta
 endif
-
-augroup trailing
-  au!
-  au InsertEnter * :set listchars-=trail:·
-  au InsertLeave * :set listchars+=trail:·
-augroup END
 
 " GUI Options{{{
 set mouse+=a
@@ -162,11 +138,6 @@ endif
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
 
-function! <SID>SetDoxygenCommentTypes()
-    setl comments-=://
-    setl comments+=:///,://
-endfunction
-
 augroup vimrc_filetypes
   au!
   au BufRead,BufNewFile *.m setf objc
@@ -175,9 +146,9 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.ypp setf yacc.cpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
 
-  au Filetype cpp,c,objc,objcpp call <SID>SetDoxygenCommentTypes()
-  au Filetype cpp,c,objc,objcpp setl fdm=syntax
-  au Filetype cpp,c,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype c,cpp,objc,objcpp setl comments-=:// comments+=:///,://
+  au Filetype c,cpp,objc,objcpp setl fdm=syntax
+  au Filetype c,cpp,objc,objcpp setl formatexpr=clang_format#formatexpr()
   au Filetype glsl setl comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=yapf#formatexpr()
@@ -211,9 +182,6 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
-nnoremap gb :BufSurfBack<CR>
-nnoremap gB :BufSurfForward<CR>
-
 " copy absolute path to clipboard
 nnoremap <leader>cp :let @+ = expand("%:p")<CR>
 
@@ -244,28 +212,11 @@ command! -bang Qa qa<bang>
 "}}}
 
 "Plugin Config {{{
-" NERDTree"{{{
-nnoremap <silent> <leader>n :NERDTreeToggle<CR>
-nnoremap <silent> <leader>N :NERDTreeFind<CR>
-
-let g:NERDTreeMapHelp = "<F1>"
-let g:NERDTreeMapOpenInTab="<C-T>"
-let g:NERDTreeMapOpenSplit="<C-S>"
-let g:NERDTreeMapOpenVSplit="<C-V>"
-let g:NERDTreeMapUpdirKeepOpen="-"
-
-let g:NERDTreeShowHidden=1
-let g:NERDTreeRespectWildignore = 1
-let g:NERDTreeSortOrder=[]
-let g:NERDTreeMinimalUI=1
-
-"}}}
-" Wilgignore{{{
+" Wildignore{{{
 set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
     \ }
-let g:NERDTreeRespectWildIgnore = 1
 "}}}
 " CtrlP{{{
 let g:CommandTFileScanner="find"
@@ -304,11 +255,6 @@ if executable("/usr/local/opt/python/bin/python")
 endif
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
-" Eregex{{{
-let g:eregex_default_enable = 0
-" Toggles '/' to mean eregex search or normal Vim search
-nnoremap <leader>/ :call eregex#toggle()<CR>
-" }}}
 " Airline/Bufferline{{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
@@ -321,10 +267,6 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#syntastic#enabled = 0
 let g:bufferline_echo = 0
 let g:airline_theme="base16"
-"}}}
-" LocalVimrc{{{
-let g:localvimrc_persistent = 1
-let g:localvimrc_sandbox    = 0
 "}}}
 " Gist {{{
 let g:gist_open_browser_after_post = 1
@@ -396,13 +338,6 @@ let g:projectiles = {
    \ }
    \ }
 "}}}
-" Slime{{{
-let g:slime_target = "tmux"
-let g:slime_no_mappings = 1
-xmap <leader>s <Plug>SlimeRegionSend
-nmap <leader>s <Plug>SlimeMotionSend
-nmap <leader>ss <Plug>SlimeLineSend
-"}}}
 " Syntastic{{{
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
@@ -415,9 +350,6 @@ let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "VimSession{{{
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
-"}}}
-" Instant Markdown{{{
-let g:instant_markdown_autostart = 0
 "}}}
 " Fugitive"{{{
 nnoremap <leader>gd :Gdiff<cr>
@@ -432,15 +364,9 @@ let g:promptline_preset = {
     \'y' : [ promptline#slices#vcs_branch() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
 "}}}
+" Doxygen {{{
+let g:load_doxygen_syntax=1
 "}}}
-
-" Misc{{{
-augroup foundry
-  au!
-  au BufRead,BufNewFile *.args setf xml
-augroup END
-
-if filereadable(expand("~/.vimrc.local")) | source ~/.vimrc.local | endif
 "}}}
 
 " Scratchpad"{{{
@@ -465,9 +391,5 @@ endif
 
 
 "}}}
-
-nnoremap <leader>\| :vsp<CR>
-nnoremap <leader>- :sp<CR>
-nnoremap <leader><space> :noh<CR>
 
 " vim: fdm=marker:foldlevel=0:

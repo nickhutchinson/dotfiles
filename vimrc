@@ -160,6 +160,11 @@ augroup vimrc_filetypes
   au BufReadPost fugitive://* set bufhidden=delete
 augroup END
 let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
+" Fix buggy syntax highlighting in bash scripts.
+" <http://stackoverflow.com/questions/11044378/syntax-highlighting-bugs-of-vim-7-3-for-bash-scripts>
+let g:sh_no_error=1
+set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
+let g:load_doxygen_syntax=1
 "}}}
 " Mappings/Commands {{{
 
@@ -209,29 +214,19 @@ command! -bang WA wa<bang>
 command! -bang Q q<bang>
 command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
-
 "}}}
 
 "Plugin Config {{{
-" Wildignore{{{
-set wildignore+=*.exe,*.so,*.dll,*.pyc,*.pyo
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v/(out|(Apps/Katana/)@<!objects)$',
-    \ }
-"}}}
 " CtrlP{{{
-let g:CommandTFileScanner="find"
-let g:CommandTMaxFiles=200000
-
 let g:ctrlp_clear_cache_on_exit = 0
-" let g:ctrlp_cmd = "CtrlPMixed"
+let g:ctrlp_custom_ignore = {'dir': '\v/(out|(Apps/Katana/)@<!objects)$'}
 let g:ctrlp_lazy_update = 50
-if has('lua')
-  let g:ctrlp_match_func  = {'match' : 'ctrlp_luamatcher#Match'}
-endif
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:13'
 let g:ctrlp_max_files=100000
 let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
+if has('lua')
+  let g:ctrlp_match_func  = {'match': 'ctrlp_luamatcher#Match'}
+endif
 nnoremap <leader>t :CtrlPBufTagAll<CR>
 nnoremap <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <leader>r :CtrlPMRUFiles<CR>
@@ -364,9 +359,6 @@ let g:promptline_preset = {
     \'c' : [ promptline#slices#cwd() ],
     \'y' : [ promptline#slices#vcs_branch() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
-"}}}
-" Doxygen {{{
-let g:load_doxygen_syntax=1
 "}}}
 "}}}
 

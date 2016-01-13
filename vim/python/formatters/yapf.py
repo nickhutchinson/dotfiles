@@ -30,27 +30,20 @@ def TemporaryDirectory(delete=True, *args, **kwargs):
             shutil.rmtree(path)
 
 
-def Yapf(start=None, end=None):
+def Yapf(start, end):
     # Get the current text.
     buf = vim.current.buffer
     text = "\n".join(buf)
 
     command = [BINARY]
 
-    # Determine range to format.
-    if not start or not end:
-        lines = '%s-%s' % (vim.current.range.start + 1,
-                           vim.current.range.end + 1)
-    else:
-        lines = '%s-%s' % (start, end)
-
     with TemporaryDirectory() as temp_dir_path:
         tempfile_path = os.path.join(temp_dir_path,
                                      os.path.basename(vim.current.buffer.name))
-        with open(tempfile_path, "wb") as f:
+        with open(tempfile_path, "ab+") as f:
             f.write(text)
 
-        command += ["-l", lines]
+        command += ["-l", '%s-%s' % (start + 1, end + 1), ]
         command += ['--style={indent_width: %d}' % buf.options['shiftwidth']]
         command += [tempfile_path]
 
@@ -65,8 +58,19 @@ def Yapf(start=None, end=None):
     if stdout:
         lines = stdout.splitlines()
         sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
-        for op in reversed(sequence.get_opcodes()):
-            if op[0] is not 'equal':
-                vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
+        for op, i1, i2, j1, j2 in reversed(sequence.get_opcodes()):
+            if op == 'equal':
+                continue
+
+            whitespace_only = True
+            for k in xrange(max(i2 - i1, j2 - j1)):
+                line_a = buf[i1 + k] if k < i2 - i1 else ''
+                line_b = lines[j1 + k] if k < j2 - j1 else ''
+                whitespace_only = line_a.strip() == line_b.strip()
+                if not whitespace_only:
+                    break
+
+            if i1 <= end and i2 >= start or not whitespace_only:
+                buf[i1:i2] = lines[j1:j2]
     else:
         print('ERROR: No output from %r' % (command, ))

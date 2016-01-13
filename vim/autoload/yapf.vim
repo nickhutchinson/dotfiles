@@ -18,8 +18,8 @@ python << EOF
 import formatters.yapf
 import vim
 formatters.yapf.Yapf(
-    vim.vvars['lnum'], 
-    vim.vvars['lnum'] + vim.vvars['count'])
+    vim.vvars['lnum'] - 1,
+    vim.vvars['lnum'] + vim.vvars['count'] - 2)
 EOF
 endfunction
 

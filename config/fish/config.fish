@@ -32,12 +32,6 @@ case 'Darwin'
   alias o open
 end
 
-alias gdc 'git diff --cached'
-alias gd 'git diff'
-alias gc 'git checkout'
-alias gs 'git status'
-alias gh 'git hist'
-
 ################################################################################
 set -l XDG_CONFIG_DIR "$XDG_CONFIG_DIR"
 if test -z "$XDG_CONFIG_DIR"

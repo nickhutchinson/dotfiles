@@ -18,8 +18,8 @@ python << EOF
 import formatters.clang_format
 import vim
 formatters.clang_format.ClangFormat(
-    vim.vvars['lnum'], 
-    vim.vvars['lnum'] + vim.vvars['count'])
+    vim.vvars['lnum'] - 1,
+    vim.vvars['lnum'] + vim.vvars['count'] - 2)
 EOF
 endfunction
 

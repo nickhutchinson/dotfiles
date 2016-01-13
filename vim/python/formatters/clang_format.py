@@ -24,62 +24,62 @@ import sys
 import vim
 
 # Change this to the full path if clang-format is not on the path.
-binary = 'clang-format'
+binary = '/usr/local/opt/clang-format/bin/clang-format'
 
 # Change this to format according to other formatting styles. See the output of
-# 'clang-format --help' for a list of supported styles. The default looks for
-# a '.clang-format' or '_clang-format' file to indicate the style that should be
+# 'clang-format --help' for a list of supported styles. The default looks for a
+# '.clang-format' or '_clang-format' file to indicate the style that should be
 # used.
 style = 'file'
 
-def ClangFormat(start=None, end=None):
-  # Get the current text.
-  buf = vim.current.buffer
-  text = '\n'.join(buf)
 
-  # Determine range to format.
-  if not start or not end:
-    lines = '%s:%s' % (vim.current.range.start + 1, vim.current.range.end + 1)
-  else:
-    lines = '%s:%s' % (start, end)
+def ClangFormat(start, end):
+    # Get the current text.
+    buf = vim.current.buffer
+    text = '\n'.join(buf)
 
-  # Determine the cursor position.
-  cursor = int(vim.eval('line2byte(line("."))+col(".")')) - 2
-  if cursor < 0:
-    print('Couldn\'t determine cursor position. Is your file empty?')
-    return
+    # Determine range to format.
+    lines = '%s:%s' % (start + 1, end + 1)
 
-  # Avoid flashing an ugly, ugly cmd prompt on Windows when invoking
-  # clang-format.
-  startupinfo = None
-  if sys.platform.startswith('win32'):
-    startupinfo = subprocess.STARTUPINFO()
-    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    startupinfo.wShowWindow = subprocess.SW_HIDE
+    # Determine the cursor position.
+    cursor = int(vim.eval('line2byte(line("."))+col(".")')) - 2
+    if cursor < 0:
+        print('Couldn\'t determine cursor position. Is your file empty?')
+        return
 
-  # Call formatter.
-  command = [binary, '-lines', lines, '-style', style, '-cursor', str(cursor)]
-  if vim.current.buffer.name:
-    command.extend(['-assume-filename', vim.current.buffer.name])
-  p = subprocess.Popen(command,
-                       stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                       stdin=subprocess.PIPE, startupinfo=startupinfo)
-  stdout, stderr = p.communicate(input=text)
+    # Avoid flashing an ugly, ugly cmd prompt on Windows when invoking
+    # clang-format.
+    startupinfo = None
+    if sys.platform.startswith('win32'):
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
 
-  # If successful, replace buffer contents.
-  if stderr:
-    print stderr
+    # Call formatter.
+    command = [binary, '-lines', lines, '-style', style, '-cursor', str(cursor)
+               ]
+    if vim.current.buffer.name:
+        command.extend(['-assume-filename', vim.current.buffer.name])
+    p = subprocess.Popen(command,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
+                         stdin=subprocess.PIPE,
+                         startupinfo=startupinfo)
+    stdout, stderr = p.communicate(input=text)
 
-  if not stdout:
-    print(
-        'No output from clang-format (crashed?).\n' +
-        'Please report to bugs.llvm.org.')
-  else:
-    lines = stdout.split('\n')
-    output = json.loads(lines[0])
-    lines = lines[1:]
-    sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
-    for op in reversed(sequence.get_opcodes()):
-      if op[0] is not 'equal':
-        vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
-    vim.command('goto %d' % (output['Cursor'] + 1))
+    # If successful, replace buffer contents.
+    if stderr:
+        print stderr
+
+    if not stdout:
+        print('No output from clang-format (crashed?).\n' +
+              'Please report to bugs.llvm.org.')
+    else:
+        lines = stdout.splitlines()
+        output = json.loads(lines[0])
+        lines = lines[1:]
+        sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
+        for op in reversed(sequence.get_opcodes()):
+            if op[0] is not 'equal':
+                vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
+        vim.command('goto %d' % (output['Cursor'] + 1))

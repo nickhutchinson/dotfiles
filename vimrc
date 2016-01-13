@@ -350,7 +350,7 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_glsl_checkers = ['glslang']
 let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
+let g:syntastic_python_checkers = ['python', 'flake8'] ", 'pylint']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{

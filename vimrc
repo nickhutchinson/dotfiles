@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 
 " == General ==
 Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -12,6 +11,8 @@ Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'rking/ag.vim'
@@ -33,21 +34,22 @@ Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-indent'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'PeterRincker/vim-argumentative'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
 if v:version >= 704
   Plug 'tomtom/tcomment_vim'
 endif
+Plug 'SWIG-syntax'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
-Plug 'SWIG-syntax'
 
 " == Syntax/filetype-specific ==
 Plug 'ekalinin/Dockerfile.vim'
@@ -57,8 +59,9 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'jneen/ragel.vim'
 Plug 'Keithbsmiley/swift.vim'
 Plug 'mitsuhiko/vim-jinja'
-Plug 'nickhutchinson/vim-systemtap'
 Plug 'nginx.vim'
+Plug 'nickhutchinson/vim-cmake-syntax'
+Plug 'nickhutchinson/vim-systemtap'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
 Plug 'scons.vim'
@@ -248,13 +251,11 @@ vnoremap <C-]> :CtrlPtjumpVisual<cr>
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
       \ '/workspace/Katana/*',
-      \ '/workspace/nick/Desktop/KatanaScratchpad/*',
       \ '~/.ycm_extra_conf.py']
 
-let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 if executable("/usr/local/opt/python/bin/python")
   let g:ycm_path_to_python_interpreter = "/usr/local/opt/python/bin/python"

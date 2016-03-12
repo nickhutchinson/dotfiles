@@ -398,5 +398,11 @@ endif
 
 "}}}
 
+let h = strftime("%H")
+if 7 <= h && h <= 17
+  set background=light
+else
+  set background=dark
+endif
 
 " vim: fdm=marker:foldlevel=0:

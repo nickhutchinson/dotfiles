@@ -10,9 +10,8 @@ Plug 'drawit'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'jeetsukumaran/vim-filebeagle'
-Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher', { 'branch': 'dev' }
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'rking/ag.vim'
@@ -55,7 +54,6 @@ Plug 'wellle/targets.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-go'
 Plug 'fish-syntax'
-Plug 'hynek/vim-python-pep8-indent'
 Plug 'jneen/ragel.vim'
 Plug 'Keithbsmiley/swift.vim'
 Plug 'mitsuhiko/vim-jinja'
@@ -370,6 +368,10 @@ let g:promptline_preset = {
     \'c' : [ promptline#slices#cwd() ],
     \'y' : [ promptline#slices#vcs_branch() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
+"}}}
+" FileBeagle {{{
+let g:filebeagle_suppress_keymaps = 1
+map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 "}}}
 "}}}
 

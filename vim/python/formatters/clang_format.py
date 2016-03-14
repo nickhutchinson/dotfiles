@@ -24,7 +24,7 @@ import sys
 import vim
 
 # Change this to the full path if clang-format is not on the path.
-binary = '/usr/local/opt/clang-format/bin/clang-format'
+binary = '/opt/toolchains/llvm38/bin/clang-format'
 
 # Change this to format according to other formatting styles. See the output of
 # 'clang-format --help' for a list of supported styles. The default looks for a

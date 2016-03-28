@@ -22,9 +22,14 @@ import json
 import subprocess
 import sys
 import vim
+import os
+from distutils.spawn import find_executable
 
-# Change this to the full path if clang-format is not on the path.
-binary = '/opt/toolchains/llvm38/bin/clang-format'
+PATH = [
+    '/opt/toolchains/llvm38/bin',
+    '/usr/local/opt/clang-format/bin',
+] + os.environ['PATH'].split(os.pathsep)
+binary = find_executable('clang-format', os.pathsep.join(PATH))
 
 # Change this to format according to other formatting styles. See the output of
 # 'clang-format --help' for a list of supported styles. The default looks for a

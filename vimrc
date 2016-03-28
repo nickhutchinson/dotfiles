@@ -1,8 +1,15 @@
+set encoding=utf-8 " for windows
+if has('win32unix')
+  set rtp^=~/vimfiles " For Cygwin.
+end
+
 " Plugins {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " == General ==
-Plug 'airblade/vim-gitgutter'
+if !has('win32')
+  Plug 'airblade/vim-gitgutter' " Buggy on Windows.
+end
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -11,7 +18,7 @@ Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher', { 'branch': 'dev' }
+Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'rking/ag.vim'
@@ -37,9 +44,7 @@ Plug 'PeterRincker/vim-argumentative'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
-if v:version >= 704
-  Plug 'tomtom/tcomment_vim'
-endif
+Plug 'tomtom/tcomment_vim'
 Plug 'SWIG-syntax'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
@@ -64,7 +69,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
 Plug 'scons.vim'
 Plug 'shime/vim-livedown'
-Plug 'SirVer/ultisnips', { 'on': [], }
 Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-jdaddy' " JSON
@@ -72,7 +76,8 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag' " XML/HTML
 Plug 'tpope/vim-scriptease'
 
-if v:version >= 704
+if !has('win32unix')
+  Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'  " Requires compilation
 endif
 Plug 'vim-jp/cpp-vim'
@@ -82,7 +87,7 @@ call plug#end()
 
 " Options {{{
 " Colour scheme {{{
-if $TERM_PROGRAM != "Apple_Terminal"
+if $TERM_PROGRAM !=# "Apple_Terminal"
   let base16colorspace=256
 endif
 
@@ -91,9 +96,11 @@ colorscheme base16-ocean
 " }}}
 
 let mapleader = ","
+
 let &showbreak='↪ '
-set clipboard=unnamed,unnamedplus
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
+
+set clipboard=unnamed,unnamedplus
 set colorcolumn=81
 set cursorline
 set foldlevelstart=99
@@ -140,6 +147,8 @@ if has("mac")
   let &guifont="Inconsolata for Powerline:h15"
 elseif has("unix")
   let &guifont="DeJa Vu Sans Mono For Powerline 10"
+elseif has("win32")
+  let &guifont="DeJaVu_Sans_Mono_For_Powerline:h9"
 endif
 "}}}
 "}}}
@@ -261,8 +270,8 @@ endif
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
 " Airline/Bufferline{{{
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tmuxline#enabled = 0
+let g:airline_powerline_fonts = !has("win32unix")
+let g:airline#extensions#tmuxline#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -371,6 +380,7 @@ let g:promptline_preset = {
 "}}}
 " FileBeagle {{{
 let g:filebeagle_suppress_keymaps = 1
+let g:filebeagle_show_hidden = 1
 map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 "}}}
 "}}}
@@ -384,13 +394,6 @@ nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(st
 " Replace current word
 nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 
-if v:version >= 704
-  augroup lazy_load
-    au!
-    au InsertEnter * call plug#load('ultisnips') | au! lazy_load
-  augroup END
-endif
-
 if has("gui_running")
   set lines=999 columns=999
 endif
@@ -400,11 +403,13 @@ endif
 
 "}}}
 
-let h = strftime("%H")
-if 7 <= h && h <= 17
-  set background=light
-else
-  set background=dark
+if &term !=# "cygwin"
+  let h = strftime("%H")
+  if 7 <= h && h <= 17
+    set background=light
+  else
+    set background=dark
+  endif
 endif
 
 " vim: fdm=marker:foldlevel=0:

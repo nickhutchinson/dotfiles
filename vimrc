@@ -1,15 +1,19 @@
-set encoding=utf-8 " for windows
-if has('win32unix')
-  set rtp^=~/vimfiles " For Cygwin.
-end
+" Windows Nonsense "{{{
+set encoding=utf-8
 
+if has('win32unix') " Cygwin
+  set rtp^=~/vimfiles
+endif
+
+if has('win32')
+  set shell=$COMSPEC
+endif
+"}}}
 " Plugins {{{
 call plug#begin()
 
 " == General ==
-if !has('win32')
-  Plug 'airblade/vim-gitgutter' " Buggy on Windows.
-end
+Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -20,7 +24,6 @@ Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
-Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'rking/ag.vim'
 Plug 'tpope/vim-dispatch' " process launcher
 Plug 'tpope/vim-eunuch' " UNIX commands
@@ -45,7 +48,6 @@ Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
 Plug 'tomtom/tcomment_vim'
-Plug 'SWIG-syntax'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise'
@@ -67,24 +69,23 @@ Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
+Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'scons.vim'
 Plug 'shime/vim-livedown'
+Plug 'SWIG-syntax'
 Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-jdaddy' " JSON
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag' " XML/HTML
-Plug 'tpope/vim-scriptease'
-
-if !has('win32unix')
+Plug 'vim-jp/cpp-vim'
+if !has('python')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'  " Requires compilation
 endif
-Plug 'vim-jp/cpp-vim'
 
 call plug#end()
 " }}}
-
 " Options {{{
 " Colour scheme {{{
 if $TERM_PROGRAM !=# "Apple_Terminal"
@@ -93,6 +94,15 @@ endif
 
 set background=dark
 colorscheme base16-ocean
+
+if &term !=# "cygwin"
+  let h = strftime("%H")
+  if 7 <= h && h <= 17
+    set background=light
+  else
+    set background=dark
+  endif
+endif
 " }}}
 
 let mapleader = ","
@@ -105,6 +115,7 @@ set colorcolumn=81
 set cursorline
 set foldlevelstart=99
 set formatoptions+=jn " j: join commented lines sensibly; n: indent lists properly
+let &formatlistpat="\\v^\\s*(\\d+[\\]:.)}\\t ]|-|\\*)\\s*"
 set hidden
 set hlsearch
 set ignorecase
@@ -130,17 +141,17 @@ if has("mac")
 endif
 
 " GUI Options{{{
-set mouse+=a
-if &term =~ '^screen'
-  " tmux knows the extended mouse mode
-  set ttymouse=xterm2
+if has("gui_running")
+  set lines=999 columns=999
 endif
 
-set guioptions-=l
-set guioptions-=r
+set mouse=a " enable mouse mode
+
+" Disable left/right scrollbars, toolbar.
 set guioptions-=L
-set guioptions-=R
+set guioptions-=r
 set guioptions-=T
+
 set guicursor+=a:blinkon0
 set guioptions+=c  " Use console dialogs
 if has("mac")
@@ -148,7 +159,7 @@ if has("mac")
 elseif has("unix")
   let &guifont="DeJa Vu Sans Mono For Powerline 10"
 elseif has("win32")
-  let &guifont="DeJaVu_Sans_Mono_For_Powerline:h9"
+  let &guifont="DeJaVu_Sans_Mono_For_Powerline:h10"
 endif
 "}}}
 "}}}
@@ -171,9 +182,6 @@ augroup vimrc_filetypes
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=yapf#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
-  if v:version >= 704
-    au Filetype python setl cc=+1
-  endif
   au Filetype ruby setl ts=2 sts=2 sw=2
 
   " Don't let us get swamped with fugitive buffers
@@ -195,18 +203,26 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
+" Don't move on *. Credit: https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
+nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
 " Easy way to exit insert mode
 inoremap jj <Esc>
 inoremap jk <Esc>
 
 " verymagic
 nnoremap / /\v
+vnoremap / /\v
 
 " going up and down in wrapped lines
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
+
+" Format paragraph/selection
+nnoremap Q gqip
+vnoremap Q gq
 
 " copy absolute path to clipboard
 nnoremap <leader>cp :let @+ = expand("%:p")<CR>
@@ -220,10 +236,8 @@ nnoremap <leader>F :echo printf("%s:%d", expand("%:p"), line("."))<CR>
 
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | let @/=""'
 
-
 " Fat fingers
 nnoremap <F1> <nop>
-nnoremap Q <nop>
 nnoremap K <nop>
 command! -bang -nargs=? -complete=file E e<bang> <args>
 command! -bang -nargs=? -complete=file W w<bang> <args>
@@ -235,7 +249,6 @@ command! -bang Q q<bang>
 command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
 "}}}
-
 "Plugin Config {{{
 " CtrlP{{{
 let g:ctrlp_clear_cache_on_exit = 0
@@ -384,32 +397,4 @@ let g:filebeagle_show_hidden = 1
 map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 "}}}
 "}}}
-
-" Scratchpad"{{{
-
-" Cribbed from https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
-" Don't move on *
-nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
-
-" Replace current word
-nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
-
-if has("gui_running")
-  set lines=999 columns=999
-endif
-
-
-
-
-"}}}
-
-if &term !=# "cygwin"
-  let h = strftime("%H")
-  if 7 <= h && h <= 17
-    set background=light
-  else
-    set background=dark
-  endif
-endif
-
 " vim: fdm=marker:foldlevel=0:

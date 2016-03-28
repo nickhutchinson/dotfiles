@@ -3,6 +3,7 @@
 /autom4te.cache
 .tags
 *.sublime-workspace
+*.pyc
 
 #### VISUAL STUDIO ####
 ## Ignore Visual Studio temporary files, build results, and

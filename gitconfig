@@ -4,19 +4,13 @@
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	editor = vim
-
 [alias]
-	hist = log --date=relative --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' 
-
-[color]
-	ui = auto
-
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
-[user]
-	name = Nicholas Hutchinson
-	email = nshutchinson@gmail.com
+	hist = log --date=relative --graph --pretty=tformat:'%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %Cgreen(%cd) %C(bold blue)<%an>%C(reset)'
+[blame]
+	date = short
+[github]
+	user = nickhutchinson
+[push]
+	default = simple
+[rerere]
+	enabled = true

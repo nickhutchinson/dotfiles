@@ -95,7 +95,7 @@ endif
 set background=dark
 colorscheme base16-ocean
 
-if &term !=# "cygwin"
+if &term !=# "cygwin" && hostname() !~ "gabor"
   let h = strftime("%H")
   if 7 <= h && h <= 17
     set background=light

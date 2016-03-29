@@ -79,7 +79,7 @@ Plug 'tpope/vim-jdaddy' " JSON
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag' " XML/HTML
 Plug 'vim-jp/cpp-vim'
-if !has('python')
+if has('python')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'  " Requires compilation
 endif

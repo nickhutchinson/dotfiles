@@ -13,17 +13,17 @@ endif
 call plug#begin()
 
 " == General ==
-Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'drawit'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'jeetsukumaran/vim-filebeagle'
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-gtfo'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
+Plug 'mhinz/vim-signify'
 Plug 'rking/ag.vim'
 Plug 'tpope/vim-dispatch' " process launcher
 Plug 'tpope/vim-eunuch' " UNIX commands
@@ -33,6 +33,7 @@ Plug 'tpope/vim-rsi' " readline bindings
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-tbone' " tmux
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 
 " == Text editing ==
@@ -58,27 +59,14 @@ Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
 " == Syntax/filetype-specific ==
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'fatih/vim-go'
 Plug 'fish-syntax'
-Plug 'jneen/ragel.vim'
-Plug 'Keithbsmiley/swift.vim'
-Plug 'mitsuhiko/vim-jinja'
-Plug 'nginx.vim'
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'othree/html5.vim'
 Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'scons.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'SWIG-syntax'
-Plug 'tikhomirov/vim-glsl'
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-jdaddy' " JSON
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-ragtag' " XML/HTML
-Plug 'vim-jp/cpp-vim'
 if has('python')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'  " Requires compilation
@@ -183,6 +171,7 @@ augroup vimrc_filetypes
   au Filetype python setl formatexpr=yapf#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
+  au FileType dirvish setlocal nospell
 
   " Don't let us get swamped with fugitive buffers
   au BufReadPost fugitive://* set bufhidden=delete
@@ -390,11 +379,6 @@ let g:promptline_preset = {
     \'c' : [ promptline#slices#cwd() ],
     \'y' : [ promptline#slices#vcs_branch() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
-"}}}
-" FileBeagle {{{
-let g:filebeagle_suppress_keymaps = 1
-let g:filebeagle_show_hidden = 1
-map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 "}}}
 "}}}
 " vim: fdm=marker:foldlevel=0:

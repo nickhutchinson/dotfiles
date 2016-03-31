@@ -19,7 +19,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'drawit'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'justinmk/vim-dirvish'
+Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'justinmk/vim-gtfo'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
@@ -379,6 +379,10 @@ let g:promptline_preset = {
     \'c' : [ promptline#slices#cwd() ],
     \'y' : [ promptline#slices#vcs_branch() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
+"}}}
+" FileBeagle {{{
+let g:filebeagle_suppress_keymaps = 1
+map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 "}}}
 "}}}
 " vim: fdm=marker:foldlevel=0:

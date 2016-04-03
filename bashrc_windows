@@ -1,0 +1,65 @@
+alias mvc="/c/sw/python25/python /c/sw/mvc/mvc"
+alias subl="/c/Program\\ Files/Sublime\\ Text\\ 3/subl"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gh="git hist"
+alias gf="git fetch --all --prune"
+alias gst="git status"
+alias gc="git commit -v"
+
+export P4PORT=perforce1.thefoundry.co.uk:1669
+export P4USER=nick.hutchinson
+export P4CONFIG=.p4config
+export P4EDITOR="C:\\Program Files\\Sublime Text 3\\subl.exe --wait"
+
+# MSVC 2010
+export INCLUDE='c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\INCLUDE;c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\ATLMFC\INCLUDE;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include'
+export LIB='c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\LIB\amd64;c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\ATLMFC\LIB\amd64;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64'
+export LIBPATH='C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework64\v3.5;c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\LIB\amd64;c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\ATLMFC\LIB\amd64'
+export PATH="/c/Program Files (x86)/Microsoft SDKs/Windows/v7.0A/bin:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft SDKs/Windows/v7.0A/bin/x64:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft SDKs/Windows/v7.0A/bin/NETFX 4.0 Tools/x64:$PATH"
+export PATH="/c/Program Files (x86)/HTML Help Workshop:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/Tools:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/IDE:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft Visual Studio 10.0/VC/VCPackages:$PATH"
+export PATH="/c/Windows/Microsoft.NET/Framework64/v4.0.30319:/c/Windows/Microsoft.NET/Framework64/v3.5:$PATH"
+export PATH="/c/Program Files (x86)/Microsoft Visual Studio 10.0/VC/BIN/amd64:$PATH"
+
+function o() {
+    start "$(cygpath -w "$@")"
+}
+
+function kt_build() {
+    pushd /c/workspace/katana/Apps/Katana
+    args=(/c/sw/python25/python ../../Thirdparty/SCons/2.1.0/bin/bin/scons -u --debug=stacktrace FnInternalPlugins=1 FnDisableKatanaLicense=1 -j4)
+    >&2 echo "+ ${args[*]} $*"
+    "${args[@]}" "$@"
+    popd
+}
+
+#--------------------------------------------------------------------------------
+# https://help.github.com/articles/working-with-ssh-key-passphrases/
+env=~/.ssh/agent.env
+
+agent_load_env () {
+    . "$env" >| /dev/null ; }
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key;
+# 2= agent not running agent_run_state=$(ssh-add -l >| /dev/null 2>&1;
+# echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_load_env
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+#--------------------------------------------------------------------------------

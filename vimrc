@@ -83,7 +83,7 @@ endif
 set background=dark
 colorscheme base16-ocean
 
-if &term !=# "cygwin" && hostname() !~ "gabor"
+if &term !=# "cygwin" && hostname() !~? "\\v(gabor|crerar)"
   let h = strftime("%H")
   if 7 <= h && h <= 17
     set background=light
@@ -120,13 +120,25 @@ set spell
 set spelllang=en_gb
 set splitbelow
 set splitright
-set undodir=/tmp/vim/,.
 set undofile
 set wildignorecase  " case insensitive filename completion
 
 if has("mac")
   set macmeta
 endif
+
+" Configure temp directories
+if has("win32") || has("win32unix")
+  let s:tmpdir = expand("$TEMP/vim")
+elseif has("mac")
+  let s:tmpdir = expand("$TMPDIR/vim")
+else
+  let s:tmpdir = expand("$TMPDIR/vim.$USER")
+endif
+:silent! call mkdir(s:tmpdir, "p", 0700)
+let &dir = s:tmpdir
+let &undodir = s:tmpdir
+let &backupdir = s:tmpdir
 
 " GUI Options{{{
 if has("gui_running")

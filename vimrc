@@ -129,11 +129,10 @@ endif
 
 " Configure temp directories
 if has("win32") || has("win32unix")
-  let s:tmpdir = expand("$TEMP/vim")
-elseif has("mac")
-  let s:tmpdir = expand("$TMPDIR/vim")
+  let s:tmpdir = expand("~/AppData/Local/Temp/vim")
 else
-  let s:tmpdir = expand("$TMPDIR/vim.$USER")
+  let s:tmpdir = !empty($TMPDIR) ? $TMPDIR : "/tmp"
+  let s:tmpdir .= expand("/vim.$USER")
 endif
 :silent! call mkdir(s:tmpdir, "p", 0700)
 let &dir = s:tmpdir

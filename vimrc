@@ -17,8 +17,10 @@ Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'drawit'
-Plug 'edkolev/promptline.vim'
-Plug 'edkolev/tmuxline.vim'
+if !has('gui_running')
+  Plug 'edkolev/promptline.vim'
+  Plug 'edkolev/tmuxline.vim'
+endif
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
@@ -68,7 +70,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'SWIG-syntax'
 if has('python')
-  Plug 'SirVer/ultisnips'
+  Plug 'SirVer/ultisnips', { 'on': [] }
   Plug 'Valloric/YouCompleteMe'  " Requires compilation
 endif
 
@@ -299,6 +301,13 @@ let g:airline_theme="base16"
 let g:gist_open_browser_after_post = 1
 "}}}
 " UltiSnips{{{
+augroup lazyload_ultisnips
+  autocmd!
+  autocmd InsertEnter *
+    \  call plug#load('ultisnips')
+    \| call UltiSnips#FileTypeChanged()
+    \| autocmd! lazyload_ultisnips
+augroup END
 let g:snips_author                 = 'Nick Hutchinson'
 let g:ultisnips_python_style       = "doxygen"
 let g:UltiSnipsExpandTrigger       = "<c-j>"
@@ -386,10 +395,12 @@ nnoremap <leader>gs :Gstatus<cr>
 let g:EasyMotion_do_mapping = 0
 "}}}
 " Promptline {{{
-let g:promptline_preset = {
-    \'c' : [ promptline#slices#cwd() ],
-    \'y' : [ promptline#slices#vcs_branch() ],
-    \'warn' : [ promptline#slices#last_exit_code() ]}
+if !has('gui_running')
+  let g:promptline_preset = {
+      \'c' : [ promptline#slices#cwd() ],
+      \'y' : [ promptline#slices#vcs_branch() ],
+      \'warn' : [ promptline#slices#last_exit_code() ]}
+endif
 "}}}
 "}}}
 " vim: fdm=marker:foldlevel=0:

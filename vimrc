@@ -61,7 +61,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
 " == Syntax/filetype-specific ==
-Plug 'fish-syntax'
+Plug 'fatih/vim-go'
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'raymond-w-ko/vim-lua-indent'
@@ -183,6 +183,7 @@ augroup vimrc_filetypes
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=yapf#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent
+  au Filetype go setl tw=100 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
   au FileType dirvish setlocal nospell
 
@@ -279,9 +280,6 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-if executable("/usr/local/opt/python/bin/python")
-  let g:ycm_path_to_python_interpreter = "/usr/local/opt/python/bin/python"
-endif
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
 " Airline/Bufferline{{{

@@ -17,7 +17,7 @@ alias mkdir 'mkdir -p'
 alias df 'df -kh'
 alias du 'du -kh'
 
-if not type pbcopy > /dev/null
+if not type pbcopy >/dev/null 2>&1
   alias pbcopy 'xsel --clipboard --input'
   alias pbpaste 'xsel --clipboard --output'
 end

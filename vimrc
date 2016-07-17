@@ -14,7 +14,7 @@ call plug#begin()
 
 " == General ==
 Plug 'bling/vim-bufferline'
-Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break light scheme.
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'drawit'
 if !has('gui_running')
@@ -26,7 +26,7 @@ Plug 'justinmk/vim-gtfo'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'mhinz/vim-signify'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-dispatch' " process launcher
 Plug 'tpope/vim-eunuch' " UNIX commands
 Plug 'tpope/vim-fugitive'
@@ -71,7 +71,12 @@ Plug 'shime/vim-livedown'
 Plug 'SWIG-syntax'
 if has('python')
   Plug 'SirVer/ultisnips', { 'on': [] }
-  Plug 'Valloric/YouCompleteMe'  " Requires compilation
+  if hostname() =~? "\\v(gabor|crerar|jordan)"
+    " Recent versions break C++03 support.
+    Plug 'Valloric/YouCompleteMe', { 'commit': '0de1c0c' }
+  else
+    Plug 'Valloric/YouCompleteMe'
+  endif
 endif
 
 call plug#end()
@@ -85,7 +90,7 @@ endif
 set background=dark
 colorscheme base16-ocean
 
-if &term !=# "cygwin" && hostname() !~? "\\v(gabor|crerar)"
+if &term !=# "cygwin" && hostname() !~? "\\v(gabor|crerar|jordan)"
   let h = strftime("%H")
   if 7 <= h && h <= 17
     set background=light
@@ -239,6 +244,8 @@ nnoremap <leader>F :echo printf("%s:%d", expand("%:p"), line("."))<CR>
 
 command! -range=% StripTrailingWhitespace execute '<line1>,<line2>s/\v\s+$//e | let @/=""'
 
+nnoremap <F9> :Dispatch<CR>
+
 " Fat fingers
 nnoremap <F1> <nop>
 nnoremap K <nop>
@@ -378,7 +385,7 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_glsl_checkers = ['glslang']
 let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'flake8'] ", 'pylint']
+let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
 "}}}
 "VimSession{{{
@@ -400,5 +407,10 @@ if !has('gui_running')
       \'warn' : [ promptline#slices#last_exit_code() ]}
 endif
 "}}}
+" Ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+cnoreabbrev Ag Ack
 "}}}
 " vim: fdm=marker:foldlevel=0:

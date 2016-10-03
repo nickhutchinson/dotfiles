@@ -71,15 +71,16 @@ Plug 'shime/vim-livedown'
 Plug 'SWIG-syntax'
 if has('python')
   Plug 'SirVer/ultisnips', { 'on': [] }
-  if hostname() =~? "\\v(gabor|crerar|jordan)"
-    " Recent versions break C++03 support.
-    Plug 'Valloric/YouCompleteMe', { 'commit': '0de1c0c' }
-  else
-    Plug 'Valloric/YouCompleteMe'
-  endif
+  Plug 'Valloric/YouCompleteMe', { 'on': [] }
 endif
 
 call plug#end()
+
+augroup plugin_lazyload
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+                     \| autocmd! plugin_lazyload
+augroup END
 " }}}
 " Options {{{
 " Colour scheme {{{
@@ -129,10 +130,6 @@ set splitbelow
 set splitright
 set undofile
 set wildignorecase  " case insensitive filename completion
-
-if has("mac")
-  set macmeta
-endif
 
 " Configure temp directories
 if has("win32") || has("win32unix")
@@ -306,13 +303,6 @@ let g:airline_theme="base16"
 let g:gist_open_browser_after_post = 1
 "}}}
 " UltiSnips{{{
-augroup lazyload_ultisnips
-  autocmd!
-  autocmd InsertEnter *
-    \  call plug#load('ultisnips')
-    \| call UltiSnips#FileTypeChanged()
-    \| autocmd! lazyload_ultisnips
-augroup END
 let g:snips_author                 = 'Nick Hutchinson'
 let g:ultisnips_python_style       = "doxygen"
 let g:UltiSnipsExpandTrigger       = "<c-j>"

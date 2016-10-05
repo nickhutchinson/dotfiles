@@ -13,14 +13,13 @@ endif
 call plug#begin()
 
 " == General ==
-Plug 'bling/vim-bufferline'
-Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break light scheme.
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'drawit'
 if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
+Plug 'bling/vim-bufferline'
+Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break light scheme.
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
@@ -76,11 +75,13 @@ endif
 
 call plug#end()
 
-augroup plugin_lazyload
-  autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
-                     \| autocmd! plugin_lazyload
-augroup END
+if has('python')
+  augroup plugin_lazyload
+    autocmd!
+    autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+                       \| autocmd! plugin_lazyload
+  augroup END
+endif
 " }}}
 " Options {{{
 " Colour scheme {{{
@@ -105,7 +106,7 @@ let mapleader = ","
 
 let &showbreak='↪ '
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
-
+let g:python2_host_prog='/usr/bin/python'
 set clipboard=unnamed,unnamedplus
 set colorcolumn=81
 set cursorline
@@ -296,6 +297,10 @@ let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#syntastic#enabled = 0
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': [] }
+
 let g:bufferline_echo = 0
 let g:airline_theme="base16"
 "}}}

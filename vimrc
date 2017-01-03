@@ -42,11 +42,12 @@ Plug 'AndrewRadev/linediff.vim'
 Plug 'junegunn/goyo.vim' " focussed text editing
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-indent'
+Plug 'Konfekt/FastFold'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'neomake/neomake'
 Plug 'PeterRincker/vim-argumentative'
-Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
 Plug 'tomtom/tcomment_vim'
@@ -69,19 +70,12 @@ Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'SWIG-syntax'
 if has('python')
-  Plug 'SirVer/ultisnips', { 'on': [] }
-  Plug 'Valloric/YouCompleteMe', { 'on': [] }
+  Plug 'SirVer/ultisnips'
+  Plug 'Valloric/YouCompleteMe'
 endif
 
 call plug#end()
 
-if has('python')
-  augroup plugin_lazyload
-    autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
-                       \| autocmd! plugin_lazyload
-  augroup END
-endif
 " }}}
 " Options {{{
 " Colour scheme {{{
@@ -172,6 +166,8 @@ set ts=4 sts=4 sw=4 expandtab
 
 augroup vimrc_filetypes
   au!
+  au BufWritePost * Neomake
+
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.i set ft=swig
   au BufRead,BufNewFile *.mm setf objcpp
@@ -189,9 +185,6 @@ augroup vimrc_filetypes
   au Filetype go setl tw=100 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
   au FileType dirvish setlocal nospell
-
-  " Don't let us get swamped with fugitive buffers
-  au BufReadPost fugitive://* set bufhidden=delete
 augroup END
 let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
 " Fix buggy syntax highlighting in bash scripts.
@@ -296,10 +289,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tagbar#flags = 'f' " show extra context for current tag
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#syntastic#enabled = 0
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
 
 let g:bufferline_echo = 0
 let g:airline_theme="base16"
@@ -374,14 +363,14 @@ let g:projectiles = {
    \ }
    \ }
 "}}}
-" Syntastic{{{
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_glsl_checkers = ['glslang']
-let g:syntastic_lua_checkers = ['luajit']
-let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
-let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
+" NeoMake{{{
+let g:neomake_glsl_glslangValidator_maker = {
+  \ 'args': ['--verbose'],
+  \ 'errorformat': '%Eerror: %\\d%\\+:%l: %m',
+  \ }
+let g:neomake_glsl_enabled_makers = ['glslangValidator']
+
+let g:neomake_cpp_enabled_makers = []
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'

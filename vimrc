@@ -153,11 +153,11 @@ set guioptions-=T
 set guicursor+=a:blinkon0
 set guioptions+=c  " Use console dialogs
 if has("mac")
-  let &guifont="Inconsolata for Powerline:h15"
+  let &guifont="Inconsolata:h15"
 elseif has("unix")
-  let &guifont="DeJa Vu Sans Mono For Powerline 10"
+  let &guifont="DeJa Vu Sans Monoe 10"
 elseif has("win32")
-  let &guifont="DeJaVu_Sans_Mono_For_Powerline:h10"
+  let &guifont="DeJaVu_Sans_Mono:h10"
 endif
 "}}}
 "}}}
@@ -279,7 +279,6 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 nnoremap <leader><leader> :silent YcmCompleter GoTo<CR>
 "}}}
 " Airline/Bufferline{{{
-let g:airline_powerline_fonts = !has("win32unix")
 let g:airline#extensions#tmuxline#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -381,8 +380,10 @@ nnoremap <leader>gs :Gstatus<cr>
 " EasyMotion{{{
 let g:EasyMotion_do_mapping = 0
 "}}}
-" Promptline {{{
+" Promptline/Tmuxline {{{
 if !has('gui_running')
+  let g:tmuxline_powerline_separators = 0
+  let g:promptline_powerline_symbols = 0
   let g:promptline_preset = {
       \'c' : [ promptline#slices#cwd() ],
       \'y' : [ promptline#slices#vcs_branch() ],

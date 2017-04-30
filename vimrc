@@ -174,9 +174,9 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.ypp setf yacc.cpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
 
-  au Filetype c,cpp,objc,objcpp setl comments-=:// comments+=:///,://
-  au Filetype c,cpp,objc,objcpp setl fdm=syntax
-  au Filetype c,cpp,objc,objcpp setl formatexpr=clang_format#formatexpr()
+  au Filetype c,cpp,objc,objcpp,cuda setl comments-=:// comments+=:///,://
+  au Filetype c,cpp,objc,objcpp,cuda setl fdm=syntax
+  au Filetype c,cpp,objc,objcpp,cuda setl formatexpr=clang_format#formatexpr()
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=yapf#formatexpr()
   au Filetype python setl tw=79 cc=+1 fdm=indent

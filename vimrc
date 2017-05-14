@@ -65,10 +65,10 @@ Plug 'fatih/vim-go'
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'raymond-w-ko/vim-lua-indent'
-Plug 'scons.vim'
+Plug 'vim-scripts/scons.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
-Plug 'SWIG-syntax'
+Plug 'vim-scripts/SWIG-syntax'
 if has('python')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'
@@ -155,7 +155,7 @@ set guioptions+=c  " Use console dialogs
 if has("mac")
   let &guifont="Inconsolata:h15"
 elseif has("unix")
-  let &guifont="DeJa Vu Sans Monoe 10"
+  let &guifont="DeJa Vu Sans Mono 10"
 elseif has("win32")
   let &guifont="DeJaVu_Sans_Mono:h10"
 endif

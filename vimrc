@@ -33,7 +33,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rsi' " readline bindings
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth' " Large performance penalty
 Plug 'tpope/vim-tbone' " tmux
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'

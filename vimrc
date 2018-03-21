@@ -22,7 +22,8 @@ Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break ligh
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
-Plug 'kien/ctrlp.vim' | Plug 'ivalkeen/vim-ctrlp-tjump' | Plug 'nickhutchinson/ctrlp-luamatcher'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'mhinz/vim-signify'
 Plug 'mileszs/ack.vim'
@@ -249,24 +250,11 @@ command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
 "}}}
 "Plugin Config {{{
-" CtrlP{{{
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_custom_ignore = {'dir': '\v/(out|(Apps/Katana/)@<!objects)$'}
-let g:ctrlp_lazy_update = 50
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:13'
-let g:ctrlp_max_files=100000
-let g:ctrlp_root_markers = ['.ctrlp', '.project_root']
-if has('lua')
-  let g:ctrlp_match_func  = {'match': 'ctrlp_luamatcher#Match'}
-endif
-nnoremap <leader>t :CtrlPBufTagAll<CR>
-nnoremap <leader>B :CtrlPBookmarkDir<CR>
-nnoremap <leader>r :CtrlPMRUFiles<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>l :CtrlPLine<CR>
-nnoremap <C-]> :CtrlPtjump<cr>
-vnoremap <C-]> :CtrlPtjumpVisual<cr>
-"}}}
+" FZF{{{
+nnoremap <C-P> :Files<cr>
+nnoremap <leader>r :History<cr>
+nnoremap <C-]> :Tags <c-r><c-w><cr>
+" }}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
       \ '/workspace/Katana/*',

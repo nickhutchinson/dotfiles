@@ -165,6 +165,12 @@ endif
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
 
+" The default vim plug-in loads faster
+let g:polyglot_disabled = ['markdown']
+
+" Don't make trailing whitespace so angry
+let g:python_highlight_space_errors = 0
+
 augroup vimrc_filetypes
   au!
   au BufWritePost * Neomake
@@ -185,7 +191,6 @@ augroup vimrc_filetypes
   au Filetype ruby setl ts=2 sts=2 sw=2
   au FileType dirvish setlocal nospell
 augroup END
-let g:markdown_fenced_languages = ['python', 'lua', 'cpp']
 " Fix buggy syntax highlighting in bash scripts.
 " <http://stackoverflow.com/questions/11044378/syntax-highlighting-bugs-of-vim-7-3-for-bash-scripts>
 let g:sh_no_error=1

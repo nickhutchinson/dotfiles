@@ -80,10 +80,6 @@ call plug#end()
 " }}}
 " Options {{{
 " Colour scheme {{{
-if $TERM_PROGRAM !=# "Apple_Terminal"
-  let base16colorspace=256
-endif
-
 set background=dark
 colorscheme base16-ocean
 

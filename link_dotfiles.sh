@@ -30,8 +30,6 @@ link_dotfile() {
         bashrc
         cgdb
         clang-format
-        config/base16-shell
-        config/base16-xresources
         config/fish/config.fish
         config/fish/{config.fish.d,functions}/*.fish
         config/mr/config.d/*

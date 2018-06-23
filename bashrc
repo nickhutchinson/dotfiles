@@ -13,8 +13,3 @@ is_interactive() {
 }
 
 try_source /etc/bashrc
-
-if is_interactive; then
-    try_source "$HOME/.config/base16-shell/base16-ocean.dark.sh"
-    export TERM=xterm-256color
-fi

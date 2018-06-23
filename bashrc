@@ -13,3 +13,5 @@ is_interactive() {
 }
 
 try_source /etc/bashrc
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

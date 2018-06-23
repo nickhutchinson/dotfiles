@@ -1,6 +1,13 @@
 #
 # This shell prompt config file was created by promptline.vim
 #
+function __promptline_wrapper {
+  # wrap the text in $1 with $2 and $3, only if $1 is not empty
+  # $2 and $3 typically contain non-content-text, like color escape codes and separators
+
+  [[ -n "$1" ]] || return 1
+  printf "%s" "${2}${1}${3}"
+}
 
 function __promptline_last_exit_code {
 
@@ -22,6 +29,7 @@ function __promptline_ps1 {
   [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
   # section "y" slices
   __promptline_wrapper "$(__promptline_vcs_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
+  __promptline_wrapper "$(hg_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
 
   # section "warn" header
   slice_prefix="${warn_bg}${sep}${warn_fg}${warn_bg}${space}" slice_suffix="$space${warn_sep_fg}" slice_joiner="${warn_fg}${warn_bg}${alt_sep}${space}" slice_empty_prefix="${warn_fg}${warn_bg}${space}"
@@ -44,6 +52,30 @@ function __promptline_vcs_branch {
       return
     fi
   fi
+
+  # svn
+  if hash svn 2>/dev/null; then
+    local svn_info
+    if svn_info=$(svn info 2>/dev/null); then
+      local svn_url=${svn_info#*URL:\ }
+      svn_url=${svn_url/$'\n'*/}
+
+      local svn_root=${svn_info#*Repository\ Root:\ }
+      svn_root=${svn_root/$'\n'*/}
+
+      if [[ -n $svn_url ]] && [[ -n $svn_root ]]; then
+        # https://github.com/tejr/dotfiles/blob/master/bash/bashrc.d/prompt.bash#L179
+        branch=${svn_url/$svn_root}
+        branch=${branch#/}
+        branch=${branch#branches/}
+        branch=${branch%%/*}
+
+        printf "%s" "${branch_symbol}${branch:-unknown}"
+        return
+      fi
+    fi
+  fi
+
   return 1
 }
 function __promptline_cwd {
@@ -88,12 +120,23 @@ function __promptline_left_prompt {
   # close sections
   printf "%s" "${reset_bg}${sep}$reset$space"
 }
-function __promptline_wrapper {
-  # wrap the text in $1 with $2 and $3, only if $1 is not empty
-  # $2 and $3 typically contain non-content-text, like color escape codes and separators
-
-  [[ -n "$1" ]] || return 1
-  printf "%s" "${2}${1}${3}"
+function hg_branch {
+  local branch_symbol=""
+  local dir=$PWD
+  while true; do
+    if [[ -d "$dir/.hg" ]]; then
+      printf "%s%s" "$branch_symbol" "$(
+        cat "$dir/.hg/bookmarks.current" 2>/dev/null ||
+        cat "$dir/.hg/branch" 2>/dev/null ||
+        echo "default"
+      )"
+      return 0
+    elif [[ "$dir" != "/" ]]; then
+      dir=$(dirname "$dir")
+    else
+      return 1
+    fi
+  done
 }
 function __promptline_right_prompt {
   local slice_prefix slice_empty_prefix slice_joiner slice_suffix
@@ -107,6 +150,7 @@ function __promptline_right_prompt {
   slice_prefix="${y_sep_fg}${rsep}${y_fg}${y_bg}${space}" slice_suffix="$space${y_sep_fg}" slice_joiner="${y_fg}${y_bg}${alt_rsep}${space}" slice_empty_prefix=""
   # section "y" slices
   __promptline_wrapper "$(__promptline_vcs_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; }
+  __promptline_wrapper "$(hg_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; }
 
   # close sections
   printf "%s" "$reset"

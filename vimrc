@@ -373,10 +373,33 @@ let g:EasyMotion_do_mapping = 0
 if !has('gui_running')
   let g:tmuxline_powerline_separators = 0
   let g:promptline_powerline_symbols = 0
+  let s:hg_branch = {
+    \'function_name': 'hg_branch',
+    \'function_body': [
+      \'function hg_branch {',
+      \'  local branch_symbol="' . promptline#symbols#get().vcs_branch . '"',
+      \'  local dir=$PWD',
+      \'  while true; do',
+      \'    if [[ -d "$dir/.hg" ]]; then',
+      \'      printf "%s%s" "$branch_symbol" "$(',
+      \'        cat "$dir/.hg/bookmarks.current" 2>/dev/null ||',
+      \'        cat "$dir/.hg/branch" 2>/dev/null ||',
+      \'        echo "default"',
+      \'      )"',
+      \'      return 0',
+      \'    elif [[ "$dir" != "/" ]]; then',
+      \'      dir=$(dirname "$dir")',
+      \'    else',
+      \'      return 1',
+      \'    fi',
+      \'  done',
+      \'}',
+    \]
+  \}
   let g:promptline_preset = {
-      \'c' : [ promptline#slices#cwd() ],
-      \'y' : [ promptline#slices#vcs_branch() ],
-      \'warn' : [ promptline#slices#last_exit_code() ]}
+      \'c':    [promptline#slices#cwd()],
+      \'y':    [promptline#slices#vcs_branch({'git':1, 'svn':1}), s:hg_branch],
+      \'warn': [promptline#slices#last_exit_code()]}
 endif
 "}}}
 " Ack

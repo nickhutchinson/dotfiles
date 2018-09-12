@@ -17,13 +17,15 @@ if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
+Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break light scheme.
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'justinmk/vim-dirvish'
-Plug 'justinmk/vim-gtfo'
+Plug 'jlfwong/vim-mercenary' " mercurial plugin
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-gtfo'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'mhinz/vim-signify'
 Plug 'mileszs/ack.vim'
@@ -33,7 +35,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rsi' " readline bindings
 Plug 'tpope/vim-sensible'
-" Plug 'tpope/vim-sleuth' " Large performance penalty
+Plug 'tpope/vim-sleuth', { 'on': [] }
 Plug 'tpope/vim-tbone' " tmux
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
@@ -47,7 +49,7 @@ Plug 'Konfekt/FastFold'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'sjl/gundo.vim'
 Plug 'tommcdo/vim-exchange'
@@ -62,15 +64,17 @@ Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
 " == Syntax/filetype-specific ==
+Plug 'ambv/black'
 Plug 'fatih/vim-go'
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'raymond-w-ko/vim-lua-indent'
-Plug 'vim-scripts/scons.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'vim-scripts/SWIG-syntax'
-if has('python')
+Plug 'vim-scripts/scons.vim'
+if has('python') || has('python3')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'
 endif
@@ -83,7 +87,7 @@ call plug#end()
 set background=dark
 colorscheme base16-ocean
 
-if &term !=# "cygwin" && hostname() !~? "\\v(gabor|crerar|jordan)"
+if &term !=# "cygwin" && hostname() !~? "\\v(Filigree|gabor|crerar|jordan)"
   let h = strftime("%H")
   if 7 <= h && h <= 17
     set background=light
@@ -99,7 +103,7 @@ let &showbreak='↪ '
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
 let g:python2_host_prog='/usr/bin/python'
 set clipboard=unnamed,unnamedplus
-set colorcolumn=81
+set colorcolumn=89
 set cursorline
 set foldlevelstart=99
 set formatoptions+=jn " j: join commented lines sensibly; n: indent lists properly
@@ -169,22 +173,27 @@ let g:python_highlight_space_errors = 0
 
 augroup vimrc_filetypes
   au!
-  au BufWritePost * Neomake
-
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.i set ft=swig
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile *.ypp setf yacc.cpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
 
+  " load vim-sleuth if filetype is not markdown to avoid performance bug. See:
+  " https://github.com/tpope/vim-sleuth/issues/43.
+  au Filetype * if &filetype != 'markdown' | call plug#load('vim-sleuth') | endif
+
   au Filetype c,cpp,objc,objcpp,cuda setl comments-=:// comments+=:///,://
   au Filetype c,cpp,objc,objcpp,cuda setl fdm=syntax
   au Filetype c,cpp,objc,objcpp,cuda setl formatexpr=clang_format#formatexpr()
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
   au Filetype python setl formatexpr=yapf#formatexpr()
-  au Filetype python setl tw=79 cc=+1 fdm=indent
+  au Filetype python setl fdm=indent
+  au Filetype python setl tw=88
   au Filetype go setl tw=100 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
+  au Filetype javascript setl ts=2 sts=2 sw=2
+  au Filetype typescript setl ts=2 sts=2 sw=2
   au FileType dirvish setlocal nospell
 augroup END
 " Fix buggy syntax highlighting in bash scripts.
@@ -349,14 +358,10 @@ let g:projectiles = {
    \ }
    \ }
 "}}}
-" NeoMake{{{
-let g:neomake_glsl_glslangValidator_maker = {
-  \ 'args': ['--verbose'],
-  \ 'errorformat': '%Eerror: %\\d%\\+:%l: %m',
-  \ }
-let g:neomake_glsl_enabled_makers = ['glslangValidator']
-
-let g:neomake_cpp_enabled_makers = []
+" ALE{{{
+" Pylint gets confused if files in the CWD are named the same as standard
+" modules (even if their case differs).
+let g:ale_python_pylint_change_directory = 0
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'
@@ -401,11 +406,5 @@ if !has('gui_running')
       \'y':    [promptline#slices#vcs_branch({'git':1, 'svn':1}), s:hg_branch],
       \'warn': [promptline#slices#last_exit_code()]}
 endif
-"}}}
-" Ack
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-cnoreabbrev Ag Ack
 "}}}
 " vim: fdm=marker:foldlevel=0:

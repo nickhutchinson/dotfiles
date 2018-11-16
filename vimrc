@@ -264,6 +264,8 @@ command! -bang Qa qa<bang>
 nnoremap <C-P> :Files<cr>
 nnoremap <leader>r :History<cr>
 nnoremap <C-]> :Tags <c-r><c-w><cr>
+let $FZF_DEFAULT_COMMAND='fd --type f'
+
 " }}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
@@ -362,6 +364,9 @@ let g:projectiles = {
 " Pylint gets confused if files in the CWD are named the same as standard
 " modules (even if their case differs).
 let g:ale_python_pylint_change_directory = 0
+let g:ale_linters = {
+\   'typescript': ['tslint'],
+\}
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'

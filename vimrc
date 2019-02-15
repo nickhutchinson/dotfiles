@@ -69,7 +69,6 @@ Plug 'fatih/vim-go'
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'raymond-w-ko/vim-lua-indent'
 Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'vim-scripts/SWIG-syntax'
@@ -192,8 +191,8 @@ augroup vimrc_filetypes
   au Filetype python setl tw=88
   au Filetype go setl tw=100 cc=+1 fdm=indent
   au Filetype ruby setl ts=2 sts=2 sw=2
-  au Filetype javascript setl ts=2 sts=2 sw=2
-  au Filetype typescript setl ts=2 sts=2 sw=2
+  au Filetype javascript setl ts=2 sts=2 sw=2 tw=88
+  au Filetype typescript setl ts=2 sts=2 sw=2 tw=88
   au FileType dirvish setlocal nospell
 augroup END
 " Fix buggy syntax highlighting in bash scripts.

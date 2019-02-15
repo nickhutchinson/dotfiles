@@ -1,6 +1,9 @@
 if test -f "$HOME/.autojump/etc/profile.d/autojump.fish"
   . "$HOME/.autojump/etc/profile.d/autojump.fish"
 
+else if test -f /usr/share/autojump/autojump.fish
+  . /usr/share/autojump/autojump.fish
+
 else if test -f /usr/local/share/autojump/autojump.fish
   . /usr/local/share/autojump/autojump.fish
 

@@ -364,9 +364,6 @@ let g:projectiles = {
 " Pylint gets confused if files in the CWD are named the same as standard
 " modules (even if their case differs).
 let g:ale_python_pylint_change_directory = 0
-let g:ale_linters = {
-\   'typescript': ['tslint'],
-\}
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'

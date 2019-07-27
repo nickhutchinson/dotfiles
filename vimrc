@@ -138,6 +138,8 @@ let &dir = s:tmpdir
 let &undodir = s:tmpdir
 let &backupdir = s:tmpdir
 
+set suffixes-=.h
+
 " GUI Options{{{
 if has("gui_running")
   set lines=999 columns=999
@@ -264,7 +266,6 @@ nnoremap <C-P> :Files<cr>
 nnoremap <leader>r :History<cr>
 nnoremap <C-]> :Tags <c-r><c-w><cr>
 let $FZF_DEFAULT_COMMAND='fd --type f'
-
 " }}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
@@ -343,26 +344,18 @@ let g:tagbar_type_objc = {
     \ }
 \ }
 "}}}
-" Projectile"{{{
-let g:projectiles = {
-   \ "*": {
-   \   "*.m":  { "alternate": ["{}.h"] },
-   \   "*.mm": { "alternate": ["{}.h"] },
-   \   "*.c":  { "alternate": ["{}.h"] },
-   \   "*.cc": { "alternate": ["{}.h"] },
-   \   "*.cpp":{ "alternate": ["{}.h"] },
-   \   "*.h":  { "alternate": ["{}.c", "{}.cc", "{}.cpp", "{}.m", "{}.mm"] }
-   \ },
-   \ "src/&include/": {
-   \   "include/*.h": {"alternate": ["src/{}.cpp"]},
-   \   "src/*.cpp": {"alternate": ["include/{}.h"]}
-   \ }
-   \ }
-"}}}
 " ALE{{{
 " Pylint gets confused if files in the CWD are named the same as standard
 " modules (even if their case differs).
 let g:ale_python_pylint_change_directory = 0
+let g:ale_linters = {
+\   'cpp': [],
+\}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint', 'prettier'],
+\   'cpp': ['clang-format'],
+\}
 "}}}
 "VimSession{{{
 let g:session_autosave = 'yes'
@@ -375,6 +368,9 @@ nnoremap <leader>gs :Gstatus<cr>
 " EasyMotion{{{
 let g:EasyMotion_do_mapping = 0
 "}}}
+" Go {{{
+let g:go_addtags_transform = 'camelcase'
+" }}}
 " Promptline/Tmuxline {{{
 if !has('gui_running')
   let g:tmuxline_powerline_separators = 0
@@ -407,5 +403,14 @@ if !has('gui_running')
       \'y':    [promptline#slices#vcs_branch({'git':1, 'svn':1}), s:hg_branch],
       \'warn': [promptline#slices#last_exit_code()]}
 endif
+"}}}
+" Projectionist {{{
+let g:projectionist_heuristics = {
+  \   '*': {
+  \     '*.h': {'alternate': ['{}.cc', '{}.cpp']},
+  \     '*.cpp': {'alternate': '{}.h'},
+  \     '*.cc': {'alternate': '{}.h'}
+  \   }
+  \ }
 "}}}
 " vim: fdm=marker:foldlevel=0:

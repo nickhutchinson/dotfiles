@@ -1,7 +1,7 @@
 set fish_greeting ''
 set -x LESS '-F -g -i -M -R -S -w -X -z-4'
 
-set -x EDITOR vim
+set -x EDITOR nvim
 
 for p in "$HOME/bin" /usr/local/{bin,sbin}
   _append_path "$p"

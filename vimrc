@@ -66,9 +66,11 @@ Plug 'wellle/targets.vim'
 " == Syntax/filetype-specific ==
 Plug 'ambv/black'
 Plug 'fatih/vim-go'
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'rhysd/vim-clang-format'
 Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'vim-scripts/SWIG-syntax'
@@ -173,9 +175,8 @@ augroup vimrc_filetypes
 
   au Filetype c,cpp,objc,objcpp,cuda setl comments-=:// comments+=:///,://
   au Filetype c,cpp,objc,objcpp,cuda setl fdm=syntax
-  au Filetype c,cpp,objc,objcpp,cuda setl formatexpr=clang_format#formatexpr()
   au Filetype lua setl ts=2 sts=2 sw=2 fdm=indent
-  au Filetype python setl formatexpr=yapf#formatexpr()
+  au Filetype python setl formatexpr=yapf#YAPF()
   au Filetype python setl fdm=indent
   au Filetype python setl tw=88
   au Filetype go setl tw=100 cc=+1 fdm=indent
@@ -248,6 +249,8 @@ command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
 "}}}
 "Plugin Config {{{
+let g:clang_format#auto_formatexpr = 1
+"
 " FZF{{{
 nnoremap <C-P> :Files<cr>
 nnoremap <leader>r :History<cr>

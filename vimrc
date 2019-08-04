@@ -64,11 +64,10 @@ Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
 " == Syntax/filetype-specific ==
-Plug 'ambv/black'
 Plug 'fatih/vim-go'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-Plug 'nickhutchinson/vim-cmake-syntax'
 Plug 'nickhutchinson/vim-systemtap'
+Plug 'pboettch/vim-cmake-syntax'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'rhysd/vim-clang-format'
 Plug 'sheerun/vim-polyglot'
@@ -78,6 +77,9 @@ Plug 'vim-scripts/scons.vim'
 if has('python') || has('python3')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'
+endif
+if has('python3')
+  Plug 'ambv/black'
 endif
 
 call plug#end()

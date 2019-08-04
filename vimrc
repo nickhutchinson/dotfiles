@@ -19,7 +19,7 @@ if !has('gui_running')
 endif
 Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
-Plug 'chriskempson/base16-vim', {'commit': '6fa899d'} " Newer commits break light scheme.
+Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jlfwong/vim-mercenary' " mercurial plugin
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -82,19 +82,7 @@ call plug#end()
 
 " }}}
 " Options {{{
-" Colour scheme {{{
-set background=dark
-colorscheme base16-ocean
-
-if &term !=# "cygwin" && hostname() !~? "\\v(Filigree|gabor|crerar|jordan)"
-  let h = strftime("%H")
-  if 7 <= h && h <= 17
-    set background=light
-  else
-    set background=dark
-  endif
-endif
-" }}}
+colorscheme base16-tomorrow
 
 let mapleader = ","
 
@@ -119,7 +107,6 @@ set numberwidth=2
 set scrolloff=10
 set shortmess+=I
 set smartcase
-set spell
 set spelllang=en_gb
 set splitbelow
 set splitright

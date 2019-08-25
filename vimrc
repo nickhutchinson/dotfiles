@@ -29,7 +29,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'mhinz/vim-signify'
-Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-dispatch' " process launcher
 Plug 'tpope/vim-eunuch' " UNIX commands
 Plug 'tpope/vim-fugitive'
@@ -43,11 +42,9 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 
 " == Text editing ==
 Plug 'AndrewRadev/linediff.vim'
-Plug 'junegunn/goyo.vim' " focussed text editing
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-indent'
 Plug 'Konfekt/FastFold'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'w0rp/ale'
@@ -69,7 +66,6 @@ Plug 'fatih/vim-go'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'nickhutchinson/vim-cpp'
 Plug 'nickhutchinson/vim-systemtap'
-Plug 'pboettch/vim-cmake-syntax'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'rhysd/vim-clang-format'
 Plug 'sheerun/vim-polyglot'

@@ -17,6 +17,7 @@ if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
@@ -66,6 +67,7 @@ Plug 'wellle/targets.vim'
 " == Syntax/filetype-specific ==
 Plug 'fatih/vim-go'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'nickhutchinson/vim-cpp'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
@@ -157,8 +159,12 @@ endif
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
 
-" The default vim plug-in loads faster
-let g:polyglot_disabled = ['markdown']
+" Disable markdown: the default vim plug-in loads faster
+" Disable c/cpp: we're using a patched version
+let g:polyglot_disabled = [
+    \"markdown",
+    \"c/cpp"
+    \]
 
 " Don't make trailing whitespace so angry
 let g:python_highlight_space_errors = 0
@@ -186,6 +192,9 @@ augroup vimrc_filetypes
   au Filetype javascript setl ts=2 sts=2 sw=2 tw=88
   au Filetype typescript setl ts=2 sts=2 sw=2 tw=88
   au FileType dirvish setlocal nospell
+
+  au FileType c,cpp,objc,objcpp,cuda,proto
+      \ setl formatexpr=clang_format#replace(v:lnum,v:lnum+v:count-1)
 augroup END
 " Fix buggy syntax highlighting in bash scripts.
 " <http://stackoverflow.com/questions/11044378/syntax-highlighting-bugs-of-vim-7-3-for-bash-scripts>
@@ -251,8 +260,6 @@ command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
 "}}}
 "Plugin Config {{{
-let g:clang_format#auto_formatexpr = 1
-"
 " FZF{{{
 nnoremap <C-P> :Files<cr>
 nnoremap <leader>r :History<cr>
@@ -342,11 +349,13 @@ let g:tagbar_type_objc = {
 let g:ale_python_pylint_change_directory = 0
 let g:ale_linters = {
 \   'cpp': [],
+\   'objcpp': [],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint', 'prettier'],
 \   'cpp': ['clang-format'],
+\   'objcpp': ['clang-format'],
 \}
 "}}}
 "VimSession{{{

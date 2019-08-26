@@ -262,7 +262,7 @@ let $FZF_DEFAULT_COMMAND='fd --type f'
 " }}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
-      \ '/workspace/Katana/*',
+      \ '~/Code/eyebrow/*',
       \ '~/.ycm_extra_conf.py']
 
 let g:ycm_autoclose_preview_window_after_insertion = 1

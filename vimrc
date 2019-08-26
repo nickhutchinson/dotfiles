@@ -1,10 +1,6 @@
 " Windows Nonsense "{{{
 set encoding=utf-8
 
-if has('win32unix') " Cygwin
-  set rtp^=~/vimfiles
-endif
-
 if has('win32')
   set shell=$COMSPEC
 endif
@@ -17,14 +13,21 @@ if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+if !has('win32')
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+else
+  Plug 'Shougo/vimproc.vim', {'do' : 'mingw32-make -f make_mingw64.mak'}
+endif
 Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jlfwong/vim-mercenary' " mercurial plugin
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+
+if !has('win32')
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+endif
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
@@ -90,7 +93,6 @@ let mapleader = ","
 
 let &showbreak='↪ '
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
-let g:python2_host_prog='/usr/bin/python'
 set clipboard=unnamed,unnamedplus
 set colorcolumn=101
 set cursorline
@@ -148,7 +150,7 @@ if has("mac")
 elseif has("unix")
   let &guifont="DeJa Vu Sans Mono 10"
 elseif has("win32")
-  let &guifont="DeJaVu_Sans_Mono:h10"
+  let &guifont="Inconsolata_NF:h10"
 endif
 "}}}
 "}}}
@@ -341,7 +343,9 @@ let g:tagbar_type_objc = {
 " Pylint gets confused if files in the CWD are named the same as standard
 " modules (even if their case differs).
 let g:ale_python_pylint_change_directory = 0
-let g:ale_cpp_clangtidy_executable = '/usr/local/opt/llvm/bin/clang-tidy'
+if has('mac')
+  let g:ale_cpp_clangtidy_executable = '/usr/local/opt/llvm/bin/clang-tidy'
+endif
 let g:ale_linters = {
 \   'cpp': ['clangtidy'],
 \   'objcpp': ['clangtidy'],

@@ -341,9 +341,10 @@ let g:tagbar_type_objc = {
 " Pylint gets confused if files in the CWD are named the same as standard
 " modules (even if their case differs).
 let g:ale_python_pylint_change_directory = 0
+let g:ale_cpp_clangtidy_executable = '/usr/local/opt/llvm/bin/clang-tidy'
 let g:ale_linters = {
-\   'cpp': [],
-\   'objcpp': [],
+\   'cpp': ['clangtidy'],
+\   'objcpp': ['clangtidy'],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],

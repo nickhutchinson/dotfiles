@@ -92,7 +92,7 @@ let &showbreak='↪ '
 let &listchars='tab:▸ ,eol:¬,extends:❯,precedes:❮'
 let g:python2_host_prog='/usr/bin/python'
 set clipboard=unnamed,unnamedplus
-set colorcolumn=89
+set colorcolumn=101
 set cursorline
 set foldlevelstart=99
 set formatoptions+=jn " j: join commented lines sensibly; n: indent lists properly

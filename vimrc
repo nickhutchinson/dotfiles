@@ -24,7 +24,10 @@ Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jlfwong/vim-mercenary' " mercurial plugin
 
-if !has('win32')
+if has('win32')
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+  Plug 'junegunn/fzf.vim'
+else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
 endif
@@ -69,19 +72,17 @@ Plug 'bennyyip/vim-yapf'
 Plug 'fatih/vim-go'
 Plug 'nickhutchinson/vim-cpp'
 Plug 'nickhutchinson/vim-systemtap'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'prettier/vim-prettier'
 Plug 'rhysd/vim-clang-format'
 Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'vim-scripts/SWIG-syntax'
 Plug 'vim-scripts/scons.vim'
-if has('python') || has('python3')
+if has('python3')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'
 endif
-if has('python3')
-  Plug 'ambv/black'
-endif
+Plug 'psf/black', { 'tag': '*' }
 
 call plug#end()
 
@@ -150,7 +151,10 @@ if has("mac")
 elseif has("unix")
   let &guifont="DeJa Vu Sans Mono 10"
 elseif has("win32")
-  let &guifont="Inconsolata_NF:h10"
+  let &guifont="Consolas:h9.5"
+  if has("gui_running")
+    colorscheme base16-tomorrow-night
+  end
 endif
 "}}}
 "}}}
@@ -260,7 +264,7 @@ let g:yapf#auto_formatexpr = 1
 nnoremap <C-P> :Files<cr>
 nnoremap <leader>r :History<cr>
 nnoremap <C-]> :Tags <c-r><c-w><cr>
-let $FZF_DEFAULT_COMMAND='fd --type f'
+let $FZF_DEFAULT_COMMAND='rg --files'
 " }}}
 " YouCompleteMe{{{
 let g:ycm_extra_conf_globlist = [
@@ -347,12 +351,14 @@ if has('mac')
   let g:ale_cpp_clangtidy_executable = '/usr/local/opt/llvm/bin/clang-tidy'
 endif
 let g:ale_linters = {
-\   'cpp': ['clangtidy'],
-\   'objcpp': ['clangtidy'],
+\   'c': [],
+\   'cpp': [],
+\   'objcpp': [],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint', 'prettier'],
+\   'c': ['clang-format'],
 \   'cpp': ['clang-format'],
 \   'objcpp': ['clang-format'],
 \}

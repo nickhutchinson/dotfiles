@@ -70,6 +70,7 @@ Plug 'wellle/targets.vim'
 " == Syntax/filetype-specific ==
 Plug 'bennyyip/vim-yapf'
 Plug 'fatih/vim-go'
+Plug 'neoclide/jsonc.vim'
 Plug 'nickhutchinson/vim-cpp'
 Plug 'nickhutchinson/vim-systemtap'
 Plug 'prettier/vim-prettier'

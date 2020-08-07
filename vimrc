@@ -84,7 +84,9 @@ if has('python3')
   Plug 'SirVer/ultisnips'
   Plug 'Valloric/YouCompleteMe'
 endif
-Plug 'psf/black', { 'tag': '*' }
+if has('python3')
+  Plug 'psf/black', { 'branch': 'stable' }
+endif
 
 call plug#end()
 
@@ -136,10 +138,6 @@ let &backupdir = s:tmpdir
 set suffixes-=.h
 
 " GUI Options{{{
-if has("gui_running")
-  set lines=999 columns=999
-endif
-
 set mouse=a " enable mouse mode
 
 " Disable left/right scrollbars, toolbar.
@@ -167,12 +165,16 @@ set ts=4 sts=4 sw=4 expandtab
 " Don't make trailing whitespace so angry
 let g:python_highlight_space_errors = 0
 
+let g:black_linelength = 100
+let g:prettier#config#tab_width = 4
+
 augroup vimrc_filetypes
   au!
   au BufRead,BufNewFile *.m setf objc
   au BufRead,BufNewFile *.i set ft=swig
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile *.ypp setf yacc.cpp
+  au BufRead,BufNewFile *.log.[0-9] setf log
   au BufRead,BufNewFile SConscript,SConstruct setf scons
 
   au Filetype c,cpp,objc,objcpp,cuda setl comments-=:// comments+=:///,://
@@ -344,6 +346,7 @@ if has('mac')
 endif
 let g:ale_linters = {
 \   'c': [],
+\   'objc': [],
 \   'cpp': [],
 \   'objcpp': [],
 \}
@@ -351,6 +354,7 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint', 'prettier'],
 \   'c': ['clang-format'],
+\   'objc': ['clang-format'],
 \   'cpp': ['clang-format'],
 \   'objcpp': ['clang-format'],
 \}

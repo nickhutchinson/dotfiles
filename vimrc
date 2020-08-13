@@ -1,9 +1,5 @@
 " Windows Nonsense "{{{
 set encoding=utf-8
-
-if has('win32')
-  set shell=$COMSPEC
-endif
 "}}}
 " Plugins {{{
 call plug#begin()
@@ -118,6 +114,7 @@ set splitbelow
 set splitright
 set undofile
 set wildignorecase  " case insensitive filename completion
+set belloff=all
 
 " Configure temp directories
 if has("win32") || has("win32unix")
@@ -152,7 +149,7 @@ if has("mac")
 elseif has("unix")
   let &guifont="DeJa Vu Sans Mono 10"
 elseif has("win32")
-  let &guifont="Consolas:h9.5"
+  let &guifont="Consolas:h10"
   if has("gui_running")
     colorscheme base16-tomorrow-night
   end

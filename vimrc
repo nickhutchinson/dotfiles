@@ -1,6 +1,12 @@
 " Windows Nonsense "{{{
 set encoding=utf-8
 "}}}
+" Polyglot config "{{{
+" Disable c/cpp: we're using a patched version
+let g:polyglot_disabled = [
+    \"c/cpp"
+    \]
+"}}}
 " Plugins {{{
 call plug#begin()
 
@@ -37,7 +43,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rsi' " readline bindings
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth', { 'on': [] }
 Plug 'tpope/vim-tbone' " tmux
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
@@ -159,13 +164,6 @@ endif
 " Filetype-specific stuff{{{
 set ts=4 sts=4 sw=4 expandtab
 
-" Disable markdown: the default vim plug-in loads faster
-" Disable c/cpp: we're using a patched version
-let g:polyglot_disabled = [
-    \"markdown",
-    \"c/cpp"
-    \]
-
 " Don't make trailing whitespace so angry
 let g:python_highlight_space_errors = 0
 
@@ -176,10 +174,6 @@ augroup vimrc_filetypes
   au BufRead,BufNewFile *.mm setf objcpp
   au BufRead,BufNewFile *.ypp setf yacc.cpp
   au BufRead,BufNewFile SConscript,SConstruct setf scons
-
-  " load vim-sleuth if filetype is not markdown to avoid performance bug. See:
-  " https://github.com/tpope/vim-sleuth/issues/43.
-  au Filetype * if &filetype != 'markdown' | call plug#load('vim-sleuth') | endif
 
   au Filetype c,cpp,objc,objcpp,cuda setl comments-=:// comments+=:///,://
   au Filetype c,cpp,objc,objcpp,cuda setl fdm=syntax

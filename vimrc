@@ -2,6 +2,12 @@
 set encoding=utf-8
 "}}}
 " Plugins {{{
+
+if has("win32")
+  let g:python3_host_prog = expand("~/.venvs/neovim3/Scripts/python")
+  let g:python_host_prog = expand("~/.venvs/neovim2/Scripts/python")
+endif
+
 call plug#begin()
 
 " == General ==
@@ -148,10 +154,9 @@ elseif has("unix")
   let &guifont="DeJa Vu Sans Mono 10"
 elseif has("win32")
   let &guifont="Consolas:h10"
-  if has("gui_running")
-    colorscheme base16-tomorrow-night
-  end
+  colorscheme base16-tomorrow-night
 endif
+
 "}}}
 "}}}
 " Filetype-specific stuff{{{

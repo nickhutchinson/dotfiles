@@ -1,5 +1,9 @@
 " Windows Nonsense "{{{
 set encoding=utf-8
+
+if has('win32')
+  set shell=cmd
+endif
 "}}}
 " Plugins {{{
 
@@ -15,24 +19,13 @@ if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
-if !has('win32')
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-else
-  Plug 'Shougo/vimproc.vim', {'do' : 'mingw32-make -f make_mingw64.mak'}
-endif
 Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jlfwong/vim-mercenary' " mercurial plugin
-
-if has('win32')
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
-  Plug 'junegunn/fzf.vim'
-else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-endif
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-gtfo'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'

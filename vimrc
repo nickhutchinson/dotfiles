@@ -7,9 +7,20 @@ endif
 "}}}
 " Plugins {{{
 
-if has("win32")
-  let g:python3_host_prog = expand("~/.venvs/neovim3/Scripts/python")
-  let g:python_host_prog = expand("~/.venvs/neovim2/Scripts/python")
+if isdirectory(expand("~/.venvs/neovim3"))
+  if has("win32")
+    let g:python3_host_prog = expand("~/.venvs/neovim3/Scripts/python")
+  else
+    let g:python3_host_prog = expand("~/.venvs/neovim3/bin/python")
+  end
+endif
+
+if isdirectory(expand("~/.venvs/neovim2"))
+  if has("win32")
+    let g:python2_host_prog = expand("~/.venvs/neovim2/Scripts/python")
+  else
+    let g:python2_host_prog = expand("~/.venvs/neovim2/bin/python")
+  end
 endif
 
 call plug#begin()
@@ -19,6 +30,7 @@ if !has('gui_running')
   Plug 'edkolev/promptline.vim'
   Plug 'edkolev/tmuxline.vim'
 endif
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'airblade/vim-rooter'
 Plug 'bling/vim-bufferline'
 Plug 'chriskempson/base16-vim'

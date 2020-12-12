@@ -17,9 +17,9 @@ endif
 
 if isdirectory(expand("~/.venvs/neovim2"))
   if has("win32")
-    let g:python2_host_prog = expand("~/.venvs/neovim2/Scripts/python")
+    let g:python_host_prog = expand("~/.venvs/neovim2/Scripts/python")
   else
-    let g:python2_host_prog = expand("~/.venvs/neovim2/bin/python")
+    let g:python_host_prog = expand("~/.venvs/neovim2/bin/python")
   end
 endif
 
@@ -178,6 +178,7 @@ let g:polyglot_disabled = [
 let g:python_highlight_space_errors = 0
 
 let g:black_linelength = 100
+let g:black_virtualenv = expand("~/.venvs/black")
 let g:prettier#config#tab_width = 4
 
 augroup vimrc_filetypes

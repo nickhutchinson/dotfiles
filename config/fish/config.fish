@@ -1,11 +1,7 @@
 set fish_greeting ''
 set -x LESS '-F -g -i -M -R -S -w -X -z-4'
 
-set -x EDITOR nvim
-
-for p in "$HOME/bin" /usr/local/{bin,sbin}
-  _append_path "$p"
-end
+set -x VISUAL nvim
 
 ################################################################################
 alias cp 'cp -i'
@@ -38,10 +34,7 @@ if test -z "$XDG_CONFIG_DIR"
   set XDG_CONFIG_DIR "$HOME/.config"
 end
 
-if test -d "$XDG_CONFIG_DIR/fish/config.fish.d"
-  for f in "$XDG_CONFIG_DIR/fish/config.fish.d/"*.fish
-    source $f
-  end
+if type jenv >/dev/null 2>&1
+  source (jenv init -|psub)
 end
-
 

@@ -23,7 +23,7 @@ link_dotfile() {
 
     echo_exec mkdir -p ~/.config
     echo_exec mkdir -p ~/.config/mr/config.d
-    echo_exec mkdir -p ~/.config/fish/{config.fish.d,functions}
+    echo_exec mkdir -p ~/.config/fish/conf.d
 
     files=(
         bash_profile
@@ -31,7 +31,7 @@ link_dotfile() {
         cgdb
         clang-format
         config/fish/config.fish
-        config/fish/{config.fish.d,functions}/*.fish
+        config/fish/conf.d/*.fish
         config/mr/config.d/*
         gdbinit
         gitattributes
